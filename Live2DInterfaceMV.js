@@ -89,11 +89,11 @@
 * @default 
 * @parent moc3_1
 *
-* @param motion3_1
+* @param model3_1
 * @type string[]
 * @default []
 * @parent moc3_1
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_2
 * @type string
@@ -118,11 +118,11 @@
 * @default 
 * @parent moc3_2
 *
-* @param motion3_2
+* @param model3_2
 * @type string[]
 * @default []
 * @parent moc3_2
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_3
 * @type string
@@ -147,11 +147,11 @@
 * @default 
 * @parent moc3_3
 *
-* @param motion3_3
+* @param model3_3
 * @type string[]
 * @default []
 * @parent moc3_3
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_4
 * @type string
@@ -176,11 +176,11 @@
 * @default 
 * @parent moc3_4
 *
-* @param motion3_4
+* @param model3_4
 * @type string[]
 * @default []
 * @parent moc3_4
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_5
 * @type string
@@ -205,11 +205,11 @@
 * @default 
 * @parent moc3_5
 *
-* @param motion3_5
+* @param model3_5
 * @type string[]
 * @default []
 * @parent moc3_5
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_6
 * @type string
@@ -234,11 +234,11 @@
 * @default 
 * @parent moc3_6
 *
-* @param motion3_6
+* @param model3_6
 * @type string[]
 * @default []
 * @parent moc3_6
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_7
 * @type string
@@ -263,11 +263,11 @@
 * @default 
 * @parent moc3_7
 *
-* @param motion3_7
+* @param model3_7
 * @type string[]
 * @default []
 * @parent moc3_7
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_8
 * @type string
@@ -292,11 +292,11 @@
 * @default 
 * @parent moc3_8
 *
-* @param motion3_8
+* @param model3_8
 * @type string[]
 * @default []
 * @parent moc3_8
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_9
 * @type string
@@ -321,11 +321,11 @@
 * @default 
 * @parent moc3_9
 *
-* @param motion3_9
+* @param model3_9
 * @type string[]
 * @default []
 * @parent moc3_9
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_10
 * @type string
@@ -350,11 +350,11 @@
 * @default 
 * @parent moc3_10
 *
-* @param motion3_10
+* @param model3_10
 * @type string[]
 * @default []
 * @parent moc3_10
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_11
 * @type string
@@ -379,11 +379,11 @@
 * @default 
 * @parent moc3_11
 *
-* @param motion3_11
+* @param model3_11
 * @type string[]
 * @default []
 * @parent moc3_11
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_12
 * @type string
@@ -408,11 +408,11 @@
 * @default 
 * @parent moc3_12
 *
-* @param motion3_12
+* @param model3_12
 * @type string[]
 * @default []
 * @parent moc3_12
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_13
 * @type string
@@ -437,11 +437,11 @@
 * @default 
 * @parent moc3_13
 *
-* @param motion3_13
+* @param model3_13
 * @type string[]
 * @default []
 * @parent moc3_13
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_14
 * @type string
@@ -466,11 +466,11 @@
 * @default 
 * @parent moc3_14
 *
-* @param motion3_14
+* @param model3_14
 * @type string[]
 * @default []
 * @parent moc3_14
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @param folder_15
 * @type string
@@ -495,11 +495,11 @@
 * @default 
 * @parent moc3_15
 *
-* @param motion3_15
+* @param model3_15
 * @type string[]
 * @default []
 * @parent moc3_15
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 * @param folder_16
 * @type string
 * @desc live2Dモデルのフォルダパス
@@ -523,11 +523,11 @@
 * @default 
 * @parent moc3_16
 *
-* @param motion3_16
+* @param model3_16
 * @type string[]
 * @default []
 * @parent moc3_16
-* @desc motion3のファイルパス
+* @desc model3のファイルパス
 *
 * @help
 * live2d立ち絵表示プラグイン　ver1.0.0
@@ -547,7 +547,7 @@
 *
 * ■ モーション
 * 　TalkLive2d モデル名 モーション モーション名
-*　※モーション名・・・〇〇.motion3.jsonの〇〇部分
+*　※モーション名・・・〇〇.model3.jsonの〇〇部分
 * 　例）TalkLive2d コハル Koharu
 *
 * ■ 位置変更
@@ -597,7 +597,7 @@ Game_Live2d.prototype.initialize = function() {
         this._texture[i] = String(parameters['texture_'+i]);
         this._name[i] = String(parameters['name_'+i]);        
         
-        var str = parameters['motion3_'+i].replace('[','');
+        var str = parameters['model3_'+i].replace('[','');
         str = str.replace(']','');
         str = str.replace(/"/g,'');
         this._motion[i] = str.split(',');
@@ -796,6 +796,7 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
     temp_gl.frontFace(temp_gl.CW);
     //this.draw();
     if($gameLive2d._lappLive2dManager){
+        
         LAppPal.updateTime();
         $gameLive2d.gl.flush();
         $gameLive2d._lappLive2dManager.onUpdate();
@@ -941,7 +942,7 @@ if (PIXI) {
                     break;
                 }
             }
-*/
+            */
             switch (args[1]) {
             case 'show':
             case '表示':
@@ -1014,7 +1015,7 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
     $gameLive2d.visible[model_no] = flag;
 };
 
-//表情設定（.motion3.jsonの手前の文字列）
+//表情設定（.model3.jsonの手前の文字列）
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
     $gameLive2d._lappLive2dManager._models.at(model_no-1).startMotion(motionGroup,motion_no, 1);
 }

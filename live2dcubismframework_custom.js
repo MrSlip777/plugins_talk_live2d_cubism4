@@ -6977,6 +6977,7 @@ var Live2DCubismFramework;
          * @param renderer レンダラのインスタンス
          */
         CubismClippingManager_WebGL.prototype.setupClippingContext = function (model, renderer) {
+            this.gl = $gameLive2d.gl;//this.glを更新　Slip 2020/01/22
             this._currentFrameNo++;
             // 全てのクリッピングを用意する
             // 同じクリップ（複数の場合はまとめて一つのクリップ）を使う場合は1度だけ設定する
@@ -7977,6 +7978,8 @@ var Live2DCubismFramework;
          * モデルを描画する前にクリッピングマスクに必要な処理を実装している
          */
         CubismRenderer_WebGL.prototype.preDraw = function () {
+            //this.glを更新　Slip 2020/01/22
+            this.gl = $gameLive2d.gl;
             if (this.firstDraw) {
                 this.firstDraw = false;
                 // 拡張機能を有効にする
@@ -12039,22 +12042,22 @@ var LAppLive2DManager = /** @class */ (function () {
 
     LAppLive2DManager.prototype.loadModels = function () {
     
-        var model_no = 1;
         this._sceneIndex = model_no;
     
         // ModelDir[]に保持したディレクトリ名から
         // model3.jsonのパスを決定する。
         // ディレクトリ名とmodel3.jsonの名前を一致させておくこと。
     
-        var modelPath = $gameLive2d._folder[model_no];
-        var modelJsonName = $gameLive2d._motion[model_no][0];
-    
         this.releaseAllModel();
-        this._models.pushBack(new LAppModel());
-        this._models.at(0).loadAssets(modelPath, modelJsonName);
+
+        for(var model_no = 1; model_no<4; model_no++){
+            var modelPath = $gameLive2d._folder[model_no];
+            var modelJsonName = $gameLive2d._motion[model_no][0];
         
-        //SceneManager._scene._spriteset.addChild(this._models.at(0));
-        
+            
+            this._models.pushBack(new LAppModel());
+            this._models.at(model_no-1).loadAssets(modelPath, modelJsonName);
+        }
     };
 
 
