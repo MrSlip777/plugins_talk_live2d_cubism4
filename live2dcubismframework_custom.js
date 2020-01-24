@@ -11242,7 +11242,6 @@ var BreathParameterData = Live2DCubismFramework.BreathParameterData;
 var CubismEyeBlink = Live2DCubismFramework.CubismEyeBlink;
 var ACubismMotion = Live2DCubismFramework.ACubismMotion;
 var CubismFramework = Live2DCubismFramework.CubismFramework;
-//var CubismUserModel = Live2DCubismFramework.CubismUserModel;
 var CubismModelSettingJson = Live2DCubismFramework.CubismModelSettingJson;
 var CubismDefaultParameterId = Live2DCubismFramework;
 
@@ -11713,6 +11712,17 @@ var LAppModel = /** @class */ (function (_super) {
         var no = Math.floor(Math.random() * this._modelSetting.getMotionCount(group));
         return this.startMotion(group, no, priority);
     };
+    //モーションを変更する
+    LAppModel.prototype.changeMotion = function (group, no, priority) {
+        this._motionManager.stopAllMotions();
+        this._updating = false;
+        this._initialized = true; 
+        var name = CubismString.getFormatedString("{0}_{1}", group, no);
+        var motion = this._motions.getValue(name);
+        motion._motionData.loop = false;//ループしない設定へ変更　slip デバッグ用 2020/01/19 
+        this._motionManager.startMotionPriority(motion, false, priority);     
+    };
+
     /**
      * 引数で指定した表情モーションをセットする
      *
@@ -11732,6 +11742,12 @@ var LAppModel = /** @class */ (function (_super) {
             }
         }
     };
+
+    LAppModel.prototype.changeExpression = function (expressionId) {
+        var motion = this._expressions.getValue(expressionId);
+        this._expressionManager.startMotionPriority(motion, false, 1);
+    }
+
     /**
      * ランダムに選ばれた表情モーションをセットする
      */
@@ -11872,6 +11888,7 @@ var LAppModel = /** @class */ (function (_super) {
         }
         // 各読み込み終了後
         if (this._state == LoadStep.CompleteSetup) {
+
             matrix.multiplyByMatrix(this._modelMatrix);
             this.getRenderer().setMvpMatrix(matrix);
             this.doDraw();
@@ -12004,6 +12021,7 @@ var LAppLive2DManager = /** @class */ (function () {
                     model._pos_x = $gameLive2d.pos_x[i+1];
                     projection = saveProjection.clone();
                     model.update();
+                    projection.scale($gameLive2d.scale[i+1],$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
                     model.draw(projection); // 参照渡しなのでprojectionは変質する。
                 }
             }
@@ -12050,13 +12068,13 @@ var LAppLive2DManager = /** @class */ (function () {
     
         this.releaseAllModel();
 
-        for(var model_no = 1; model_no<4; model_no++){
+        for(var model_no = 1; model_no<=$gameLive2d.MAXNUMBER; model_no++){
             var modelPath = $gameLive2d._folder[model_no];
             var modelJsonName = $gameLive2d._motion[model_no][0];
-        
-            
             this._models.pushBack(new LAppModel());
-            this._models.at(model_no-1).loadAssets(modelPath, modelJsonName);
+            if(modelPath != "" && modelJsonName != ""){
+                this._models.at(model_no-1).loadAssets(modelPath, modelJsonName);
+            }
         }
     };
 

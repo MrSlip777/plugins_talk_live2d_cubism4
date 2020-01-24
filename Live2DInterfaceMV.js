@@ -590,6 +590,7 @@ Game_Live2d.prototype.initialize = function() {
     this.visible = {};  //モデルの表示、非表示
     this.pos_x ={};     //モデルのX位置
     this.pos_y ={};     //モデルのY位置
+    this.scale = {};    //スケール
 
     for(var i = 1; i<=this.MAXNUMBER; i++){
         this._folder[i] = String(parameters['folder_'+i]);
@@ -603,6 +604,7 @@ Game_Live2d.prototype.initialize = function() {
         this._motion[i] = str.split(',');
 
         this.visible[i] = false;
+        this.scale[i] = 1.0;
     }
 
     //内部変数
@@ -794,7 +796,7 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
     temp_gl.clearColor(0.0, 0.0, 0.0, 0.0);
     temp_gl.clear(temp_gl.COLOR_BUFFER_BIT);
     temp_gl.frontFace(temp_gl.CW);
-    //this.draw();
+
     if($gameLive2d._lappLive2dManager){
         
         LAppPal.updateTime();
@@ -822,7 +824,7 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
     temp_gl.activeTexture(activeTexture);
     }
     temp_gl.frontFace(frontFace);
-    //gl.colorMask(...colorWhiteMask); //Slip 2017/03/24
+
     temp_gl.colorMask(colorWhiteMask[0],colorWhiteMask[1],
         colorWhiteMask[2],colorWhiteMask[3]); //Slip 2017/03/24
     
@@ -933,16 +935,7 @@ if (PIXI) {
             }
 
             var model_no = gameLive2d_no;
-            /*
-            //モデル名を検索
-            var path = $gameLive2d._folder[gameLive2d_no]+$gameLive2d._moc[gameLive2d_no];
-            for(var number in live2dmodel){
-                if(live2dmodel[number]._userData == path){
-                    model_no = number;
-                    break;
-                }
-            }
-            */
+
             switch (args[1]) {
             case 'show':
             case '表示':
@@ -968,6 +961,10 @@ if (PIXI) {
                 }
 
                 Live2DManager.prototype.live2dMotion(model_no,args[2],args[3],loop);
+                break;
+            case 'expression':
+            case '表情':
+                Live2DManager.prototype.live2dExpression(model_no,args[2]);
                 break;
             case 'left':
             case '左':
@@ -1015,10 +1012,16 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
     $gameLive2d.visible[model_no] = flag;
 };
 
-//表情設定（.model3.jsonの手前の文字列）
+//モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
-    $gameLive2d._lappLive2dManager._models.at(model_no-1).startMotion(motionGroup,motion_no, 1);
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no, 1);
 }
+
+//表情設定
+Live2DManager.prototype.live2dExpression = function (model_no,expressionId){
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeExpression(expressionId);
+}
+
 
 //表示位置変更
 Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
@@ -1027,10 +1030,7 @@ Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
 
 //倍率変更
 Live2DManager.prototype.live2dSetScale = function (model_no,scale) {
-    if(live2dmodel[model_no] != null){   
-        live2dmodel[model_no].scale.x = $gameLive2d._pos_middle*scale;
-        live2dmodel[model_no].scale.y = $gameLive2d._pos_middle*scale;
-    }
+    $gameLive2d.scale[model_no] = scale;
 };
 
 Scene_Map.prototype.createlive2d = function(){
