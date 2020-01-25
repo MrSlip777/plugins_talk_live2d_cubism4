@@ -61,13 +61,13 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
 　TalkLive2d "Model name" expression "Number"<br>
 　ex) TalkLive2d Koharu expression 1<br>
 
-■ 位置変更<br>
-　TalkLive2d モデル名 右（または、中央、左）<br>
-　ex) TalkLive2d コハル 左<br>
+■ Position change<br>
+　TalkLive2d "Model name" right（or middle, or left）<br>
+　ex) TalkLive2d Koharu left<br>
 
-■ 倍率変更<br>
-　TalkLive2d モデル名 倍率変更 数値<br>
-　ex) TalkLive2d コハル 倍率変更 4.0<br>
+■ Change magnification<br>
+　TalkLive2d "Model name" scale "Number"<br>
+　ex) TalkLive2d Koharu scale 4.0<br>
 
-## デプロイメント<br>
-・検証中
+## Deployment<br>
+・During verification
