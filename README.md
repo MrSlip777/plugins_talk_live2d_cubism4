@@ -57,6 +57,10 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　②ループしない場合<br>
 　　TalkLive2d モデル名 モーション グループ名 番号 ループしない<br>
 
+■ 表情<br>
+　TalkLive2d モデル名 表情 番号<br>
+　例）TalkLive2d コハル 表情 1<br>
+
 ■ 位置変更<br>
 　TalkLive2d モデル名 右（または、中央、左）<br>
 　例）TalkLive2d コハル 左<br>
