@@ -46,16 +46,16 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　例）TalkLive2d コハル 消去<br>
 
 ■ モーション<br>
-　TalkLive2d モデル名 モーション モーション名<br>
-　※モーション名・・・〇〇.motion3.jsonの〇〇部分<br>
-　例）TalkLive2d コハル Koharu<br>
+　TalkLive2d モデル名 モーション グループ名 番号<br>
+　※グループ名・・・jsonファイル内のMotionsの名称<br>
+　例）TalkLive2d コハル Idle 1<br>
 
 ■ モーションのループ設定<br>
 　※モーションのオプションとしてループする、しないを選択できます。<br>
 　①ループする場合<br>
-　　TalkLive2d モデル名 モーション モーション名 ループする<br>
+　　TalkLive2d モデル名 モーション グループ名 番号 ループする<br>
 　②ループしない場合<br>
-　　TalkLive2d モデル名 モーション モーション名 ループしない<br>
+　　TalkLive2d モデル名 モーション グループ名 番号 ループしない<br>
 
 ■ 位置変更<br>
 　TalkLive2d モデル名 右（または、中央、左）<br>
@@ -66,8 +66,4 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　例）TalkLive2d コハル 倍率変更 4.0<br>
 
 ## デプロイメント<br>
-・Win版で実行する場合<br>
-
-・ブラウザ版<br>
-　・ローカルサーバーは問題ありません。<br>
-　・RPGアツマールはmoc3ファイルの拡張子を.jpgに変えてください。<br>
+・検証中
