@@ -6,37 +6,37 @@
 デモ（作成中）
 
 ## 準備
-１．Cubism SDK for Webをダウンロードする
+１．Cubism SDK for Webをダウンロードする<br>
 https://www.live2d.com/download/cubism-sdk/
 
-２．フォルダを解凍する
-３．Coreフォルダの"live2dcubismcore.min.js"をツクールMVのpluginsフォルダへ置く
-※live2dcubismcore.min.js→live2dcubismcore_min.jsにリネームしておく
+２．フォルダを解凍する<br>
+３．Coreフォルダの"live2dcubismcore.min.js"をツクールMVのpluginsフォルダへ置く<br>
+※live2dcubismcore.min.js→live2dcubismcore_min.jsにリネームしておく<br>
 
-４．以下のURLから"polyfill.min.js"をダウンロードし、ツクールMVのpluginsフォルダへ置く
+４．以下のURLから"polyfill.min.js"をダウンロードし、ツクールMVのpluginsフォルダへ置く<br>
 https://www.jsdelivr.com/package/npm/promise-polyfill?version=8.0.0&path=dist
-※polyfill.min.js→polyfill_min.jsにリネームしておく
+※polyfill.min.js→polyfill_min.jsにリネームしておく<br>
 
-５．以下からプラグインをDLする
+５．以下からプラグインをDLする<br>
 https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 
-６．live2dモデル(cubism3.0)をプロジェクトのフォルダ内に置く
+６．live2dモデル(cubism3.0)をプロジェクトのフォルダ内に置く<br>
 
 ## ツクールMVでの設定
-１．ツクールMVを起動する
+１．ツクールMVを起動する<br>
 
-２．プラグインを上から以下の順番に設定する
-　・live2dcubismcore_min.js
-　・polyfill_min.js
-　・live2dcubismframework_custom.js
-　・Live2DInterfaceMV.js
+２．プラグインを上から以下の順番に設定する<br>
+　・live2dcubismcore_min.js<br>
+　・polyfill_min.js<br>
+　・live2dcubismframework_custom.js<br>
+　・Live2DInterfaceMV.js<br>
 
-３．live2DInterfaceMVにて、live2Dモデルの各ファイル、フォルダのパスを設定する
+３．live2DInterfaceMVにて、live2Dモデルの各ファイル、フォルダのパスを設定する<br>
 
-※モデルは最大16モデル登録できます。
+※モデルは最大16モデル登録できます。<br>
 
 ## イベント内の設定
-以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。
+以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
 
 ■ 表示
 　TalkLive2d モデル名 表示
