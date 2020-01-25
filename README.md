@@ -25,8 +25,8 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 １．ツクールMVを起動する<br>
 
 ２．プラグインを上から以下の順番に設定する<br>
-　・live2dcubismcore_min.js<br>
 　・polyfill_min.js<br>
+　・live2dcubismcore_min.js<br>
 　・live2dcubismframework_custom.js<br>
 　・Live2DInterfaceMV.js<br>
 
