@@ -37,29 +37,29 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 ## Settings in the event
 The Live2d model can be operated by setting the following plug-in commands.<br>
 
-■ 表示<br>
-　TalkLive2d モデル名 表示<br>
-　例）TalkLive2d コハル 表示<br>
+■ Display<br>
+　TalkLive2d "Model name" show<br>
+　例）TalkLive2d Koharu show<br>
 
-■ 消去<br>
-　TalkLive2d モデル名 消去<br>
-　例）TalkLive2d コハル 消去<br>
+■ Erase<br>
+　TalkLive2d "Model name" hide<br>
+　例）TalkLive2d Koharu hide<br>
 
-■ モーション<br>
-　TalkLive2d モデル名 モーション グループ名 番号<br>
-　※グループ名・・・jsonファイル内のMotionsの名称<br>
-　例）TalkLive2d コハル Idle 1<br>
+■ Motion<br>
+　TalkLive2d "Model name" motion "Group name" "Number"<br>
+　※Group name・・・Motions name in json file<br>
+　例）TalkLive2d Koharu Idle 1<br>
 
-■ モーションのループ設定<br>
-　※モーションのオプションとしてループする、しないを選択できます。<br>
-　①ループする場合<br>
-　　TalkLive2d モデル名 モーション グループ名 番号 ループする<br>
-　②ループしない場合<br>
-　　TalkLive2d モデル名 モーション グループ名 番号 ループしない<br>
+■ Motion loop settings<br>
+　※You can choose to loop or not as a motion option.<br>
+　①When to loop<br>
+　　TalkLive2d "Model name" motion "Group name" "Number" loop<br>
+　②When not to loop<br>
+　　TalkLive2d "Model name" motion "Group name" "Number" noloop<br>
 
-■ 表情<br>
-　TalkLive2d モデル名 表情 番号<br>
-　例）TalkLive2d コハル 表情 1<br>
+■ Expression<br>
+　TalkLive2d "Model name" expression "Number"<br>
+　例）TalkLive2d Koharu expression 1<br>
 
 ■ 位置変更<br>
 　TalkLive2d モデル名 右（または、中央、左）<br>
