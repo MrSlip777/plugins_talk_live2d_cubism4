@@ -22,6 +22,12 @@
 * @type note
 * @default 'memo'
 *
+* @param upsidedown
+* @type boolean
+* @desc 上下反転スイッチ
+* @default false
+* @parent setting
+*
 * @param vertical
 * @type number
 * @desc 縦の表示位置
@@ -373,10 +379,11 @@ Game_Live2d.prototype.initialize = function() {
     this._pos_middle = Number(parameters['middle']);
     this._pos_right = Number(parameters['right']);
     this._pos_vertical = Number(parameters['vertical']);
-
-    this._scale_V = parameters['scale_V'];
-    this._scale_H = parameters['scale_H'];
-
+    this._IsUpsidedown = false;
+    if(String(parameters['upsidedown']) == 'true'){
+        this._IsUpsidedown = true;
+    }
+    
     //コマンド経由の設定値（ここでは初期値を設定する）
     this.visible = {};  //モデルの表示、非表示
     this.pos_x ={};     //モデルのX位置

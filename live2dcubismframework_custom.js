@@ -12022,7 +12022,12 @@ var LAppLive2DManager = /** @class */ (function () {
                     model._pos_x = $gameLive2d.pos_x[i+1];
                     projection = saveProjection.clone();
                     model.update();
-                    projection.scale($gameLive2d.scale[i+1],$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
+
+                    var direction_Y = 1;
+                    if($gameLive2d._IsUpsidedown){
+                        direction_Y = -1;
+                    }
+                    projection.scale($gameLive2d.scale[i+1],direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
                     model.draw(projection); // 参照渡しなのでprojectionは変質する。
                 }
             }
