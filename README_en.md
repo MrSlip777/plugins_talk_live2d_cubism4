@@ -22,20 +22,20 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 ６．Put live2d model (cubism4.0) in project folder<br>
 
 ## Settings in Maker MV
-１．ツクールMVを起動する<br>
+１．Start RPGMaker MV<br>
 
-２．プラグインを上から以下の順番に設定する<br>
+２．Set plug-ins in the following order from the top<br>
 　・live2dcubismcore_min.js<br>
 　・polyfill_min.js<br>
 　・live2dcubismframework_custom.js<br>
 　・Live2DInterfaceMV.js<br>
 
-３．live2DInterfaceMVにて、live2Dモデルの各ファイル、フォルダのパスを設定する<br>
+３．Set the path of each file and folder of live2D model in Live2DInterfaceMV<br>
 
-※モデルは最大16モデル登録できます。<br>
+※Up to 16 models can be registered.<br>
 
-## イベント内の設定
-以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
+## Settings in the event
+The Live2d model can be operated by setting the following plug-in commands.<br>
 
 ■ 表示<br>
 　TalkLive2d モデル名 表示<br>
