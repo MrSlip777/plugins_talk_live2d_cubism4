@@ -39,16 +39,16 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
 
 ■ Display<br>
 　TalkLive2d "Model name" show<br>
-　例）TalkLive2d Koharu show<br>
+　ex) TalkLive2d Koharu show<br>
 
 ■ Erase<br>
 　TalkLive2d "Model name" hide<br>
-　例）TalkLive2d Koharu hide<br>
+  ex) TalkLive2d Koharu hide<br>
 
 ■ Motion<br>
 　TalkLive2d "Model name" motion "Group name" "Number"<br>
 　※Group name・・・Motions name in json file<br>
-　例）TalkLive2d Koharu Idle 1<br>
+  ex) TalkLive2d Koharu Idle 1<br>
 
 ■ Motion loop settings<br>
 　※You can choose to loop or not as a motion option.<br>
@@ -59,15 +59,15 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
 
 ■ Expression<br>
 　TalkLive2d "Model name" expression "Number"<br>
-　例）TalkLive2d Koharu expression 1<br>
+　ex) TalkLive2d Koharu expression 1<br>
 
 ■ 位置変更<br>
 　TalkLive2d モデル名 右（または、中央、左）<br>
-　例）TalkLive2d コハル 左<br>
+　ex) TalkLive2d コハル 左<br>
 
 ■ 倍率変更<br>
 　TalkLive2d モデル名 倍率変更 数値<br>
-　例）TalkLive2d コハル 倍率変更 4.0<br>
+　ex) TalkLive2d コハル 倍率変更 4.0<br>
 
 ## デプロイメント<br>
 ・検証中
