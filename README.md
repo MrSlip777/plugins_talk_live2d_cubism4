@@ -1,11 +1,7 @@
 # plugins_talk_live2d_cubism4
-display live2d model for rpgmakerMV
-
 
 ［概要］
 会話表示中にLive2d(cubism3.0)でキャラクターを表示させるプラグインです。
- 
-
 
 デモ
 こんな感じでゲームに反映できます。
