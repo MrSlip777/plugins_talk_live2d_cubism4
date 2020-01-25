@@ -1,51 +1,41 @@
 # plugins_talk_live2d_cubism4
 
-［概要］
+##概要
 会話表示中にLive2d(cubism3.0)でキャラクターを表示させるプラグインです。
 
-デモ
-こんな感じでゲームに反映できます。
-https://game.nicovideo.jp/atsumaru/games/gm7367
+デモ（作成中）
 
-↓Live2d(cubism2.1)でのプラグインは以下になります。
-https://tm.lucky-duet.com/viewtopic.php?f=5&t=1610
-
-［準備］
-１．以下のサイトからサンプルをダウンロードする
-https://github.com/Live2D/CubismJsComponents
+##準備
+１．Cubism SDK for Webをダウンロードする
+https://www.live2d.com/download/cubism-sdk/
 
 ２．フォルダを解凍する
-３．example/wwwroot/js/フォルダから以下のファイルをツクールMVのpluginsフォルダへ置く
-　・live2dcubismframework.js
-　・live2dcubismpixi.js
-
-４．以下のサイトからlive2dcubismcore.min.jsをダウンロードし、ツクールMVのpluginsフォルダへ置く
-https://live2d.github.io/#js
+３．Coreフォルダの"live2dcubismcore.min.js"をツクールMVのpluginsフォルダへ置く
 ※live2dcubismcore.min.js→live2dcubismcore_min.jsにリネームしておく
+
+４．以下のURLから"polyfill.min.js"をダウンロードし、ツクールMVのpluginsフォルダへ置く
+https://www.jsdelivr.com/package/npm/promise-polyfill?version=8.0.0&path=dist
+※polyfill.min.js→polyfill_min.jsにリネームしておく
 
 ５．以下からプラグインをDLする
 https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 
 ６．live2dモデル(cubism3.0)をプロジェクトのフォルダ内に置く
 
-［ツクールMVでの設定］
+##ツクールMVでの設定
 １．ツクールMVを起動する
 
 ２．プラグインを上から以下の順番に設定する
 　・live2dcubismcore_min.js
-　・live2dcubismpixi.js
-　・live2dcubismframework.js
-　・Live2DPlatformManager.js
+　・polyfill_min.js
+　・live2dcubismframework_custom.js
 　・Live2DInterfaceMV.js
 
 ３．live2DInterfaceMVにて、live2Dモデルの各ファイル、フォルダのパスを設定する
 
- 
-
-
 ※モデルは最大16モデル登録できます。
 
-［イベント内の設定］
+##イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。
 
 ■ 表示
@@ -76,11 +66,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 　TalkLive2d モデル名 倍率変更 数値
 　例）TalkLive2d コハル 倍率変更 4.0
 
-［デバッグ］
-テストプレイでは実行できません。
-フォルダ内のindex.htmlをEdge、IEブラウザで実行してください。
-
-［デプロイメント］
+##デプロイメント
 ・Win版で実行する場合
 　・最新のNWでデプロイメントしたものを上書きしてください。
 　↓参考
@@ -88,26 +74,3 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 ・ブラウザ版
 　・ローカルサーバーは問題ありません。
 　・RPGアツマールはmoc3ファイルの拡張子を.jpgに変えてください。
-
-​
-
-[サンプルプロジェクト]
-
-・プラグインを入れたプロジェクトはこちらからDLできます。
-
-http://firestorage.jp/download/9f5fd90367c7a8e9f21ebbdfbf90d0985ebbe586
-
-​
-
-【注意】このプロジェクトは以下のファイルを入れないと動作しません。
-
-①"\js\plugins"に以下の3ファイルを入れてください。
-live2dcubismcore_min.js
-live2dcubismframework.js
-live2dcubismpixi.js
-
-​
-
-②"CubismJsComponents-master\example\assets"から"Koharu"、"Mark_model3"を"assets"フォルダに入れてください。
-
-​
