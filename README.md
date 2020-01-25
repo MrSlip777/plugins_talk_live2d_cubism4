@@ -1,11 +1,11 @@
 # plugins_talk_live2d_cubism4
 
-##概要
+## 概要
 会話表示中にLive2d(cubism3.0)でキャラクターを表示させるプラグインです。
 
 デモ（作成中）
 
-##準備
+## 準備
 １．Cubism SDK for Webをダウンロードする
 https://www.live2d.com/download/cubism-sdk/
 
@@ -22,7 +22,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 
 ６．live2dモデル(cubism3.0)をプロジェクトのフォルダ内に置く
 
-##ツクールMVでの設定
+## ツクールMVでの設定
 １．ツクールMVを起動する
 
 ２．プラグインを上から以下の順番に設定する
@@ -35,7 +35,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 
 ※モデルは最大16モデル登録できます。
 
-##イベント内の設定
+## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。
 
 ■ 表示
@@ -66,7 +66,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism3
 　TalkLive2d モデル名 倍率変更 数値
 　例）TalkLive2d コハル 倍率変更 4.0
 
-##デプロイメント
+## デプロイメント
 ・Win版で実行する場合
 　・最新のNWでデプロイメントしたものを上書きしてください。
 　↓参考
