@@ -736,10 +736,10 @@ if (PIXI) {
                     loop = true;
                 }
                 else{
-                    if(args[4] == "ループする" ||args[4] == "loop"){
+                    if(args[4] == "ループ" || args[4] == "ループする" ||args[4] == "loop"){
                         loop = true;
                     }
-                    else if(args[4] == "ループしない" ||args[4] == "noloop"){
+                    else if(args[4] == "ループなし" || args[4] == "ループしない" ||args[4] == "noloop"){
                         loop = false;
                     }
                 }
