@@ -68,9 +68,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism3<br>
 
 ## デプロイメント<br>
 ・Win版で実行する場合<br>
-　・最新のNWでデプロイメントしたものを上書きしてください。<br>
-　↓参考<br>
-　http://b.dlsite.net/RG26890/archives/upgrading_nwjs_within_rpgmakermv<br>
+
 ・ブラウザ版<br>
 　・ローカルサーバーは問題ありません。<br>
 　・RPGアツマールはmoc3ファイルの拡張子を.jpgに変えてください。<br>
