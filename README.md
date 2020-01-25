@@ -1,9 +1,7 @@
 # plugins_talk_live2d_cubism4
 
 ## 概要
-会話表示中にLive2d(cubism3.0)でキャラクターを表示させるプラグインです。
-
-デモ（作成中）
+会話表示中にLive2d(cubism4.0)でキャラクターを表示させるプラグインです。
 
 ## 準備
 １．Cubism SDK for Webをダウンロードする<br>
