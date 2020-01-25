@@ -1,27 +1,27 @@
 # plugins_talk_live2d_cubism4
 
-## 概要
-会話表示中にLive2d(cubism4.0)でキャラクターを表示させるプラグインです。
+## Overview
+It is a plug-in that displays characters with Live2d (cubism 4.0) during conversation display.
 
-## 準備
-１．Cubism SDK for Webをダウンロードする<br>
+## Preparation
+１．Download Cubism SDK for Web<br>
 https://www.live2d.com/download/cubism-sdk/<br>
 
-２．フォルダを解凍する<br>
-３．Coreフォルダの"live2dcubismcore.min.js"をツクールMVのpluginsフォルダへ置く<br>
-※live2dcubismcore.min.js→live2dcubismcore_min.jsにリネームしておく<br>
+２．Unzip folder<br>
+３．Put "live2dcubismcore.min.js" in Core folder to plugins folder of Maker MV<br>
+※Rename from live2dcubismcore.min.js to live2dcubismcore_min.js<br>
 
-４．以下のURLから"polyfill.min.js"をダウンロードし、ツクールMVのpluginsフォルダへ置く<br>
+４．Download "polyfill.min.js" from the following URL and place it in the plugins folder of Maker MV<br>
 https://www.jsdelivr.com/package/npm/promise-polyfill?version=8.0.0&path=dist<br>
-※polyfill.min.js→polyfill_min.jsにリネームしておく<br>
+※Rename from polyfill.min.js to polyfill_min.js<br>
 
-５．以下からプラグインをダウンロードする<br>
+５．Download plugin from<br>
 https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
-※clone or Downloadからダウンロードできます。
+※Download for "clone or Download"
 
-６．live2dモデル(cubism3.0)をプロジェクトのフォルダ内に置く<br>
+６．Put live2d model (cubism4.0) in project folder<br>
 
-## ツクールMVでの設定
+## Settings in Maker MV
 １．ツクールMVを起動する<br>
 
 ２．プラグインを上から以下の順番に設定する<br>
