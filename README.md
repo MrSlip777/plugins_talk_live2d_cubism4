@@ -19,7 +19,7 @@ https://www.jsdelivr.com/package/npm/promise-polyfill?version=8.0.0&path=dist<br
 https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 ※clone or Downloadからダウンロードできます。
 
-６．live2dモデル(cubism3.0)をプロジェクトのフォルダ内に置く<br>
+６．live2dモデル(cubism4.0)をプロジェクトのフォルダ内に置く<br>
 
 ## ツクールMVでの設定
 １．ツクールMVを起動する<br>
