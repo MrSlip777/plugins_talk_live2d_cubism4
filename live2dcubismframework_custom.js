@@ -11670,7 +11670,6 @@ var LAppModel = /** @class */ (function (_super) {
         // ex) idle_0
         var name = CubismString.getFormatedString("{0}_{1}", group, no);
         var motion = this._motions.getValue(name);
-        motion._motionData.loop = false;//ループしない設定へ変更　slip デバッグ用 2020/01/19
         var autoDelete = false;
         if (motion == null) {
             var path_5 = fileName;
@@ -11713,14 +11712,14 @@ var LAppModel = /** @class */ (function (_super) {
         return this.startMotion(group, no, priority);
     };
     //モーションを変更する
-    LAppModel.prototype.changeMotion = function (group, no, priority) {
+    LAppModel.prototype.changeMotion = function (group, no, loop) {
         this._motionManager.stopAllMotions();
         this._updating = false;
         this._initialized = true; 
         var name = CubismString.getFormatedString("{0}_{1}", group, no);
         var motion = this._motions.getValue(name);
-        motion._motionData.loop = false;//ループしない設定へ変更　slip デバッグ用 2020/01/19 
-        this._motionManager.startMotionPriority(motion, false, priority);     
+        motion.setIsLoop(loop);//ループ設定
+        this._motionManager.startMotionPriority(motion, false, 1);     
     };
 
     /**
@@ -12070,7 +12069,7 @@ var LAppLive2DManager = /** @class */ (function () {
 
         for(var model_no = 1; model_no<=$gameLive2d.MAXNUMBER; model_no++){
             var modelPath = $gameLive2d._folder[model_no];
-            var modelJsonName = $gameLive2d._motion[model_no][0];
+            var modelJsonName = $gameLive2d._model[model_no] + ".model3.json";
             this._models.pushBack(new LAppModel());
             if(modelPath != "" && modelJsonName != ""){
                 this._models.at(model_no-1).loadAssets(modelPath, modelJsonName);

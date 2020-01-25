@@ -20,7 +20,7 @@
 *
 * @param setting
 * @type note
-* @default ※ここの欄はメモとして使用してください
+* @default 'memo'
 *
 * @param vertical
 * @type number
@@ -54,18 +54,6 @@
 * @max 816
 * @parent setting
 *
-* @param scale_V
-* @type string
-* @desc 縦の表示倍率
-* @default 1.0
-* @parent setting
-*
-* @param scale_H
-* @type string
-* @desc 横の表示倍率
-* @default 1.0
-* @parent setting
-*
 * @param folder_1
 * @type string
 * @desc live2Dモデルのフォルダパス
@@ -73,27 +61,16 @@
 *
 * @param name_1
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_1
 *
-* @param moc3_1
+* @param model_1
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_1
 *
-* @param texture_1
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_1
-*
-* @param model3_1
-* @type string[]
-* @default []
-* @parent moc3_1
-* @desc model3のファイルパス
 *
 * @param folder_2
 * @type string
@@ -102,27 +79,16 @@
 *
 * @param name_2
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default
 * @parent folder_2
 *
-* @param moc3_2
+* @param model_2
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_2
 *
-* @param texture_2
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_2
-*
-* @param model3_2
-* @type string[]
-* @default []
-* @parent moc3_2
-* @desc model3のファイルパス
 *
 * @param folder_3
 * @type string
@@ -131,27 +97,16 @@
 *
 * @param name_3
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_3
 *
-* @param moc3_3
+* @param model_3
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_3
 *
-* @param texture_3
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_3
-*
-* @param model3_3
-* @type string[]
-* @default []
-* @parent moc3_3
-* @desc model3のファイルパス
 *
 * @param folder_4
 * @type string
@@ -160,27 +115,16 @@
 *
 * @param name_4
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_4
 *
-* @param moc3_4
+* @param model_4
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_4
 *
-* @param texture_4
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_4
-*
-* @param model3_4
-* @type string[]
-* @default []
-* @parent moc3_4
-* @desc model3のファイルパス
 *
 * @param folder_5
 * @type string
@@ -189,27 +133,16 @@
 *
 * @param name_5
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_5
 *
-* @param moc3_5
+* @param model_5
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_5
 *
-* @param texture_5
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_5
-*
-* @param model3_5
-* @type string[]
-* @default []
-* @parent moc3_5
-* @desc model3のファイルパス
 *
 * @param folder_6
 * @type string
@@ -218,27 +151,16 @@
 *
 * @param name_6
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_6
 *
-* @param moc3_6
+* @param model_6
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_6
 *
-* @param texture_6
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_6
-*
-* @param model3_6
-* @type string[]
-* @default []
-* @parent moc3_6
-* @desc model3のファイルパス
 *
 * @param folder_7
 * @type string
@@ -247,27 +169,16 @@
 *
 * @param name_7
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_7
 *
-* @param moc3_7
+* @param model_7
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_7
 *
-* @param texture_7
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_7
-*
-* @param model3_7
-* @type string[]
-* @default []
-* @parent moc3_7
-* @desc model3のファイルパス
 *
 * @param folder_8
 * @type string
@@ -276,27 +187,16 @@
 *
 * @param name_8
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_8
 *
-* @param moc3_8
+* @param model_8
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_8
 *
-* @param texture_8
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_8
-*
-* @param model3_8
-* @type string[]
-* @default []
-* @parent moc3_8
-* @desc model3のファイルパス
 *
 * @param folder_9
 * @type string
@@ -305,27 +205,16 @@
 *
 * @param name_9
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_9
 *
-* @param moc3_9
+* @param model_9
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_9
 *
-* @param texture_9
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_9
-*
-* @param model3_9
-* @type string[]
-* @default []
-* @parent moc3_9
-* @desc model3のファイルパス
 *
 * @param folder_10
 * @type string
@@ -334,27 +223,16 @@
 *
 * @param name_10
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_10
 *
-* @param moc3_10
+* @param model_10
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_10
 *
-* @param texture_10
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_10
-*
-* @param model3_10
-* @type string[]
-* @default []
-* @parent moc3_10
-* @desc model3のファイルパス
 *
 * @param folder_11
 * @type string
@@ -363,27 +241,16 @@
 *
 * @param name_11
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_11
 *
-* @param moc3_11
+* @param model_11
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_11
 *
-* @param texture_11
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_11
-*
-* @param model3_11
-* @type string[]
-* @default []
-* @parent moc3_11
-* @desc model3のファイルパス
 *
 * @param folder_12
 * @type string
@@ -392,27 +259,16 @@
 *
 * @param name_12
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_12
 *
-* @param moc3_12
+* @param model_12
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_12
 *
-* @param texture_12
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_12
-*
-* @param model3_12
-* @type string[]
-* @default []
-* @parent moc3_12
-* @desc model3のファイルパス
 *
 * @param folder_13
 * @type string
@@ -421,27 +277,16 @@
 *
 * @param name_13
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_13
 *
-* @param moc3_13
+* @param model_13
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_13
 *
-* @param texture_13
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_13
-*
-* @param model3_13
-* @type string[]
-* @default []
-* @parent moc3_13
-* @desc model3のファイルパス
 *
 * @param folder_14
 * @type string
@@ -450,27 +295,16 @@
 *
 * @param name_14
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_14
 *
-* @param moc3_14
+* @param model_14
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_14
 *
-* @param texture_14
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_14
-*
-* @param model3_14
-* @type string[]
-* @default []
-* @parent moc3_14
-* @desc model3のファイルパス
 *
 * @param folder_15
 * @type string
@@ -479,26 +313,17 @@
 *
 * @param name_15
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_15
 *
-* @param moc3_15
+* @param model_15
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_15
 *
-* @param texture_15
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_15
 *
-* @param model3_15
-* @type string[]
-* @default []
-* @parent moc3_15
 * @desc model3のファイルパス
 * @param folder_16
 * @type string
@@ -507,27 +332,16 @@
 *
 * @param name_16
 * @type string
-* @desc モデルの名前
+* @desc モデルの名前(呼び出し名称)
 * @default 
 * @parent folder_16
 *
-* @param moc3_16
+* @param model_16
 * @type string
-* @desc moc3のファイルパス
+* @desc model3.jsonの名前
 * @default 
 * @parent folder_16
 *
-* @param texture_16
-* @type string
-* @desc textureのファイルパス
-* @default 
-* @parent moc3_16
-*
-* @param model3_16
-* @type string[]
-* @default []
-* @parent moc3_16
-* @desc model3のファイルパス
 *
 * @help
 * live2d立ち絵表示プラグイン　ver1.0.0
@@ -535,29 +349,8 @@
 * live2d(cubism4.0)のモデルを会話中に立ち絵表示するプラグインです。
 *
 * 使い方：
-* 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。
-*
-* ■ 表示
-* 　TalkLive2d モデル名 表示
-* 　例）TalkLive2d コハル 表示
-*
-* ■ 消去
-* 　TalkLive2d モデル名 消去
-* 　例）TalkLive2d コハル 消去
-*
-* ■ モーション
-* 　TalkLive2d モデル名 モーション モーション名
-*　※モーション名・・・〇〇.model3.jsonの〇〇部分
-* 　例）TalkLive2d コハル Koharu
-*
-* ■ 位置変更
-* 　TalkLive2d モデル名 右（または、中央、左）
-* 　例）TalkLive2d コハル 左
-*
-* ■ 倍率変更
-* 　TalkLive2d モデル名 倍率変更 数値
-* 　例）TalkLive2d コハル 倍率変更 4.0
-* 
+* ↓こちらに記載しています。
+* https://github.com/MrSlip777/plugins_talk_live2d_cubism4/blob/master/README.md
 */
 
 //Game_Live2dの追加
@@ -574,10 +367,8 @@ Game_Live2d.prototype.initialize = function() {
 
     //エディタ(プラグインの設定)から取得する設定値
     this._folder = {};
-    this._moc = {};
-    this._texture = {};
     this._name = {};
-    this._motion = {};
+    this._model = {};
     this._pos_left = Number(parameters['left']);
     this._pos_middle = Number(parameters['middle']);
     this._pos_right = Number(parameters['right']);
@@ -594,15 +385,8 @@ Game_Live2d.prototype.initialize = function() {
 
     for(var i = 1; i<=this.MAXNUMBER; i++){
         this._folder[i] = String(parameters['folder_'+i]);
-        this._moc[i] = String(parameters['moc3_'+i]);
-        this._texture[i] = String(parameters['texture_'+i]);
         this._name[i] = String(parameters['name_'+i]);        
-        
-        var str = parameters['model3_'+i].replace('[','');
-        str = str.replace(']','');
-        str = str.replace(/"/g,'');
-        this._motion[i] = str.split(',');
-
+        this._model[i] = String(parameters['model_'+i]);
         this.visible[i] = false;
         this.scale[i] = 1.0;
     }
@@ -1014,7 +798,7 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
 
 //モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
-    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no, 1);
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no, loop);
 }
 
 //表情設定
