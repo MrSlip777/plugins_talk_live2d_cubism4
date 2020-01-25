@@ -798,7 +798,7 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
 
 //モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
-    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no, loop);
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no-1, loop);
 }
 
 //表情設定

@@ -11718,8 +11718,10 @@ var LAppModel = /** @class */ (function (_super) {
         this._initialized = true; 
         var name = CubismString.getFormatedString("{0}_{1}", group, no);
         var motion = this._motions.getValue(name);
-        motion.setIsLoop(loop);//ループ設定
-        this._motionManager.startMotionPriority(motion, false, 1);     
+        if(motion){
+            motion.setIsLoop(loop);//ループ設定
+            this._motionManager.startMotionPriority(motion, false, 1);
+        }
     };
 
     /**
