@@ -6918,6 +6918,7 @@ var Live2DCubismFramework;
          * デストラクタ相当の処理
          */
         CubismClippingManager_WebGL.prototype.release = function () {
+            this.gl = $gameLive2d.gl;//glは$gamelive2dで管理　Slip 2020/01/26
             for (var i = 0; i < this._clippingContextListForMask.getSize(); i++) {
                 if (this._clippingContextListForMask.at(i)) {
                     this._clippingContextListForMask.at(i).release();
@@ -7862,6 +7863,7 @@ var Live2DCubismFramework;
          * デストラクタ相当の処理
          */
         CubismRenderer_WebGL.prototype.release = function () {
+            this.gl = $gameLive2d.gl;
             this._clippingManager.release();
             this._clippingManager = void 0;
             this._clippingManager = null;
