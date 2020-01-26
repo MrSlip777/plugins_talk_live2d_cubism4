@@ -760,15 +760,23 @@ if (PIXI) {
             case 'left':
             case '左':
                 Live2DManager.prototype.live2dSetPosition_X(model_no,$gameLive2d._pos_left);
+ 
                 break;
             case 'middle':
             case '中央':
                 Live2DManager.prototype.live2dSetPosition_X(model_no,$gameLive2d._pos_middle);
+
                 break;
             case 'right':
             case '右':
                 Live2DManager.prototype.live2dSetPosition_X(model_no,$gameLive2d._pos_right);
+                
                 break;
+            case 'Xposition':
+            case 'X位置':
+                    Live2DManager.prototype.live2dSetPosition_X(model_no,args[2]);
+                    break;
+                                
             case 'scale':
             case '倍率変更':
                 Live2DManager.prototype.live2dSetScale(model_no,args[2]);
@@ -816,6 +824,17 @@ Live2DManager.prototype.live2dExpression = function (model_no,expressionId){
 
 //表示位置変更
 Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
+    var canvas = $gameLive2d.canvas;
+    if(pos_x < 1){
+        pos_x = 1;
+    }
+    else if(pos_x > canvas.width){
+        pos_x = canvas.width;
+    }
+    else{
+        pos_x = pos_x;
+    }
+
     $gameLive2d.pos_x[model_no] = pos_x;
 };
 

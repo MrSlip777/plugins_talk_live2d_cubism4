@@ -1885,7 +1885,7 @@ var Live2DCubismFramework;
         };
         /**
          * モーションの重みの取得
-         * @return モーションの重み
+         * @return モーシ���ンの重み
          */
         CubismMotionQueueEntry.prototype.getStateWeight = function () {
             return this._stateWeight;
@@ -10404,7 +10404,7 @@ var Live2DCubismFramework;
         /**
          * モーションのカーブの種類の取得
          * @param curveIndex カーブのインデックス
-         * @return カーブの種類
+         * @return カ���ブの種類
          */
         CubismMotionJson.prototype.getMotionCurveTarget = function (curveIndex) {
             return this._json.getRoot().getValueByString(Curves).getValueByIndex(curveIndex).getValueByString(Target).getRawString();
@@ -11871,8 +11871,8 @@ var LAppModel = /** @class */ (function (_super) {
         var frameBuffer = $gameLive2d.frameBuffer;//Slip 定義　2020/01/13
         // キャンバスサイズを渡す
         var viewport = [
-            this._pos_x - canvas.width/2,//位置を設定できるように修正　Slip 2020/01/19
-            this._pos_y,//位置を設定できるように修正　Slip 2020/01/19
+            0,//位置を設定できるように修正　Slip 2020/01/19
+            0,//位置を設定できるように修正　Slip 2020/01/19
             canvas.width,
             canvas.height
         ];
@@ -12027,7 +12027,20 @@ var LAppLive2DManager = /** @class */ (function () {
                     if($gameLive2d._IsUpsidedown){
                         direction_Y = -1;
                     }
-                    projection.scale($gameLive2d.scale[i+1],direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
+
+                    //位置計算
+                    var pos_x = 0;
+
+                    if($gameLive2d.pos_x[i+1]){
+                        pos_x = ($gameLive2d.pos_x[i+1] - canvas.width/2)/(canvas.width/2); 
+                    }
+                    else{
+                        pos_x = 0;
+                    }
+
+                    projection.translateX(pos_x);
+                    projection.scale($gameLive2d.scale[i+1]
+                        ,direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
                     model.draw(projection); // 参照渡しなのでprojectionは変質する。
                 }
             }
