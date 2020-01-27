@@ -389,6 +389,10 @@ Game_Live2d.prototype.initialize = function() {
     this.pos_x ={};     //モデルのX位置
     this.pos_y ={};     //モデルのY位置
     this.scale = {};    //スケール
+    this.A = {};
+    this.R = {};
+    this.G = {};
+    this.B = {};
 
     for(var i = 1; i<=this.MAXNUMBER; i++){
         this._folder[i] = String(parameters['folder_'+i]);
@@ -396,6 +400,11 @@ Game_Live2d.prototype.initialize = function() {
         this._model[i] = String(parameters['model_'+i]);
         this.visible[i] = false;
         this.scale[i] = 1.0;
+        this.A[i] = 1.0;
+        this.R[i] = 1.0;
+        this.G[i] = 1.0;
+        this.B[i] = 1.0;
+        
     }
 
     //内部変数
@@ -776,7 +785,10 @@ if (PIXI) {
             case 'X位置':
                     Live2DManager.prototype.live2dSetPosition_X(model_no,args[2]);
                     break;
-                                
+            case 'grayscale':
+            case 'グレースケール':
+                    Live2DManager.prototype.live2dSetGrayscale(model_no,args[2]);
+                    break;
             case 'scale':
             case '倍率変更':
                 Live2DManager.prototype.live2dSetScale(model_no,args[2]);
@@ -821,7 +833,6 @@ Live2DManager.prototype.live2dExpression = function (model_no,expressionId){
     $gameLive2d._lappLive2dManager._models.at(model_no-1).changeExpression(expressionId);
 }
 
-
 //表示位置変更
 Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
     var canvas = $gameLive2d.canvas;
@@ -841,6 +852,14 @@ Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
 //倍率変更
 Live2DManager.prototype.live2dSetScale = function (model_no,scale) {
     $gameLive2d.scale[model_no] = scale;
+};
+
+//グレースケール変更
+Live2DManager.prototype.live2dSetGrayscale = function (model_no,grayscale){
+
+    $gameLive2d.R[model_no] = grayscale;
+    $gameLive2d.G[model_no] = grayscale;
+    $gameLive2d.B[model_no] = grayscale;
 };
 
 Scene_Map.prototype.createlive2d = function(){

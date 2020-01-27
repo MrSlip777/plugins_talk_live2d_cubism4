@@ -6805,6 +6805,8 @@ var Live2DCubismFramework;
          * @return レンダーテクスチャのアドレス
          */
         CubismClippingManager_WebGL.prototype.getMaskRenderTexture = function () {
+            this.gl = $gameLive2d.gl;//glは$gamelive2dで管理　Slip 2020/01/26
+
             var ret = 0;
             // テンポラリのRenderTextureを取得する
             if (this._maskTexture && this._maskTexture.texture != 0) // 前回使ったものを返す
@@ -7355,6 +7357,9 @@ var Live2DCubismFramework;
          * @param invertedMask マスクを反転して使用するフラグ
          */
         CubismShader_WebGL.prototype.setupShaderProgram = function (renderer, textureId, vertexCount, vertexArray, indexArray, uvArray, bufferData, opacity, colorBlendMode, baseColor, isPremultipliedAlpha, matrix4x4, invertedMask) {
+            
+            this.gl = $gameLive2d.gl;//Slip
+            
             if (!isPremultipliedAlpha) {
                 Object(CubismLogError)("NoPremultipliedAlpha is not allowed");
             }
@@ -7480,6 +7485,8 @@ var Live2DCubismFramework;
          * シェーダープログラムを解放する
          */
         CubismShader_WebGL.prototype.releaseShaderProgram = function () {
+            this.gl = $gameLive2d.gl;//Slip
+
             for (var i = 0; i < this._shaderSets.getSize(); i++) {
                 this.gl.deleteProgram(this._shaderSets.at(i).shaderProgram);
                 this._shaderSets.at(i).shaderProgram = 0;
@@ -7493,6 +7500,8 @@ var Live2DCubismFramework;
          * @param fragShaderSrc フラグメントシェーダのソース
          */
         CubismShader_WebGL.prototype.generateShaders = function () {
+            this.gl = $gameLive2d.gl;//Slip
+
             for (var i = 0; i < shaderCount; i++) {
                 this._shaderSets.pushBack(new CubismShaderSet());
             }
@@ -7595,6 +7604,7 @@ var Live2DCubismFramework;
          * @return シェーダプログラムのアドレス
          */
         CubismShader_WebGL.prototype.loadShaderProgram = function (vertexShaderSource, fragmentShaderSource) {
+            this.gl = $gameLive2d.gl;//Slip
             // Create Shader Program
             var shaderProgram = this.gl.createProgram();
             var vertShader = this.compileShaderSource(this.gl.VERTEX_SHADER, vertexShaderSource);
@@ -7640,6 +7650,8 @@ var Live2DCubismFramework;
          * @return コンパイルされたシェーダープログラム
          */
         CubismShader_WebGL.prototype.compileShaderSource = function (shaderType, shaderSource) {
+            this.gl = $gameLive2d.gl;//Slip
+            
             var source = shaderSource;
             var shader = this.gl.createShader(shaderType);
             this.gl.shaderSource(shader, source);
@@ -7863,7 +7875,8 @@ var Live2DCubismFramework;
          * デストラクタ相当の処理
          */
         CubismRenderer_WebGL.prototype.release = function () {
-            this.gl = $gameLive2d.gl;
+            this.gl = $gameLive2d.gl;//Slip
+
             this._clippingManager.release();
             this._clippingManager = void 0;
             this._clippingManager = null;
@@ -7924,6 +7937,8 @@ var Live2DCubismFramework;
          * @param invertedMask マスク使用時のマスクの反転使用
          */
         CubismRenderer_WebGL.prototype.drawMesh = function (textureNo, indexCount, vertexCount, indexArray, vertexArray, uvArray, opacity, colorBlendMode, invertedMask) {
+            this.gl = $gameLive2d.gl; //Slip
+            
             // 裏面描画の有効・無効
             if (this.isCulling()) {
                 this.gl.enable(this.gl.CULL_FACE);
@@ -7982,6 +7997,7 @@ var Live2DCubismFramework;
         CubismRenderer_WebGL.prototype.preDraw = function () {
             //this.glを更新　Slip 2020/01/22
             this.gl = $gameLive2d.gl;
+
             if (this.firstDraw) {
                 this.firstDraw = false;
                 // 拡張機能を有効にする
@@ -11281,9 +11297,11 @@ var LAppModel = /** @class */ (function (_super) {
         _this._motionCount = 0;
         _this._allMotionCount = 0;
 
-        //ツクールMV立ち絵表示用に追加　モデル表示位置 Slip 2020/01/19
-        _this._pos_x = 0;
-        _this._pos_y = 0;
+        //カラー調整用に用意 Slip 2020/01/27
+        _this._a = 1;
+        _this._r = 1;
+        _this._g = 1;
+        _this._b = 1;
         
         return _this;
     }
@@ -11873,13 +11891,14 @@ var LAppModel = /** @class */ (function (_super) {
         var frameBuffer = $gameLive2d.frameBuffer;//Slip 定義　2020/01/13
         // キャンバスサイズを渡す
         var viewport = [
-            0,//位置を設定できるように修正　Slip 2020/01/19
-            0,//位置を設定できるように修正　Slip 2020/01/19
+            0,
+            0,
             canvas.width,
             canvas.height
         ];
    
         this.getRenderer().setRenderState(frameBuffer, viewport);
+        this.getRenderer().setModelColor(this._r,this._g,this._b,this._a);
         this.getRenderer().drawModel();
     };
     /**
@@ -12021,9 +12040,13 @@ var LAppLive2DManager = /** @class */ (function () {
             for (var i = 0; i < modelCount; ++i) {
                 if($gameLive2d.visible[i+1] == true){
                     var model = this.getModel(i);
-                    model._pos_x = $gameLive2d.pos_x[i+1];
+
                     projection = saveProjection.clone();
                     model.update();
+
+                    model._r = $gameLive2d.R[i+1];
+                    model._g = $gameLive2d.G[i+1];
+                    model._b = $gameLive2d.B[i+1];
 
                     var direction_Y = 1;
                     if($gameLive2d._IsUpsidedown){
