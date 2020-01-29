@@ -715,11 +715,20 @@ if (PIXI) {
         Scene_Map_terminate.call(this);
     };
 
+    /*
     const Scene_Map_createWindowLayer=Scene_Map.prototype.createWindowLayer;
     Scene_Map.prototype.createWindowLayer=function(){
-        this.createlive2d();   
+        
         Scene_Map_createWindowLayer.call(this);
+        this.createlive2d();
     };
+*/
+
+    const Scene_Map_start = Scene_Map.prototype.start;
+    Scene_Map.prototype.start = function(){
+        Scene_Map_start.call(this);
+        this.createlive2d();
+    }
 
     // プラグインコマンド
     const Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
