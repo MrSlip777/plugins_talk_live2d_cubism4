@@ -73,7 +73,7 @@
 *
 * @param model_1
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_1
 *
@@ -91,7 +91,7 @@
 *
 * @param model_2
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_2
 *
@@ -109,7 +109,7 @@
 *
 * @param model_3
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_3
 *
@@ -127,7 +127,7 @@
 *
 * @param model_4
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_4
 *
@@ -145,7 +145,7 @@
 *
 * @param model_5
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_5
 *
@@ -163,7 +163,7 @@
 *
 * @param model_6
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_6
 *
@@ -181,7 +181,7 @@
 *
 * @param model_7
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_7
 *
@@ -199,7 +199,7 @@
 *
 * @param model_8
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_8
 *
@@ -217,7 +217,7 @@
 *
 * @param model_9
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_9
 *
@@ -235,7 +235,7 @@
 *
 * @param model_10
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_10
 *
@@ -253,7 +253,7 @@
 *
 * @param model_11
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_11
 *
@@ -271,7 +271,7 @@
 *
 * @param model_12
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_12
 *
@@ -289,7 +289,7 @@
 *
 * @param model_13
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_13
 *
@@ -307,7 +307,7 @@
 *
 * @param model_14
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_14
 *
@@ -325,12 +325,11 @@
 *
 * @param model_15
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_15
 *
 *
-* @desc model3のファイルパス
 * @param folder_16
 * @type string
 * @desc live2Dモデルのフォルダパス
@@ -344,7 +343,7 @@
 *
 * @param model_16
 * @type string
-* @desc model3.jsonの名前
+* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
 * @default 
 * @parent folder_16
 *
@@ -715,15 +714,6 @@ if (PIXI) {
         Scene_Map_terminate.call(this);
     };
 
-    /*
-    const Scene_Map_createWindowLayer=Scene_Map.prototype.createWindowLayer;
-    Scene_Map.prototype.createWindowLayer=function(){
-        
-        Scene_Map_createWindowLayer.call(this);
-        this.createlive2d();
-    };
-*/
-
     const Scene_Map_start = Scene_Map.prototype.start;
     Scene_Map.prototype.start = function(){
         Scene_Map_start.call(this);
@@ -794,6 +784,10 @@ if (PIXI) {
             case 'X位置':
                     Live2DManager.prototype.live2dSetPosition_X(model_no,args[2]);
                     break;
+            case 'Yposition':
+            case 'Y位置':
+                    Live2DManager.prototype.live2dSetPosition_Y(model_no,args[2]);
+                    break;
             case 'grayscale':
             case 'グレースケール':
                     Live2DManager.prototype.live2dSetGrayscale(model_no,args[2]);
@@ -856,6 +850,22 @@ Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
     }
 
     $gameLive2d.pos_x[model_no] = pos_x;
+};
+
+//表示位置変更
+Live2DManager.prototype.live2dSetPosition_Y = function (model_no,pos_y) {
+    var canvas = $gameLive2d.canvas;
+    if(pos_y < 1){
+        pos_y = 1;
+    }
+    else if(pos_y > canvas.height){
+        pos_y = canvas.height;
+    }
+    else{
+        pos_y = pos_y;
+    }
+
+    $gameLive2d.pos_y[model_no] = pos_y;
 };
 
 //倍率変更

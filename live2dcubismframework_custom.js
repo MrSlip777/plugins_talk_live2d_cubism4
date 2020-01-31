@@ -12064,6 +12064,19 @@ var LAppLive2DManager = /** @class */ (function () {
                     }
 
                     projection.translateX(pos_x);
+
+                    //位置計算
+                    var pos_y = 0;
+
+                    if($gameLive2d.pos_y[i+1]){
+                        pos_y = ($gameLive2d.pos_y[i+1] - canvas.height/2)/(canvas.height/2); 
+                    }
+                    else{
+                        pos_y = 0;
+                    }
+
+                    projection.translateY(pos_y);
+
                     projection.scale($gameLive2d.scale[i+1]
                         ,direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
                     model.draw(projection); // 参照渡しなのでprojectionは変質する。
