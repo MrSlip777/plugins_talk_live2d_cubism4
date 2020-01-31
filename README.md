@@ -47,7 +47,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 
 ■ モーション<br>
 　TalkLive2d モデル名 モーション グループ名 番号<br>
-　※グループ名・・・jsonファイル内のMotionsの名称<br>
+　※グループ名・・・model3.jsonファイル内のMotionsの名称<br>
 　例）TalkLive2d コハル Idle 1<br>
 
 ■ モーションのループ設定<br>
