@@ -47,7 +47,7 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
 
 ■ Motion<br>
 　TalkLive2d "Model name" motion "Group name" "Number"<br>
-　※Group name・・・Motions name in json file<br>
+　※Group name・・・Motions name in model3.json file<br>
   ex) TalkLive2d Koharu Idle 1<br>
 
 ■ Motion loop settings<br>
