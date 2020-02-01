@@ -1559,7 +1559,7 @@ var Live2DCubismFramework;
             this._model = this._moc.createModel();
             this._model.saveParameters();
             if ((this._moc == null) || (this._model == null)) {
-                Object(_utils_cubismdebug__WEBPACK_IMPORTED_MODULE_13__["CubismLogError"])("Failed to CreateModel().");
+                Object(CubismLogError)("Failed to CreateModel().");
                 return;
             }
             this._modelMatrix = new CubismModelMatrix(this._model.getCanvasWidth(), this._model.getCanvasHeight());
@@ -11033,7 +11033,9 @@ var LAppTextureManager = /** @class */ (function () {
             // Premult処理を行わせる
             if (usePremultiply) {
                 gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, 1);
+                
             }
+
             // テクスチャにピクセルを書き込む
             gl.texImage2D(gl.TEXTURE_2D, 0,gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
             // ミップマップを生成

@@ -22,11 +22,6 @@
 * @type note
 * @default 'memo'
 *
-* @param upsidedown
-* @type boolean
-* @desc 上下反転スイッチ
-* @default false
-* @parent setting
 *
 * @param vertical
 * @type number
@@ -378,10 +373,7 @@ Game_Live2d.prototype.initialize = function() {
     this._pos_middle = Number(parameters['middle']);
     this._pos_right = Number(parameters['right']);
     this._pos_vertical = Number(parameters['vertical']);
-    this._IsUpsidedown = false;
-    if(String(parameters['upsidedown']) == 'true'){
-        this._IsUpsidedown = true;
-    }
+    this._IsUpsidedown = true;
     
     //コマンド経由の設定値（ここでは初期値を設定する）
     this.visible = {};  //モデルの表示、非表示
@@ -523,7 +515,7 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
         gl.activeTexture(gl.TEXTURE0);
         this.texture
          = PIXI.RenderTexture.create($gameLive2d.canvas.width, $gameLive2d.canvas.height);
-        //this.createShader();
+        this.createShader();
         this.modelReady = true;
         return;
     }
@@ -620,7 +612,7 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
     temp_gl.bindTexture(temp_gl.TEXTURE_2D, texture1);
 
     if (!useVAO) {
-    temp_gl.activeTexture(activeTexture);
+        temp_gl.activeTexture(activeTexture);
     }
     temp_gl.frontFace(frontFace);
 
@@ -676,9 +668,6 @@ Live2DSprite.prototype.initializeCubism = function () {
     // default proj
     var projection = new Csm_CubismMatrix44();
     LAppPal.updateTime();
-
-    //createShaderはそのうち対応する　Slip 2020/01/18
-    //this.createShader();
 };
 
 //argsは配列なので考慮すること slip 2017/03/24
@@ -718,7 +707,7 @@ if (PIXI) {
     Scene_Map.prototype.start = function(){
         Scene_Map_start.call(this);
         this.createlive2d();
-    }
+    };
 
     // プラグインコマンド
     const Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
@@ -782,20 +771,25 @@ if (PIXI) {
                 break;
             case 'Xposition':
             case 'X位置':
-                    Live2DManager.prototype.live2dSetPosition_X(model_no,args[2]);
-                    break;
+                Live2DManager.prototype.live2dSetPosition_X(model_no,args[2]);
+                break;
             case 'Yposition':
             case 'Y位置':
-                    Live2DManager.prototype.live2dSetPosition_Y(model_no,args[2]);
-                    break;
+                Live2DManager.prototype.live2dSetPosition_Y(model_no,args[2]);
+                break;
             case 'grayscale':
             case 'グレースケール':
-                    Live2DManager.prototype.live2dSetGrayscale(model_no,args[2]);
-                    break;
+                Live2DManager.prototype.live2dSetGrayscale(model_no,args[2]);
+                break;
             case 'scale':
             case '倍率変更':
                 Live2DManager.prototype.live2dSetScale(model_no,args[2]);
                 break;
+            case 'upsidedown':
+            case '上下反転':
+                Live2DManager.prototype.live2dSetScale(model_no,args[2]);
+                break;
+                    
             default:
                 break;
             }
@@ -879,6 +873,11 @@ Live2DManager.prototype.live2dSetGrayscale = function (model_no,grayscale){
     $gameLive2d.R[model_no] = grayscale;
     $gameLive2d.G[model_no] = grayscale;
     $gameLive2d.B[model_no] = grayscale;
+};
+
+//上下反転
+Live2DManager.prototype.live2dDisplayDirection = function (flag) {
+    $gameLive2d._IsUpsidedown = flag;
 };
 
 Scene_Map.prototype.createlive2d = function(){
