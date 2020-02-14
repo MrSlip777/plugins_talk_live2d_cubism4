@@ -45,7 +45,17 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　TalkLive2d モデル名 消去<br>
 　例）TalkLive2d コハル 消去<br>
 
-■ モーション<br>
+ ■ モーション<br>
+ 　TalkLive2d モデル名 モーション組名 ループしない<br>
+  ※ループしない・・・記入がない場合ループする設定<br>
+  組の内最後のモーションのループに反映されます。<br>
+  ループしない場合最後のモーションのループ地点到達時に不可視状態になります。<br>
+ 　例）TalkLive2d コハル 基本モーション<br>
+  このコマンド実行時には該当のモデルは自動的に可視状態にします。<br>
+  このコマンドと位置調整を同時に行いたいときは<br>
+  位置の指定を先に行ってください。<br>
+
+■ モーション(内部データ形式)<br>
 　TalkLive2d モデル名 モーション グループ名 番号<br>
 　※グループ名・・・model3.jsonファイル内のMotionsの名称<br>
 　例）TalkLive2d コハル Idle 1<br>
@@ -73,9 +83,31 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　TalkLive2d モデル名 Y位置 数値(1～キャンバス高さ)<br>
 　例）TalkLive2d コハル 100<br>
 
+■ 位置変更（詳細）<br>
+ 　TalkLive2d モデル名 右（または、中央、左）<br>
+ 　例）TalkLive2d コハル 左<br>
+
+   TalkLive2d モデル名 位置 x y duration wait<br>
+   (waitの記入がある時duration分ウェイト)<br>
+   例）TalkLive2d コハル 位置 50 50 10 wait<br>
+   0を超えるdurationを指定した場合かつ<br>
+   ウェイト設定をしていない場合には特に<br>
+   その後のモデル設定などに注意してください。<br>
+   (メニュー開閉などを挟んでも<br>
+    基本的にモデルの移動状態は維持しています。)<br>
+
 ■ 倍率変更<br>
 　TalkLive2d モデル名 倍率変更 数値<br>
 　例）TalkLive2d コハル 倍率変更 4.0<br>
+
+■ パラメータ初期化スキップ
+ 　TalkLive2d モデル名 パラメータ初期化スキップ true
+ 　例）TalkLive2d コハル パラメータ初期化スキップ true
+   戻す時はTalkLive2d コハル パラメータ初期化スキップ false
+   falseの場合は実行した瞬間にパラメータを初期化します。
+   これ以降のこのプラグインによる実装のモデルの
+   パラメータ初期化タイミングは全てスキップします。
+   （このコマンド実行時点からモデルで見た次のタイミングから）
 
 ## デプロイメント<br>
 ・検証中
