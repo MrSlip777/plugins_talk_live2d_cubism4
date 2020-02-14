@@ -77,11 +77,11 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
  
 ■ 位置変更(X)<br>
 　TalkLive2d モデル名 X位置 数値(1～キャンバス幅)<br>
-　例）TalkLive2d コハル 100<br>
+　例）TalkLive2d コハル X位置 100<br>
 
 ■ 位置変更(Y)<br>
 　TalkLive2d モデル名 Y位置 数値(1～キャンバス高さ)<br>
-　例）TalkLive2d コハル 100<br>
+　例）TalkLive2d コハル Y位置 100<br>
 
 ■ 位置変更（詳細）<br>
  　TalkLive2d モデル名 右（または、中央、左）<br>
