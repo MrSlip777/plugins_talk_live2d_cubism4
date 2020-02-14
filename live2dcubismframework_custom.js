@@ -11735,6 +11735,7 @@ var LAppModel = /** @class */ (function (_super) {
     };
     //モーションを変更する
     LAppModel.prototype.changeMotion = function (group, no, loop) {
+
         this._motionManager.stopAllMotions();
         this._updating = false;
         this._initialized = true; 

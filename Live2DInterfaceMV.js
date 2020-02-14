@@ -17,10 +17,16 @@
 /*:
 * @plugindesc ツクールMV上でlive2dを立ち絵表示するプラグイン
 * @author Slip
+
+* @param upsidedown
+* @type boolean
+* @desc 上下反転表示
+* @default false
+*
 *
 * @param setting
 * @type note
-* @default 'memo'
+* @default '※ここの欄は設定に関係ありません。'
 *
 *
 * @param vertical
@@ -55,292 +61,11 @@
 * @max 816
 * @parent setting
 *
-* @param folder_1
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
 *
-* @param name_1
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_1
-*
-* @param model_1
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_1
-*
-*
-* @param folder_2
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_2
-* @type string
-* @desc モデルの名前(呼び出し名称)
+* @param Modelcondition
+* @desc live2dモデル個別設定
 * @default
-* @parent folder_2
-*
-* @param model_2
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_2
-*
-*
-* @param folder_3
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_3
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_3
-*
-* @param model_3
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_3
-*
-*
-* @param folder_4
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_4
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_4
-*
-* @param model_4
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_4
-*
-*
-* @param folder_5
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_5
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_5
-*
-* @param model_5
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_5
-*
-*
-* @param folder_6
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_6
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_6
-*
-* @param model_6
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_6
-*
-*
-* @param folder_7
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_7
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_7
-*
-* @param model_7
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_7
-*
-*
-* @param folder_8
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_8
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_8
-*
-* @param model_8
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_8
-*
-*
-* @param folder_9
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_9
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_9
-*
-* @param model_9
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_9
-*
-*
-* @param folder_10
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_10
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_10
-*
-* @param model_10
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_10
-*
-*
-* @param folder_11
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_11
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_11
-*
-* @param model_11
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_11
-*
-*
-* @param folder_12
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_12
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_12
-*
-* @param model_12
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_12
-*
-*
-* @param folder_13
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_13
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_13
-*
-* @param model_13
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_13
-*
-*
-* @param folder_14
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_14
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_14
-*
-* @param model_14
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_14
-*
-*
-* @param folder_15
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_15
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_15
-*
-* @param model_15
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_15
-*
-*
-* @param folder_16
-* @type string
-* @desc live2Dモデルのフォルダパス
-* @default 
-*
-* @param name_16
-* @type string
-* @desc モデルの名前(呼び出し名称)
-* @default 
-* @parent folder_16
-*
-* @param model_16
-* @type string
-* @desc model3.jsonの名前                                             例) ABCD.model3.jsonの場合、ABCD
-* @default 
-* @parent folder_16
+* @type struct<ModelconditionData>[]
 *
 *
 * @help
@@ -353,17 +78,114 @@
 * https://github.com/MrSlip777/plugins_talk_live2d_cubism4/blob/master/README.md
 */
 
+
+/*~struct~ModelconditionData:
+ * @param Modelname
+ * @desc この設定をするモデルの名前
+ * （ファイル名ではなく任意の一意の文字列です）
+ * @default
+ * 
+ * @param folderpath
+ * @desc このモデルの各設定ファイルの入った
+ * フォルダのパスを指定してください。
+ * @default
+ * 
+ * @param motiongroupnames
+ * @desc モーション組名はファイル名ではなく
+ * 一意である組の名前で指定する必要があります。
+ * @type note
+ * @default "<mot1:コハル, コハルコッハ>\n<mot2:コハルコッハ>"
+ * 
+ * 
+ */
+
+function parseStrToBoolean(str) {
+    // 文字列を判定
+    return (str == 'true') ? true : false;
+
+}
+
+const L2DINstringifyReplacer = function(key, value) {
+    if(value === 'null') return value;
+    try{
+        return JSON.parse(value);
+    }catch(e){
+        return value;
+    }
+};
+
+//設定値がある場合にはそれは配列になる。
+const L2DINextractmeta = function(data) {
+    const req = /<([^<>:]+)(:?)([^>]*)>/g;
+    data.meta = {};
+    for (var i = 0; i < 1000; i++) {
+        var match = req.exec(data.motiongroupnames);
+        if (!!match) {
+            if (match[2] === ':') {
+                data.meta[match[1]] = match[3].split(', ');
+            } else {
+                data.meta[match[1]] = true;
+            }
+        } else {
+            break;
+        }
+    }
+};
+
+const L2DINfindnameindex = function(name) {
+    return L2DINmodels.findIndex(function(data){
+        return data.Modelname === name;
+    });
+};
+
+const L2DINgetmetaarray = function(data, tag) {
+    const meta = data.meta[tag];
+    if(!meta || meta === true){
+        return [];
+    }
+    return meta;
+};
+
+const L2DINPP = PluginManager.parameters('Live2DInterfaceMV');
+
+const L2DINleft = Number(L2DINPP['left']) || 0;
+const L2DINmiddle = Number(L2DINPP['middle']) || 0;
+const L2DINright = Number(L2DINPP['right']) || 0;
+const L2DINvertical = Number(L2DINPP['vertical']) || 0;
+const L2DINscaleX = Number(L2DINPP['scale_V']) / 100;
+const L2DINscaleY = Number(L2DINPP['scale_H']) / 100;
+
+const L2DINincludesave = (L2DINPP['includesave'] === 'true');
+const L2DINuseinbattle = (L2DINPP['useinbattle'] === 'true');
+const L2DINpictpriority = Number(L2DINPP['pictpriority']) || 0;
+//Array型、各要素はobject
+const L2DINmodels = JSON.parse(JSON.stringify(L2DINPP['Modelcondition'], L2DINstringifyReplacer));
+L2DINmodels.forEach(function(Ldata) {
+    L2DINextractmeta(Ldata);
+});
+
+//他仕様定義
+const model3expend = '.model3.json';
+const motion3expend = '.motion3.json';
+const L2DINgrawidth = 816;
+const L2DINgraheight = 640;
+
 //Game_Live2dの追加
 function Game_Live2d() {
     this.initialize.apply(this, arguments);
 }
 
 Game_Live2d.prototype.initialize = function() {
+    this.clear();
+};
+
+//マジックナンバーだと分かりにくいのでパラメータ設定のモデル名をkeyにする。
+Game_Live2d.prototype.clear = function() {
 
     var parameters = PluginManager.parameters('Live2DInterfaceMV');
 
     //モデルの数
-    this.MAXNUMBER = 16;
+    //this.MAXNUMBER = 16;
 
     //エディタ(プラグインの設定)から取得する設定値
     this._folder = {};
@@ -373,30 +195,44 @@ Game_Live2d.prototype.initialize = function() {
     this._pos_middle = Number(parameters['middle']);
     this._pos_right = Number(parameters['right']);
     this._pos_vertical = Number(parameters['vertical']);
-    this._IsUpsidedown = true;
+    this._IsUpsidedown = parseStrToBoolean(parameters['upsidedown']);
     
     //コマンド経由の設定値（ここでは初期値を設定する）
     this.visible = {};  //モデルの表示、非表示
     this.pos_x ={};     //モデルのX位置
     this.pos_y ={};     //モデルのY位置
+    this._targetX ={};     //モデルのX目標位置
+    this._targetY ={};     //モデルのY目標位置
+    this._duration ={};     //移動する時間
+    
     this.scale = {};    //スケール
     this.A = {};
     this.R = {};
     this.G = {};
     this.B = {};
 
-    for(var i = 1; i<=this.MAXNUMBER; i++){
-        this._folder[i] = String(parameters['folder_'+i]);
-        this._name[i] = String(parameters['name_'+i]);        
-        this._model[i] = String(parameters['model_'+i]);
+    this._waitCount = 0;
+
+    var i = 1;
+
+    L2DINmodels.forEach(function(data) {
+        this._folder[i] = data.folderpath;
+        this._name[i] = data.Modelname;
+        var strCopy = data.folderpath.split('/');
+        this._model[i] = strCopy[strCopy.length - 2];
         this.visible[i] = false;
         this.scale[i] = 1.0;
         this.A[i] = 1.0;
         this.R[i] = 1.0;
         this.G[i] = 1.0;
         this.B[i] = 1.0;
-        
-    }
+        this._duration[i] = 0;
+        this.pos_x[i] =this._pos_middle;
+        this.pos_x[i] = 0;
+        i++;
+    }, this);
+
+    this.MAXNUMBER = i-1;
 
     //内部変数
     //Cubism4対応 Slip 2020/01/13
@@ -411,6 +247,52 @@ Game_Live2d.prototype.getTextureManager = function () {
     return this._textureManager;
 };
 
+//各シーンのupdateで呼ぶ
+Game_Live2d.prototype.live2dupdate = function () {
+    L2DINmodels.forEach(function(targetobj) {
+        var model_no = 1;
+        for(var number in $gameLive2d._name){
+            if($gameLive2d._name[number] == targetobj.Modelname){
+                break;
+            }
+            model_no++;
+        }
+
+        var model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
+        if(model !== null){
+            this.live2dupdateMove(model_no);
+        }
+    }, this);
+};
+
+Game_Live2d.prototype.wait = function(dur) {
+    this._waitCount = dur;
+};
+
+//移動する
+Game_Live2d.prototype.live2dupdateMove = function(model_no) {
+    var d = $gameLive2d._duration[model_no];
+    if (d > 0) {   
+        $gameLive2d.pos_x[model_no]
+         = ($gameLive2d.pos_x[model_no] * (d - 1) + $gameLive2d._targetX[model_no]) / d;
+        $gameLive2d.pos_y[model_no]
+         = ($gameLive2d.pos_y[model_no] * (d - 1) + $gameLive2d._targetY[model_no]) / d;
+        $gameLive2d._duration[model_no]--;
+    }
+};
+
+//内部のモーション名
+Game_Live2d.prototype.InnerMotionName = function (name, group){
+    const index = L2DINfindnameindex(name);
+    
+    if(index >= 0){
+        const innerMotionName = L2DINgetmetaarray(L2DINmodels[index], group);
+
+        return (String(innerMotionName)).split('_');
+    }else{
+        return null;
+    }
+};
 
 var $gameLive2d = null;
 
@@ -709,6 +591,21 @@ if (PIXI) {
         this.createlive2d();
     };
 
+    const Scene_Map_update = Scene_Map.prototype.update;
+    Scene_Map.prototype.update = function() {
+        Scene_Map_update.call(this);
+        $gameLive2d.live2dupdate();
+    };
+
+    const  Game_Interpreter_updateWaitCount = Game_Interpreter.prototype.updateWaitCount;
+    Game_Interpreter.prototype.updateWaitCount = function() {
+        if ($gameLive2d._waitCount > 0) {
+            $gameLive2d._waitCount--;
+            return true;
+        }
+        return Game_Interpreter_updateWaitCount.call(this);
+    };
+
     // プラグインコマンド
     const Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
     Game_Interpreter.prototype.pluginCommand = function(command, args) {
@@ -747,7 +644,7 @@ if (PIXI) {
                         loop = false;
                     }
                 }
-
+                $gameLive2d.InnerMotionName(args[0],'mot1');
                 Live2DManager.prototype.live2dMotion(model_no,args[2],args[3],loop);
                 break;
             case 'expression':
@@ -777,6 +674,18 @@ if (PIXI) {
             case 'Y位置':
                 Live2DManager.prototype.live2dSetPosition_Y(model_no,args[2]);
                 break;
+            case 'pos':
+            case '位置':
+                const x = Number(args[2]) || 0;
+                const y = Number(args[3]) || 0;
+                const dur = Number(args[4]) || 0;
+                var wait = false;
+                if(args[5] === 'wait' || args[5] === 'ウェイト'){
+                    wait = true;
+                }
+                Live2DManager.prototype.live2dSetPosition(model_no, x, y, dur, wait);
+            break;
+
             case 'grayscale':
             case 'グレースケール':
                 Live2DManager.prototype.live2dSetGrayscale(model_no,args[2]);
@@ -785,12 +694,34 @@ if (PIXI) {
             case '倍率変更':
                 Live2DManager.prototype.live2dSetScale(model_no,args[2]);
                 break;
+            case 'paraminitskip':
+            case 'パラメータ初期化スキップ':
+                const result = (args[2] === 'true');
+                Live2DManager.prototype.live2dsetparaminitskip(model_no, result);
+                break;
+
             case 'upsidedown':
             case '上下反転':
                 Live2DManager.prototype.live2dSetScale(model_no,args[2]);
                 break;
                     
             default:
+                var loop = true;
+                if(args.lenght <= 3){
+                    loop = true;
+                }
+                else{
+                    if(args[2] == "ループ" || args[2] == "ループする" ||args[2] == "loop"){
+                        loop = true;
+                    }
+                    else if(args[2] == "ループなし" || args[2] == "ループしない" ||args[2] == "noloop"){
+                        loop = false;
+                    }
+                }
+                var innerMotionName = $gameLive2d.InnerMotionName(args[0],args[1]);
+                //var innerMotionName = tempString.split('_');
+
+                Live2DManager.prototype.live2dMotion(model_no,innerMotionName[0],innerMotionName[1],loop);               
                 break;
             }
         }
@@ -823,12 +754,31 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
 //モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
     $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no-1, loop);
+    this.Modelparaminit(model_no);
 }
 
 //表情設定
 Live2DManager.prototype.live2dExpression = function (model_no,expressionId){
     $gameLive2d._lappLive2dManager._models.at(model_no-1).changeExpression(expressionId);
 }
+
+//位置変更（移動可能）
+Live2DManager.prototype.live2dSetPosition = function (model_no, x, y, dur, wait) {
+    const model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
+    if(model !== null){
+        if(dur > 0){
+            $gameLive2d._targetX[model_no] = x;
+            $gameLive2d._targetY[model_no] = y;
+        }else{
+            $gameLive2d.pos_x[model_no] = x;
+            $gameLive2d.pos_y[model_no] = y;
+        }
+        $gameLive2d._duration[model_no] = dur;
+        if(wait){
+            $gameLive2d._waitCount = dur;
+        }
+    }
+};
 
 //表示位置変更
 Live2DManager.prototype.live2dSetPosition_X = function (model_no,pos_x) {
@@ -865,6 +815,27 @@ Live2DManager.prototype.live2dSetPosition_Y = function (model_no,pos_y) {
 //倍率変更
 Live2DManager.prototype.live2dSetScale = function (model_no,scale) {
     $gameLive2d.scale[model_no] = scale;
+};
+
+//初期化スキップ
+Live2DManager.prototype.live2dsetparaminitskip = function (model_no, flag) {
+    const model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
+    if(model !== null){
+        if(flag){
+            model._paraminitskip = true;
+        }else{
+            model._paraminitskip = false;
+            this.Modelparaminit(model_no);
+        }
+    }
+};
+
+//モーション間で使用してないパラメータが異なる場合があるため更新に関わらずパラメータ初期化
+Live2DManager.prototype.Modelparaminit = function (model_no){
+    const model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
+    if(model !== null && !model._paraminitskip){
+        model._model._parameterValues.fill(0);
+    }
 };
 
 //グレースケール変更
