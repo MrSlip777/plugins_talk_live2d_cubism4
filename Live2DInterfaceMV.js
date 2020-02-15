@@ -288,7 +288,7 @@ Game_Live2d.prototype.InnerMotionName = function (name, group){
     if(index >= 0){
         const innerMotionName = L2DINgetmetaarray(L2DINmodels[index], group);
 
-        return (String(innerMotionName)).split('_');
+        return innerMotionName;
     }else{
         return null;
     }
@@ -644,7 +644,6 @@ if (PIXI) {
                         loop = false;
                     }
                 }
-                $gameLive2d.InnerMotionName(args[0],'mot1');
                 Live2DManager.prototype.live2dMotion(model_no,args[2],args[3],loop);
                 break;
             case 'expression':
@@ -719,9 +718,9 @@ if (PIXI) {
                     }
                 }
                 var innerMotionName = $gameLive2d.InnerMotionName(args[0],args[1]);
-                //var innerMotionName = tempString.split('_');
 
-                Live2DManager.prototype.live2dMotion(model_no,innerMotionName[0],innerMotionName[1],loop);               
+                //Live2DManager.prototype.live2dMotion(model_no,innerMotionName[0],innerMotionName[1],loop);
+                Live2DManager.prototype.live2dMotion_Addition(model_no,innerMotionName,loop);
                 break;
             }
         }
@@ -754,6 +753,12 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
 //モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
     $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no-1, loop);
+    this.Modelparaminit(model_no);
+}
+
+//モーション設定(加算)
+Live2DManager.prototype.live2dMotion_Addition = function (model_no,motions,loop){
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion_Addition(motions, loop);
     this.Modelparaminit(model_no);
 }
 

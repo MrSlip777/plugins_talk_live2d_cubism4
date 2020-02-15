@@ -1438,7 +1438,6 @@ var Live2DCubismFramework;
             // 各変数初期化
             this._moc = null;
             this._model = null;
-            this._motionManager = null;
             this._expressionManager = null;
             this._eyeBlink = null;
             this._breath = null;
@@ -1460,8 +1459,13 @@ var Live2DCubismFramework;
             this._debugMode = false;
             this._renderer = null;
             // モーションマネージャーを作成
-            this._motionManager = new CubismMotionManager();
-            this._motionManager.setEventCallback(CubismUserModel.cubismDefaultMotionEventCallback, this);
+            this.MANAGERMAXNUMBER = 4;
+            this._motionManager = {};
+            for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+                this._motionManager[i] = new CubismMotionManager();
+                this._motionManager[i].setEventCallback(CubismUserModel.cubismDefaultMotionEventCallback, this);
+            }
+
             // 表情マネージャーを作成
             this._expressionManager = new CubismMotionManager();
             // ドラッグによるアニメーション
@@ -1711,9 +1715,11 @@ var Live2DCubismFramework;
          * デストラクタに相当する処理
          */
         CubismUserModel.prototype.release = function () {
-            if (this._motionManager != null) {
-                this._motionManager.release();
-                this._motionManager = null;
+            for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+                if (this._motionManager[i] != null) {
+                    this._motionManager[i].release();
+                    this._motionManager[i] = null;
+                }
             }
             if (this._expressionManager != null) {
                 this._expressionManager.release();
@@ -11547,7 +11553,10 @@ var LAppModel = /** @class */ (function (_super) {
             if (motionGroupCount == 0) {
                 _this._state = LoadStep.LoadTexture;
                 // 全てのモーションを停止する
-                _this._motionManager.stopAllMotions();
+                for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+                    _this._motionManager[i].stopAllMotions();
+                }
+
                 _this._updating = false;
                 _this._initialized = true;
                 _this.createRenderer();
@@ -11620,12 +11629,13 @@ var LAppModel = /** @class */ (function (_super) {
         var motionUpdated = false;
         //--------------------------------------------------------------------------
         this._model.loadParameters(); // 前回セーブされた状態をロード
-        if (this._motionManager.isFinished()) {
-            // モーションの再生がない場合、待機モーションの中からランダムで再生する
-            //this.startRandomMotion(LAppDefine.MotionGroupIdle, LAppDefine.PriorityIdle);
-        }
-        else {
-            motionUpdated = this._motionManager.updateMotion(this._model, deltaTimeSeconds); // モーションを更新
+        for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+            if (this._motionManager[i].isFinished()) {
+
+            }
+            else {
+                motionUpdated = this._motionManager[i].updateMotion(this._model, deltaTimeSeconds); // モーションを更新
+            }
         }
         this._model.saveParameters(); // 状態を保存
         //--------------------------------------------------------------------------
@@ -11680,9 +11690,9 @@ var LAppModel = /** @class */ (function (_super) {
     LAppModel.prototype.startMotion = function (group, no, priority) {
         var _this = this;
         if (priority == LAppDefine.PriorityForce) {
-            this._motionManager.setReservePriority(priority);
+            this._motionManager[0].setReservePriority(priority);
         }
-        else if (!this._motionManager.reserveMotion(priority)) {
+        else if (!this._motionManager[0].reserveMotion(priority)) {
             if (this._debugMode) {
                 LAppPal.printLog("[APP]can't start motion.");
             }
@@ -11718,7 +11728,7 @@ var LAppModel = /** @class */ (function (_super) {
         if (this._debugMode) {
             LAppPal.printLog("[APP]start motion: [{0}_{1}", group, no);
         }
-        return this._motionManager.startMotionPriority(motion, autoDelete, priority);
+        return this._motionManager[0].startMotionPriority(motion, autoDelete, priority);
     };
     /**
      * ランダムに選ばれたモーションの再生を開始する。
@@ -11736,16 +11746,42 @@ var LAppModel = /** @class */ (function (_super) {
     //モーションを変更する
     LAppModel.prototype.changeMotion = function (group, no, loop) {
 
-        this._motionManager.stopAllMotions();
+        for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+            this._motionManager[i].stopAllMotions();
+        }
+
         this._updating = false;
         this._initialized = true; 
         var name = CubismString.getFormatedString("{0}_{1}", group, no);
         var motion = this._motions.getValue(name);
         if(motion){
             motion.setIsLoop(loop);//ループ設定
-            this._motionManager.startMotionPriority(motion, false, 1);
+            this._motionManager[0].startMotionPriority(motion, false, 1);
         }
     };
+
+    //加算モーション
+    //モーションを変更する
+    LAppModel.prototype.changeMotion_Addition = function (motionGroup, loop) {
+
+        this._updating = false;
+        this._initialized = true; 
+
+        var name = (String(motionGroup)).split(',');
+        //モーション停止
+        for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+            this._motionManager[i].stopAllMotions();
+        }
+        
+        for(var i=0; i<name.length; i++){
+            var motion = this._motions.getValue(name[i]);
+
+            if(motion){
+                motion.setIsLoop(loop);//ループ設定
+                this._motionManager[i].startMotionPriority(motion, false, 1);
+            }
+        }
+    };    
 
     /**
      * 引数で指定した表情モーションをセットする
@@ -11858,7 +11894,9 @@ var LAppModel = /** @class */ (function (_super) {
 
                     _this._state = LoadStep.LoadTexture;
                     // 全てのモーションを停止する
-                    _this._motionManager.stopAllMotions();
+                    for(i=0; i<this.MANAGERMAXNUMBER; i++){
+                        _this._motionManager[i].stopAllMotions();
+                    }
                     _this._updating = false;
                     _this._initialized = true;
                     _this.createRenderer();
