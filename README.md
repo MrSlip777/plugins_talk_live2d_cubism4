@@ -32,9 +32,9 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 
 ３．live2DInterfaceMVにて、live2Dモデルのフォルダのパスを設定する<br>
 
-※末尾のフォルダ名とmodel3.jsonのファイル名は同じにしてください。
-例）フォルダ名：/assets/koharu/
-    model3.jsonファイル名：koharu.model3.json
+※末尾のフォルダ名とmodel3.jsonのファイル名は同じにしてください。<br>
+例）フォルダ名：/assets/koharu/<br>
+    model3.jsonファイル名：koharu.model3.json<br>
 
 ## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
