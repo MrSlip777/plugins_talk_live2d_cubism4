@@ -30,9 +30,11 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　・live2dcubismframework_custom.js<br>
 　・Live2DInterfaceMV.js<br>
 
-３．live2DInterfaceMVにて、live2Dモデルの各ファイル、フォルダのパスを設定する<br>
+３．live2DInterfaceMVにて、live2Dモデルのフォルダのパスを設定する<br>
 
-※モデルは最大16モデル登録できます。<br>
+※末尾のフォルダ名とmodel3.jsonのファイル名は同じにしてください。
+例）フォルダ名：/assets/koharu/
+    model3.jsonファイル名：koharu.model3.json
 
 ## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
