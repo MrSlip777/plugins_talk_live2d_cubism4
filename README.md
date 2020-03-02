@@ -47,6 +47,12 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　例）TalkLive2d コハル 消去<br>
 
 ### モーション
+ ■事前準備<br>
+ 　motiongroupnamesで設定した文字列(モーション組名)でモーションを開始できます。<br>
+   <モーション組名:グループ名><br>
+   例）<きほん:Idle_1,Idle_7><br>
+  ※グループ名は複数設定できます（最大4）<br>
+  ※グループ名・・・model3.jsonファイル内のMotionsの名称<br>
  ■ モーション<br>
  　TalkLive2d モデル名 モーション組名 ループしない<br>
   ※ループしない・・・記入がない場合ループする設定<br>
