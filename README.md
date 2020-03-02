@@ -37,6 +37,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 ## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
 
+### 表示・非表示
 ■ 表示<br>
 　TalkLive2d モデル名 表示<br>
 　例）TalkLive2d コハル 表示<br>
@@ -45,6 +46,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　TalkLive2d モデル名 消去<br>
 　例）TalkLive2d コハル 消去<br>
 
+### モーション
  ■ モーション<br>
  　TalkLive2d モデル名 モーション組名 ループしない<br>
   ※ループしない・・・記入がない場合ループする設定<br>
@@ -71,6 +73,7 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　TalkLive2d モデル名 表情 番号<br>
 　例）TalkLive2d コハル 表情 1<br>
 
+### 位置変更
 ■ 位置変更<br>
 　TalkLive2d モデル名 右（または、中央、左）<br>
 　例）TalkLive2d コハル 左<br>
