@@ -84,9 +84,9 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 【表情名の補足】<br>
 表情名はmodel3.jsonファイル内で以下のように設定します。<br>
 ○ツクールMVエディタでの設定<br>
-![ツクールMVエディタ](https://user-images.githubusercontent.com/17643697/76080779-08559080-5feb-11ea-8230-ff2a17661c53.png)
+![ツクールMVエディタ](https://user-images.githubusercontent.com/17643697/76080779-08559080-5feb-11ea-8230-ff2a17661c53.png)<br>
 ○model3.jsonでの設定<br>
-![model3.jsonファイル](https://user-images.githubusercontent.com/17643697/76080786-0b508100-5feb-11ea-9e96-95df2c43432f.png)
+![model3.jsonファイル](https://user-images.githubusercontent.com/17643697/76080786-0b508100-5feb-11ea-9e96-95df2c43432f.png)<br>
 
 ### 位置変更
 ■ 位置変更<br>
