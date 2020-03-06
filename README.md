@@ -76,10 +76,15 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 　　TalkLive2d モデル名 モーション グループ名 番号 ループする<br>
 　②ループしない場合<br>
 　　TalkLive2d モデル名 モーション グループ名 番号 ループしない<br>
-
+### 表情
 ■ 表情<br>
-　TalkLive2d モデル名 表情 番号<br>
-　例）TalkLive2d コハル 表情 1<br>
+　TalkLive2d モデル名 表情 表情名<br>
+　例）TalkLive2d コハル 表情 表情名<br>
+
+【表情名の補足】<br>
+表情名はmodel3.jsonファイル内で以下のように設定します。<br>
+https://user-images.githubusercontent.com/17643697/76080779-08559080-5feb-11ea-8230-ff2a17661c53.png
+https://user-images.githubusercontent.com/17643697/76080786-0b508100-5feb-11ea-9e96-95df2c43432f.png
 
 ### 位置変更
 ■ 位置変更<br>
