@@ -37,15 +37,34 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 ## Settings in the event
 The Live2d model can be operated by setting the following plug-in commands.<br>
 
-■ Display<br>
+### Show / Hide
+■ Show<br>
 　TalkLive2d "Model name" show<br>
 　ex) TalkLive2d Koharu show<br>
 
-■ Erase<br>
+■ Hide<br>
 　TalkLive2d "Model name" hide<br>
   ex) TalkLive2d Koharu hide<br>
 
-■ Motion<br>
+### Motion
+■ Preparation <br>
+ Motion can be started with the character string set in motiongroupnames. <br>
+   <Motion group name: Group name> <br>
+   ex) <Basic: Idle_1, Idle_7> <br>
+  * Multiple group names can be set (up to 4) <br>
+  * Group name: Name of Motions in model3.json file <br>
+
+■ Motion <br>
+ TalkLive2d Model name Motion group name Do not loop <br>
+  * Do not loop ... setting to loop if there is no entry <br>
+  This is reflected in the last motion loop in the set. <br>
+  When not looping, it becomes invisible when the loop point of the last motion is reached. <br>
+  ex) TalkLive2d Koharu Basic Motion <br>
+  When this command is executed, the corresponding model is automatically made visible. <br>
+  To perform this command and position adjustment at the same time <br>
+  Please specify the position first. <br>
+
+■ Motion(Internal data format)<br>
 　TalkLive2d "Model name" motion "Group name" "Number"<br>
 　※Group name・・・Motions name in model3.json file<br>
   ex) TalkLive2d Koharu Idle 1<br>
@@ -57,10 +76,19 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
 　②When not to loop<br>
 　　TalkLive2d "Model name" motion "Group name" "Number" noloop<br>
 
+### Expression
 ■ Expression<br>
 　TalkLive2d "Model name" expression "Number"<br>
 　ex) TalkLive2d Koharu expression 1<br>
 
+【Supplementary expression names】<br>
+Set the expression name in the model3.json file as follows.<br>
+○at rpgmakerMV<br>
+![rpgmakerMV](https://user-images.githubusercontent.com/17643697/76080779-08559080-5feb-11ea-8230-ff2a17661c53.png)<br>
+○at model3.json<br>
+![model3.json](https://user-images.githubusercontent.com/17643697/76080786-0b508100-5feb-11ea-9e96-95df2c43432f.png)<br>
+
+### Position
 ■ Position change<br>
 　TalkLive2d "Model name" right（or middle, or left）<br>
 　ex) TalkLive2d Koharu left<br>
