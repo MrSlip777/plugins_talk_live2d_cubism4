@@ -93,9 +93,37 @@ Set the expression name in the model3.json file as follows.<br>
 　TalkLive2d "Model name" right（or middle, or left）<br>
 　ex) TalkLive2d Koharu left<br>
 
+■ Change position (X) <br>
+　TalkLive2d model name X position Numerical value (1 to canvas width) <br>
+　Example: TalkLive2d Koharu X position 100 <br>
+
+■ Change position (Y) <br>
+　TalkLive2d Model name Y position Numerical value (1 to canvas height) <br>
+　Example) TalkLive2d Koharu Y position 100 <br>
+
+■ Change position (details) <br>
+　TalkLive2d model name right (or center, left) <br>
+　Example) TalkLive2d Koharu left <br>
+
+  TalkLive2d Model name Position x y duration wait <br>
+  (Wait for duration when there is a wait) <br>
+  ex) TalkLive2d Koharu position 50 50 10 wait <br>
+  When a duration greater than 0 is specified and <br>
+  Especially if you have not set the weight <br>
+  Please pay attention to the model settings after that. <br>
+  (Even if you open and close the menu <br>
+    Basically, the moving state of the model is maintained. ) <br>
+
+### Others
 ■ Change magnification<br>
 　TalkLive2d "Model name" scale "Number"<br>
 　ex) TalkLive2d Koharu scale 4.0<br>
 
-## Deployment<br>
-・During verification
+■ Skip parameter initialization
+　TalkLive2d model name Skip parameter initialization true <br>
+　ex) TalkLive2d Koharu parameter initialization skip true <br>
+  When returning, TalkLive2d Koharu parameter initialization skip false <br>
+  If false, initialize the parameters at the moment of execution. <br>
+  The model of this plug-in implementation from here on <br>
+  All parameter initialization timings are skipped. <br>
+  (From the next timing seen in the model from the time of execution of this command) <br>
