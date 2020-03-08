@@ -94,11 +94,11 @@ Set the expression name in the model3.json file as follows.<br>
 　ex) TalkLive2d Koharu left<br>
 
 ■ Change position (X) <br>
-　TalkLive2d model name X position Numerical value (1 to canvas width) <br>
+　TalkLive2d "Model name" X position Numerical value (1 to canvas width) <br>
 　Example: TalkLive2d Koharu X position 100 <br>
 
 ■ Change position (Y) <br>
-　TalkLive2d Model name Y position Numerical value (1 to canvas height) <br>
+　TalkLive2d "Model name" Y position Numerical value (1 to canvas height) <br>
 　Example) TalkLive2d Koharu Y position 100 <br>
 
 ■ Change position (details) <br>
@@ -120,9 +120,9 @@ Set the expression name in the model3.json file as follows.<br>
 　ex) TalkLive2d Koharu scale 4.0<br>
 
 ■ Skip parameter initialization
-　TalkLive2d model name Skip parameter initialization true <br>
-　ex) TalkLive2d Koharu parameter initialization skip true <br>
-  When returning, TalkLive2d Koharu parameter initialization skip false <br>
+　TalkLive2d "Model name" paraminitskip true <br>
+　ex) TalkLive2d Koharu paraminitskip true <br>
+  When returning, TalkLive2d Koharu paraminitskip false <br>
   If false, initialize the parameters at the moment of execution. <br>
   The model of this plug-in implementation from here on <br>
   All parameter initialization timings are skipped. <br>
