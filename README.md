@@ -20,6 +20,14 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 ※clone or Downloadからダウンロードできます。
 
 ６．live2dモデル(cubism4.0)をプロジェクトのフォルダ内に置く<br>
+例）プロジェクト名："Project"でモデルのフォルダパスが"assets/koharu/"の場合は<br>
+以下のようになります<br>
+Project/assets/koharu/<br>
+
+７．model3.jsonファイルと、モデルファイル名を一致させておく<br>
+    末尾のフォルダ名とmodel3.jsonのファイル名は同じにしてください。<br>
+    例）フォルダパスが"Project/assets/koharu/"である場合は以下のようになります<br>
+    model3.jsonファイル名：koharu.model3.json<br>
 
 ## ツクールMVでの設定
 １．ツクールMVを起動する<br>
@@ -32,9 +40,8 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 
 ３．live2DInterfaceMVにて、live2Dモデルのフォルダのパスを設定する<br>
 
-※末尾のフォルダ名とmodel3.jsonのファイル名は同じにしてください。<br>
-例）フォルダ名：/assets/koharu/<br>
-    model3.jsonファイル名：koharu.model3.json<br>
+例）フォルダパスが"Project/assets/koharu/"である場合は以下のようになります<br>
+    foldername：./assets/koharu/<br>
 
 ## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
