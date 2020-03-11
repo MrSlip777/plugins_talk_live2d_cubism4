@@ -43,6 +43,11 @@ Project/assets/koharu/<br>
 例）フォルダパスが"Project/assets/koharu/"である場合は以下のようになります<br>
     foldername：./assets/koharu/<br>
 
+４．Modelname,motiongroupnameを適宜設定しておく<br>
+    Modelnameはプラグインコマンド名でモデルを呼び出すときの名前です<br>
+    例）Modelname：コハル<br>
+    motiongroupnameは後述のモーションの章を参考にしてください<br>
+
 ## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
 
