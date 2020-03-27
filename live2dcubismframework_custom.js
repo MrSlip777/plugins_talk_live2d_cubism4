@@ -9870,7 +9870,8 @@ var Live2DCubismFramework;
                     // パラメータごとのフェードを適用
                     v = sourceValue + (value - sourceValue) * paramWeight;
                 }
-                model.setParameterValueByIndex(parameterIndex, v, 1.0);
+                //ウェイト調整（AdjustWeight） slip
+                model.setParameterValueByIndex(parameterIndex, v, AdjustWeight);
             }
             {
                 if (eyeBlinkValue != Number.MAX_VALUE) {
@@ -11777,8 +11778,15 @@ var LAppModel = /** @class */ (function (_super) {
         for(var i=0; i<name.length; i++){
             var motion = this._motions.getValue(name[i]);
 
-            if(motion){
-                motion.setIsLoop(loop);//ループ設定
+            if(motion){                
+                //モーションが複数ある場合は最初のモーションはループしない
+                if(i == 0 && name.length > 1){
+                    motion.setIsLoop(false);//ループ設定
+                }
+                else{
+                    motion.setIsLoop(loop);//ループ設定
+                }
+                
                 this._motionManager[i].startMotionPriority(motion, false, 1);
             }
         }

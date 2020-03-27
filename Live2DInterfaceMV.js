@@ -32,6 +32,11 @@
 * @desc 再生速度
 * @default 8
 *
+* @param AdjustWeight
+* @type number
+* @desc 変形の重み調整パラメータ
+* @default 8
+*
 * @param vertical
 * @type number
 * @desc 縦の表示位置
@@ -173,7 +178,11 @@ const motion3expend = '.motion3.json';
 const L2DINgrawidth = 816;
 const L2DINgraheight = 640;
 
+//再生速度
 const L2DINPlaybackSpeed = Number(L2DINPP['playbackSpeed']) / 10;
+
+//重み調整
+const AdjustWeight = Number(L2DINPP['AdjustWeight']) / 10;
 
 //Game_Live2dの追加
 function Game_Live2d() {
@@ -724,7 +733,6 @@ if (PIXI) {
                 }
                 var innerMotionName = $gameLive2d.InnerMotionName(args[0],args[1]);
 
-                //Live2DManager.prototype.live2dMotion(model_no,innerMotionName[0],innerMotionName[1],loop);
                 Live2DManager.prototype.live2dMotion_Addition(model_no,innerMotionName,loop);
                 break;
             }
