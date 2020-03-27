@@ -17,17 +17,20 @@
 /*:
 * @plugindesc ツクールMV上でlive2dを立ち絵表示するプラグイン
 * @author Slip
-
-* @param upsidedown
-* @type boolean
-* @desc 上下反転表示
-* @default false
-*
 *
 * @param setting
 * @type note
 * @default '※ここの欄は設定に関係ありません。'
 *
+* @param upsidedown
+* @type boolean
+* @desc 上下反転表示
+* @default false
+*
+* @param playbackSpeed
+* @type number
+* @desc 再生速度
+* @default 8
 *
 * @param vertical
 * @type number
@@ -169,6 +172,8 @@ const model3expend = '.model3.json';
 const motion3expend = '.motion3.json';
 const L2DINgrawidth = 816;
 const L2DINgraheight = 640;
+
+const L2DINPlaybackSpeed = Number(L2DINPP['playbackSpeed']) / 10;
 
 //Game_Live2dの追加
 function Game_Live2d() {

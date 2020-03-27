@@ -11620,7 +11620,8 @@ var LAppModel = /** @class */ (function (_super) {
     LAppModel.prototype.update = function () {
         if (this._state != LoadStep.CompleteSetup)
             return;
-        var deltaTimeSeconds = LAppPal.getDeltaTime();
+        //再生速度調整を追加(L2DINPlaybackSpeed)　slip 
+        var deltaTimeSeconds = LAppPal.getDeltaTime() * L2DINPlaybackSpeed;
         this._userTimeSeconds += deltaTimeSeconds;
         this._dragManager.update(deltaTimeSeconds);
         this._dragX = this._dragManager.getX();
