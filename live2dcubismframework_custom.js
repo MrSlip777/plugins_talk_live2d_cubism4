@@ -11808,16 +11808,26 @@ var LAppModel = /** @class */ (function (_super) {
             this._motionManager[i].stopAllMotions();
         }
         
-        //初回のモーション再生
-        var firstMotion = this._motions.getValue(name[0]);
-        if(firstMotion){            
-            firstMotion.setIsLoop(false);//ループ設定    
-            this._motionManager[0].startMotionPriority(firstMotion, false, 2);
-        }        
-
-        this.SecondMotion = this._motions.getValue(name[1]);
-        this.SecondMotionLoop = loop;
-        this._IsExistNextMotion = true;
+        if(name.length > 1){
+            //初回のモーション再生
+            var firstMotion = this._motions.getValue(name[0]);
+            if(firstMotion){            
+                firstMotion.setIsLoop(false);//ループ設定    
+                this._motionManager[0].startMotionPriority(firstMotion, false, 2);
+            }        
+            //2回目のモーション設定
+            this.SecondMotion = this._motions.getValue(name[1]);
+            this.SecondMotionLoop = loop;
+            this._IsExistNextMotion = true;
+        }
+        else{
+            var firstMotion = this._motions.getValue(name[0]);
+            if(firstMotion){            
+                firstMotion.setIsLoop(loop);//ループ設定    
+                this._motionManager[0].startMotionPriority(firstMotion, false, 2);
+            }
+            this._IsExistNextMotion = false;
+        }
     };
 
     //設定したモーションを再生する。SequenceMotionと組になって使用する
