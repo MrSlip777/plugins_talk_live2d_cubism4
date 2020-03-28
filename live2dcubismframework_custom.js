@@ -11347,6 +11347,10 @@ var LAppModel = /** @class */ (function (_super) {
         this._updating = true;
         this._initialized = false;
         this._modelSetting = setting;
+
+        //SequenceMotionでの次回再生モーションの有無フラグ　Slip　2020/03/28
+        this._IsExistNextMotion = false;
+
         var buffer;
         var size;
         // CubismModel
@@ -11633,7 +11637,10 @@ var LAppModel = /** @class */ (function (_super) {
         this._model.loadParameters(); // 前回セーブされた状態をロード
         for(var i=0; i<this.MANAGERMAXNUMBER; i++){
             if (this._motionManager[i].isFinished()) {
-
+                //次に設定したモーションを再生する
+                if(i == 0 && this._IsExistNextMotion == true){
+                    this.StartNextMotion();
+                }
             }
             else {
                 motionUpdated = this._motionManager[i].updateMotion(this._model, deltaTimeSeconds); // モーションを更新
@@ -11769,6 +11776,10 @@ var LAppModel = /** @class */ (function (_super) {
         this._updating = false;
         this._initialized = true; 
 
+        //モーション再生の優先順位
+        var priority = 1;
+
+        //再生対象のモーション
         var name = (String(motionGroup)).split(',');
         //モーション停止
         for(var i=0; i<this.MANAGERMAXNUMBER; i++){
@@ -11778,19 +11789,48 @@ var LAppModel = /** @class */ (function (_super) {
         for(var i=0; i<name.length; i++){
             var motion = this._motions.getValue(name[i]);
 
-            if(motion){                
-                //モーションが複数ある場合は最初のモーションはループしない
-                if(i == 0 && name.length > 1){
-                    motion.setIsLoop(false);//ループ設定
-                }
-                else{
-                    motion.setIsLoop(loop);//ループ設定
-                }
-                
-                this._motionManager[i].startMotionPriority(motion, false, 1);
+            if(motion){            
+                motion.setIsLoop(loop);//ループ設定    
+                this._motionManager[i].startMotionPriority(motion, false, priority);
             }
         }
-    };    
+    };
+
+    LAppModel.prototype.SequenceMotion = function (motionGroup, loop) {
+
+        this._updating = false;
+        this._initialized = true; 
+
+        //再生対象のモーション
+        var name = (String(motionGroup)).split(',');
+        //モーション停止
+        for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+            this._motionManager[i].stopAllMotions();
+        }
+        
+        //初回のモーション再生
+        var firstMotion = this._motions.getValue(name[0]);
+        if(firstMotion){            
+            firstMotion.setIsLoop(false);//ループ設定    
+            this._motionManager[0].startMotionPriority(firstMotion, false, 2);
+        }        
+
+        this.SecondMotion = this._motions.getValue(name[1]);
+        this.SecondMotionLoop = loop;
+        this._IsExistNextMotion = true;
+    };
+
+    //設定したモーションを再生する。SequenceMotionと組になって使用する
+    LAppModel.prototype.StartNextMotion = function () {
+        var motion = this.SecondMotion;
+        var loop = this.SecondMotionLoop;
+
+        if(motion){
+            this.SecondMotion.setIsLoop(loop);//ループ設定    
+            this._motionManager[0].startMotionPriority(motion, false, 2);
+        }
+        this._IsExistNextMotion = false;
+    }
 
     /**
      * 引数で指定した表情モーションをセットする

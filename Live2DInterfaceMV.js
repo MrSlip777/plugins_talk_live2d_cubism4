@@ -771,7 +771,9 @@ Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,
 
 //モーション設定(加算)
 Live2DManager.prototype.live2dMotion_Addition = function (model_no,motions,loop){
-    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion_Addition(motions, loop);
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).SequenceMotion(motions, loop);
+    //SequenceMotion
+    //$gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion_Addition(motions, loop);
     this.Modelparaminit(model_no);
 }
 
