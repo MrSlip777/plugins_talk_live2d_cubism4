@@ -11672,10 +11672,12 @@ var LAppModel = /** @class */ (function (_super) {
         if (this._breath != null) {
             this._breath.updateParameters(this._model, deltaTimeSeconds);
         }
+        
+        //slip 物理演算はしない　2020/03/29
         // 物理演算の設定
-        if (this._physics != null) {
-            this._physics.evaluate(this._model, deltaTimeSeconds);
-        }
+        //if (this._physics != null) {
+        //    this._physics.evaluate(this._model, deltaTimeSeconds);
+        //}
         // リップシンクの設定
         if (this._lipsync) {
             var value = 0; // リアルタイムでリップシンクを行う場合、システムから音量を取得して、0~1の範囲で値を入力します。
