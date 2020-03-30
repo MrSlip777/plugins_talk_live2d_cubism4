@@ -59,7 +59,7 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
   * Do not loop ... setting to loop if there is no entry <br>
   This is reflected in the last motion loop in the set. <br>
   When not looping, it becomes invisible when the loop point of the last motion is reached. <br>
-  ex) TalkLive2d Koharu Basic Motion <br>
+  ex) TalkLive2d Koharu Basic<br>
   When this command is executed, the corresponding model is automatically made visible. <br>
   To perform this command and position adjustment at the same time <br>
   Please specify the position first. <br>
