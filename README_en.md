@@ -52,7 +52,8 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
    <Motion group name: Group name> <br>
    ex) <Basic: Idle_1>
    
-   ex) <Basic: Idle_1, Idle_7> <br>
+   If two sets are set, the motion will play continuously.<br>
+   ex) <Angry: Idle_1, Idle_7> <br>
   * Group name: Name of Motions in model3.json file <br>
 
 ■ Motion <br>
