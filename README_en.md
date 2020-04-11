@@ -51,9 +51,11 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
  Motion can be started with the character string set in motiongroupnames. <br>
    &lt;Motion group name: Group name&gt; <br>
    ex) &lt;Basic: Idle_1&gt;<br>
+at plugin command "TalkLive2d Koharu Basic"<br>
    
    If two sets are set, the motion will play continuously.<br>
    ex) &lt;Angry: Idle_1, Idle_7&gt; <br>
+   at plugin command "TalkLive2d Koharu Angry"<br>
   * Group name: Name of Motions in model3.json file <br>
 
 ■ Motion <br>
