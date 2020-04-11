@@ -18,24 +18,53 @@
 * @plugindesc ツクールMV上でlive2dを立ち絵表示するプラグイン
 * @author Slip
 *
-* @param setting
+* @param ModelPosition
 * @type note
-* @default '※ここの欄は設定に関係ありません。'
+* @default モデル配置
+*
+* @param ModelScaling
+* @type note
+* @default モデルの拡大・縮小
+*
+* @param PlayBack
+* @type note
+* @default モーション再生
+*
+* @param Screen
+* @type note
+* @default 画面
+*
+* @param Scene
+* @type note
+* @default マップ、戦闘画面等のシーン
+*
+* @param SaveData
+* @type note
+* @default セーブデータ
 *
 * @param upsidedown
 * @type boolean
 * @desc 上下反転表示
 * @default false
+* @parent Screen
 *
 * @param playbackSpeed
 * @type number
 * @desc 再生速度
 * @default 8
+* @parent PlayBack
 *
 * @param AdjustWeight
 * @type number
 * @desc 変形の重み調整パラメータ
 * @default 8
+* @parent PlayBack
+*
+* @param ScaleGain
+* @type number
+* @desc 拡大縮小の増加率
+* @default 2
+* @parent ModelScaling
 *
 * @param vertical
 * @type number
@@ -43,7 +72,7 @@
 * @default 320
 * @min 0
 * @max 640
-* @parent setting
+* @parent ModelPosition
 *
 * @param left
 * @type number
@@ -51,7 +80,7 @@
 * @default 100
 * @min 0
 * @max 816
-* @parent setting
+* @parent ModelPosition
 *
 * @param middle
 * @type number
@@ -59,7 +88,7 @@
 * @default 408
 * @min 0
 * @max 816
-* @parent setting
+* @parent ModelPosition
 *
 * @param right
 * @type number
@@ -67,8 +96,30 @@
 * @default 716
 * @min 0
 * @max 816
-* @parent setting
+* @parent ModelPosition
 *
+* @param includesave
+* @desc live2dの表示状況を
+* セーブデータに含める
+* @default true
+* @type boolean
+* @parent SaveData
+*
+* @param useinbattle
+* @desc 戦闘中も読み込み可にする。
+* ピクチャとは異なり戦闘内外は区別しません。
+* @default false
+* @type boolean
+* @parent Scene
+*
+* @param pictpriority
+* @type number
+* @desc このID以下のピクチャよりも手前に
+* live2dのモデルを表示します。（背景ピクチャを考慮）
+* @min 0
+* @max 100
+* @default 10
+* @parent Screen
 *
 * @param Modelcondition
 * @desc live2dモデル個別設定
@@ -184,6 +235,8 @@ const L2DINPlaybackSpeed = Number(L2DINPP['playbackSpeed']) / 10;
 //重み調整
 const AdjustWeight = Number(L2DINPP['AdjustWeight']) / 10;
 
+const ScaleGain = Number(L2DINPP['ScaleGain']);
+
 //Game_Live2dの追加
 function Game_Live2d() {
     this.initialize.apply(this, arguments);
@@ -218,7 +271,14 @@ Game_Live2d.prototype.clear = function() {
     this._targetX ={};     //モデルのX目標位置
     this._targetY ={};     //モデルのY目標位置
     this._duration ={};     //移動する時間
+    this._live2dmodelsaveonly = {}; //セーブ用データ
     
+    //モーション関係のデータ　（セーブデータの保存、読み込み用として必要）
+    this.motionGroup = {};
+    this.motionNumber = {};
+    this.motionLoop = {};
+    this.paraminitskip = {};
+
     this.scale = {};    //スケール
     this.A = {};
     this.R = {};
@@ -226,6 +286,19 @@ Game_Live2d.prototype.clear = function() {
     this.B = {};
 
     this._waitCount = 0;
+
+    this.InitializeModelSetting();
+
+    //内部変数
+    //Cubism4対応 Slip 2020/01/13
+    this._textureManager = new LAppTextureManager();
+    this.gl = null;
+    this.canvas = null;
+    this._lappLive2dManager = null;
+};
+
+//各モデル設定値の初期化
+Game_Live2d.prototype.InitializeModelSetting = function(){
 
     var i = 1;
 
@@ -242,18 +315,93 @@ Game_Live2d.prototype.clear = function() {
         this.B[i] = 1.0;
         this._duration[i] = 0;
         this.pos_x[i] =this._pos_middle;
-        this.pos_x[i] = 0;
+        this.pos_y[i] = 0;
+        this._live2dmodelsaveonly[this._name[i]] = {};
+        this.motionGroup[i] = "Idle";
+        this.motionNumber[i] = 1;
+        this.motionLoop[i] = false;
+        this.paraminitskip[i] = false;
         i++;
     }, this);
 
     this.MAXNUMBER = i-1;
+};
 
-    //内部変数
-    //Cubism4対応 Slip 2020/01/13
-    this._textureManager = new LAppTextureManager();
-    this.gl = null;
-    this.canvas = null;
-    this._lappLive2dManager = null;
+//セーブデータの設定値をモデルに反映
+Game_Live2d.prototype.ReflectSavedataToModels = function(){
+
+    var i = 1;
+    L2DINmodels.forEach(function(data) {
+        var saveobj = this._live2dmodelsaveonly[data.Modelname]
+        if(saveobj.vis){
+            this.visible[i] = saveobj.vis;
+            this.scale[i] = saveobj.scx;
+            this.pos_x[i] = saveobj.px;
+            this.pos_y[i] = saveobj.py;
+            $gameLive2d._lappLive2dManager._models.at(i-1).motionGroup_Default
+             = saveobj.motionGroup;
+             $gameLive2d._lappLive2dManager._models.at(i-1).motionNumber_Default
+             = saveobj.motionNumber;
+             $gameLive2d._lappLive2dManager._models.at(i-1).motionLoop_Default
+             = saveobj.motionLoop;
+             $gameLive2d._lappLive2dManager._models.at(i-1).paraminitskip_Default
+             = saveobj.paraminitskip;
+        }
+        i++;
+    }, this);
+
+};
+
+//ニューゲームの時に前回セーブしたときの影響が残らないように
+Game_Live2d.prototype.newgamefix = function() {
+    L2DINmodels.forEach(function(data) {
+        var name = data.Modelname;
+        var saveobj = this._live2dmodelsaveonly[name];
+        if(saveobj){
+            saveobj.isneedrestore = false;
+        }
+    }, this);
+
+    this.InitializeModelSetting();
+};
+
+//モデルの全ての情報をセーブするわけではないことに注意。
+Game_Live2d.prototype.Createsavemodel = function() {
+
+    var i = 1;
+
+    L2DINmodels.forEach(function(data) {
+        var name = data.Modelname;
+        var saveobj = this._live2dmodelsaveonly[name];
+
+        saveobj.isneedrestore = true;
+        saveobj.px = $gameLive2d.pos_x[i];
+        saveobj.py = $gameLive2d.pos_y[i];
+        saveobj.scx = $gameLive2d.scale[i];
+        saveobj.vis = $gameLive2d.visible[i];
+        saveobj.motionGroup = $gameLive2d.motionGroup[i];
+        saveobj.motionNumber = $gameLive2d.motionNumber[i];
+        saveobj.motionLoop = $gameLive2d.motionLoop[i];
+        saveobj.paraminitskip = $gameLive2d.paraminitskip[i];
+        i++;
+
+    }, this);
+    return this._live2dmodelsaveonly;
+};
+
+//loaderより先に実行されることに注意。
+Game_Live2d.prototype.Restoresavemodel = function(saveobj) {
+    this._live2dmodelsaveonly = saveobj;
+};
+
+//各シーンのupdateで呼ぶ
+Game_Live2d.prototype.live2dupdate = function () {
+    L2DINmodels.forEach(function(targetobj) {
+        var model = this._live2dmodel[targetobj.Modelname];
+        if(model !== null){
+            this.live2dupdateMove(model);
+        }
+    }, this);
 };
 
 //Cubism4対応 Slip 2020/01/13
@@ -338,9 +486,9 @@ Live2DSprite.prototype.initialize = function() {
  */
 Live2DSprite.prototype.release = function () {
 
-    // リソースを解放
-    LAppLive2DManager.releaseInstance();
-    $gameLive2d._lappLive2dManager = null;
+    // リソースを解放する　→　開放しないへ変更（ゲーム終了時まで）
+    //LAppLive2DManager.releaseInstance();
+    //$gameLive2d._lappLive2dManager = null;
     // Cubism SDKの解放
     Csm_CubismFramework.dispose();
 };
@@ -489,6 +637,8 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
         LAppPal.updateTime();
         $gameLive2d.gl.flush();
         $gameLive2d._lappLive2dManager.onUpdate();
+
+
     }
     
     if (!useVAO) {
@@ -595,7 +745,7 @@ if (PIXI) {
 
     const Scene_Map_terminate=Scene_Map.prototype.terminate;
     Scene_Map.prototype.terminate =function(){
-        this.live2dSprite.release();
+        this.terminatelive2d();
         Scene_Map_terminate.call(this);
     };
 
@@ -733,7 +883,7 @@ if (PIXI) {
                 }
                 var innerMotionName = $gameLive2d.InnerMotionName(args[0],args[1]);
 
-                Live2DManager.prototype.live2dMotion_Addition(model_no,innerMotionName,loop);
+                Live2DManager.prototype.live2dSequenceMotion(model_no,innerMotionName,loop);
                 break;
             }
         }
@@ -766,15 +916,41 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
 //モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
     $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no-1, loop);
+
+    //セーブデータ保存用
+    $gameLive2d.motionGroup[model_no] = motionGroup;
+    $gameLive2d.motionNumber[model_no] = motion_no;
+    $gameLive2d.motionLoop[model_no] = loop;
+
     this.Modelparaminit(model_no);
 }
 
-//モーション設定(加算)
-Live2DManager.prototype.live2dMotion_Addition = function (model_no,motions,loop){
-    $gameLive2d._lappLive2dManager._models.at(model_no-1).SequenceMotion(motions, loop);
-    //SequenceMotion
-    //$gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion_Addition(motions, loop);
-    this.Modelparaminit(model_no);
+//すべてのモデルの設定されたモーションを再生する（表示されたモーションのみ。セーブデータのロード用）
+Live2DManager.prototype.PlayBackAllModel = function(){
+    
+    for(var i = 1; i<=$gameLive2d.MAXNUMBER; i++){
+        if($gameLive2d.visible[i] == true){
+            this.live2dMotion(i,$gameLive2d.motionGroup[i],$gameLive2d.motionNumber[i],$gameLive2d.motionLoop[i]);
+        }
+    }
+}
+
+//モーション モーションA再生後にモーションBを再生する
+Live2DManager.prototype.live2dSequenceMotion = function (model_no,motions,loop){
+    if($gameLive2d._lappLive2dManager._models.at(model_no-1)){
+        $gameLive2d._lappLive2dManager._models.at(model_no-1).SequenceMotion(motions, loop);
+        var motionNames = (String(motions)).split(',');
+        motionNames.forEach(function(motionName){
+            var data = (String(motionName)).split('_');
+            //セーブデータ保存用
+            $gameLive2d.motionGroup[model_no] = data[0];
+            $gameLive2d.motionNumber[model_no] = Number(data[1]);
+        });
+        //セーブデータ保存用
+        $gameLive2d.motionLoop[model_no] = loop;
+
+        this.Modelparaminit(model_no);
+    }
 }
 
 //表情設定
@@ -847,6 +1023,8 @@ Live2DManager.prototype.live2dsetparaminitskip = function (model_no, flag) {
             model._paraminitskip = false;
             this.Modelparaminit(model_no);
         }
+        //セーブデータ保存用
+        $gameLive2d.paraminitskip[model_no] = model._paraminitskip;
     }
 };
 
@@ -854,7 +1032,9 @@ Live2DManager.prototype.live2dsetparaminitskip = function (model_no, flag) {
 Live2DManager.prototype.Modelparaminit = function (model_no){
     const model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
     if(model !== null && !model._paraminitskip){
-        model._model._parameterValues.fill(0);
+        if(model._model){
+            model._model._parameterValues.fill(0);
+        }
     }
 };
 
@@ -871,12 +1051,92 @@ Live2DManager.prototype.live2dDisplayDirection = function (flag) {
     $gameLive2d._IsUpsidedown = flag;
 };
 
-Scene_Map.prototype.createlive2d = function(){
+//初回モデル読み込みフラグ
+var IsFirstLoad = true;
+
+//---シーン上にlive2dモデル用スプライトを作成する---
+Scene_Base.prototype.createlive2d = function(){
 
     this.live2dSprite = new PIXI.Live2DSprite();
-    SceneManager._scene._spriteset.addChild(this.live2dSprite);
+    //SceneManager._scene._spriteset.addChild(this.live2dSprite);
+    SceneManager._scene._spriteset.addChildlive2d(this.live2dSprite);
     this.live2dSprite.initializeCubism();
-    $gameLive2d._lappLive2dManager.loadModels();
 
+    if(IsFirstLoad == true){
+        $gameLive2d._lappLive2dManager.loadModels();
+        
+        //セーブデータの設定値をモデルに反映
+        $gameLive2d.ReflectSavedataToModels();
+
+        IsFirstLoad = false;
+    }
 };
 
+Spriteset_Base.prototype.addChildlive2d = function(Sprite) {
+    if(L2DINpictpriority >= 100){
+        this.addChild(Sprite);
+    }else{
+        this._pictureContainer.addChildAt(Sprite, L2DINpictpriority);
+    }
+};
+
+Scene_Base.prototype.terminatelive2d = function(){
+    this.live2dSprite.release();
+};
+
+//---Live2dモデルの設定をセーブデータに含める機能---
+if(L2DINincludesave){
+
+    const L2DINmakeSaveContents = DataManager.makeSaveContents;
+    DataManager.makeSaveContents = function() {
+        const contents = L2DINmakeSaveContents.call(this);
+        contents.Live2d = $gameLive2d.Createsavemodel();
+        return contents;
+    };
+    
+    const L2DINextractSaveContents = DataManager.extractSaveContents;
+    DataManager.extractSaveContents = function(contents) {
+        L2DINextractSaveContents.call(this, contents);
+        if(!!contents && !!contents.Live2d){
+            $gameLive2d.Restoresavemodel(contents.Live2d);
+        }
+    };
+
+    const L2DINsetupNewGame = DataManager.setupNewGame;
+    DataManager.setupNewGame = function() {
+        L2DINsetupNewGame.call(this);
+        $gameLive2d.newgamefix();
+    };
+
+}else{
+    console.log("Live2d表示はセーブ・ロードしません。");
+}
+
+//---Live2dモデルの戦闘画面表示機能---
+if(L2DINuseinbattle){
+
+    Scene_Battle.prototype.istickerupd =function(){
+        return true;
+    };
+
+    const Battle_L2DINupdate = Scene_Battle.prototype.update;
+    Scene_Battle.prototype.update = function() {
+        Battle_L2DINupdate.call(this);
+        $gameLive2d.live2dupdate();
+    };
+
+    const Battle_L2DINterminate = Scene_Battle.prototype.terminate;
+    Scene_Battle.prototype.terminate = function() {
+        Battle_L2DINterminate.call(this);
+        this.terminatelive2d();
+    };
+    
+    const Battle_L2DINcreateWindowLayer = Scene_Battle.prototype.createWindowLayer;
+    Scene_Battle.prototype.createWindowLayer = function(){
+        this.createlive2d();
+        Battle_L2DINcreateWindowLayer.call(this);
+    };
+
+}else{
+    console.log("Live2d表示はマップシーンのみです。");
+}

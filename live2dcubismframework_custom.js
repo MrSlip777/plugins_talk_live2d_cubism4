@@ -11311,7 +11311,13 @@ var LAppModel = /** @class */ (function (_super) {
         _this._r = 1;
         _this._g = 1;
         _this._b = 1;
-        
+        //セーブデータのロード後モーション再生開始フラグ　１度でもモーションが実行されるとfalseになる Slip 2020/04/10
+        _this._IsDefaultPlayBack = true;
+        _this.motionGroup_Default = "Idle";
+        _this.motionNumber_Default = 1;
+        _this.motionLoop_Default = false;
+        _this.paraminitskip_Default = false;
+
         return _this;
     }
 
@@ -11641,6 +11647,10 @@ var LAppModel = /** @class */ (function (_super) {
                 if(i == 0 && this._IsExistNextMotion == true){
                     this.StartNextMotion();
                 }
+
+                if(this._IsDefaultPlayBack == true){
+                    this.changeMotion(this.motionGroup_Default,this.motionNumber_Default,this.motionLoop_Default);
+                }
             }
             else {
                 motionUpdated = this._motionManager[i].updateMotion(this._model, deltaTimeSeconds); // モーションを更新
@@ -11762,7 +11772,8 @@ var LAppModel = /** @class */ (function (_super) {
         }
 
         this._updating = false;
-        this._initialized = true; 
+        this._initialized = true;
+        this._IsDefaultPlayBack = false;
         var name = CubismString.getFormatedString("{0}_{1}", group, no);
         var motion = this._motions.getValue(name);
         if(motion){
@@ -11777,7 +11788,7 @@ var LAppModel = /** @class */ (function (_super) {
 
         this._updating = false;
         this._initialized = true; 
-
+        this._IsDefaultPlayBack = false;
         //モーション再生の優先順位
         var priority = 1;
 
@@ -11802,7 +11813,7 @@ var LAppModel = /** @class */ (function (_super) {
 
         this._updating = false;
         this._initialized = true; 
-
+        this._IsDefaultPlayBack = false;
         //再生対象のモーション
         var name = (String(motionGroup)).split(',');
         //モーション停止
@@ -12179,8 +12190,8 @@ var LAppLive2DManager = /** @class */ (function () {
 
                     projection.translateY(pos_y);
 
-                    projection.scale($gameLive2d.scale[i+1]
-                        ,direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height);//Slip 2020/01/24
+                    projection.scale($gameLive2d.scale[i+1]*ScaleGain
+                        ,direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height*ScaleGain);//Slip 2020/01/24
                     model.draw(projection); // 参照渡しなのでprojectionは変質する。
                 }
             }
