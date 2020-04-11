@@ -15,60 +15,78 @@
 */
 
 /*:
-* @plugindesc ツクールMV上でlive2dを立ち絵表示するプラグイン
+* @plugindesc Plug-in that displays live2d on Maker MV
+* ツクールMV上でlive2dを立ち絵表示するプラグイン
 * @author Slip
 *
 * @param ModelPosition
 * @type note
-* @default モデル配置
+* @default Model placement
+* @desc Model placement
+* モデル配置
 *
 * @param ModelScaling
 * @type note
-* @default モデルの拡大・縮小
+* @default Scale model
+* @desc Scale model
+* モデルの拡大・縮小
 *
 * @param PlayBack
 * @type note
-* @default モーション再生
+* @default Motion playback
+* @desc Motion playback
+* モーション再生
 *
 * @param Screen
 * @type note
-* @default 画面
+* @default screen
+* @desc screen
+* 画面
 *
 * @param Scene
 * @type note
-* @default マップ、戦闘画面等のシーン
+* @default Scenes such as maps and battle screens
+* @desc Scenes such as maps and battle screens
+* マップ、戦闘画面等のシーン
 *
 * @param SaveData
 * @type note
-* @default セーブデータ
+* @default Save data
+* @desc Save data
+* セーブデータ
 *
 * @param upsidedown
 * @type boolean
-* @desc 上下反転表示
+* @desc Upside down display
+* 上下反転表示
 * @default false
 * @parent Screen
 *
 * @param playbackSpeed
 * @type number
-* @desc 再生速度
+* @desc Playback speed
+* 再生速度
 * @default 8
 * @parent PlayBack
 *
 * @param AdjustWeight
 * @type number
-* @desc 変形の重み調整パラメータ
+* @desc Deformation weight adjustment parameter
+* 変形の重み調整パラメータ
 * @default 8
 * @parent PlayBack
 *
 * @param ScaleGain
 * @type number
-* @desc 拡大縮小の増加率
+* @desc Scaling growth rate
+* 拡大縮小の増加率
 * @default 2
 * @parent ModelScaling
 *
 * @param vertical
 * @type number
-* @desc 縦の表示位置
+* @desc Vertical display position
+* 縦の表示位置
 * @default 320
 * @min 0
 * @max 640
@@ -76,7 +94,8 @@
 *
 * @param left
 * @type number
-* @desc 横の表示位置（左）
+* @desc Horizontal display position (left)
+* 横の表示位置（左）
 * @default 100
 * @min 0
 * @max 816
@@ -84,7 +103,8 @@
 *
 * @param middle
 * @type number
-* @desc 横の表示位置（中央）
+* @desc Horizontal display position (center)
+* 横の表示位置（中央）
 * @default 408
 * @min 0
 * @max 816
@@ -92,42 +112,54 @@
 *
 * @param right
 * @type number
-* @desc 横の表示位置（右）
+* @desc Horizontal display position (right)
+* 横の表示位置（右）
 * @default 716
 * @min 0
 * @max 816
 * @parent ModelPosition
 *
 * @param includesave
-* @desc live2dの表示状況を
-* セーブデータに含める
+* @desc Include the display status of live2d in save data
+* live2dの表示状況をセーブデータに含める
 * @default true
 * @type boolean
 * @parent SaveData
 *
 * @param useinbattle
-* @desc 戦闘中も読み込み可にする。
-* ピクチャとは異なり戦闘内外は区別しません。
+* @desc Live2d model use flag in battle scene
+* 戦闘画面でのlive2dモデル使用フラグ
 * @default false
 * @type boolean
 * @parent Scene
 *
 * @param pictpriority
 * @type number
-* @desc このID以下のピクチャよりも手前に
-* live2dのモデルを表示します。（背景ピクチャを考慮）
+* @desc The live2d model is displayed before the picture below this ID.
+* このID以下のピクチャよりも手前にlive2dのモデルを表示します。
 * @min 0
 * @max 100
 * @default 10
 * @parent Screen
 *
 * @param Modelcondition
-* @desc live2dモデル個別設定
+* @desc live2d model individual setting
+* live2dモデル個別設定
 * @default
 * @type struct<ModelconditionData>[]
 *
 *
 * @help
+* [English]
+* live2d standing picture display plugin　ver1.0.0
+* 
+* It is a plug-in that displays a live2d (cubism 4.0) model while standing and talking.
+*
+* Usage:
+* ↓ It is described here.
+* https://github.com/MrSlip777/plugins_talk_live2d_cubism4/blob/master/README_en.md
+*
+* [日本語]
 * live2d立ち絵表示プラグイン　ver1.0.0
 * 
 * live2d(cubism4.0)のモデルを会話中に立ち絵表示するプラグインです。
@@ -140,20 +172,20 @@
 
 /*~struct~ModelconditionData:
  * @param Modelname
- * @desc この設定をするモデルの名前
- * （ファイル名ではなく任意の一意の文字列です）
+ * @desc The name of the model used in the plugin command
+ * プラグインコマンドで使用するモデルの名前
  * @default
  * 
  * @param folderpath
- * @desc このモデルの各設定ファイルの入った
- * フォルダのパスを指定してください。
+ * @desc folder path of model3.json file
+ * model3.jsonファイルのフォルダパス
  * @default
  * 
  * @param motiongroupnames
- * @desc モーション組名はファイル名ではなく
- * 一意である組の名前で指定する必要があります。
+ * @desc You can set the name of the motion. 
+ * モーションの名称を設定できます。
  * @type note
- * @default "<mot1:コハル, コハルコッハ>\n<mot2:コハルコッハ>"
+ * @default "<basic:Idle_1,Idle_3>\n<angry:Idle_4>"
  * 
  * 
  */
