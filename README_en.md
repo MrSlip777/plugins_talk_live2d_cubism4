@@ -50,7 +50,7 @@ The Live2d model can be operated by setting the following plug-in commands.<br>
 ■ Preparation <br>
  Motion can be started with the character string set in motiongroupnames. <br>
    <Motion group name: Group name> <br>
-   ex) <Basic: Idle_1>
+   ex) <Basic: Idle_1><br>
    
    If two sets are set, the motion will play continuously.<br>
    ex) <Angry: Idle_1, Idle_7> <br>
