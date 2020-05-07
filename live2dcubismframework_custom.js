@@ -8436,6 +8436,7 @@ var Live2DCubismFramework;
                 deltaTimeSeconds = 0.0;
             }
             var beginIndex = 0;
+
             for (var i = 0; i < this._partGroupCounts.getSize(); i++) {
                 var partGroupCount = this._partGroupCounts.at(i);
                 this.doFade(model, deltaTimeSeconds, beginIndex, partGroupCount);
@@ -11098,6 +11099,7 @@ var LAppTextureManager = /** @class */ (function () {
      */
     LAppTextureManager.prototype.releaseTextureByFilePath = function (fileName) {
         for (var i = 0; i < this._textures.getSize(); i++) {
+            var test = this._textures.at(i).fileName;
             if (this._textures.at(i).fileName == fileName) {
                 this._textures.set(i, null);
                 this._textures.remove(i);
@@ -11318,6 +11320,11 @@ var LAppModel = /** @class */ (function (_super) {
         _this.motionLoop_Default = false;
         _this.paraminitskip_Default = false;
 
+        //衣装変更の設定値
+        _this._IsChangeCloth = true;
+        _this._clothGroup = "Cloth";    //可変だが、文字は固定する
+        _this._clothName = "";         //着替え用のモーション名
+
         return _this;
     }
 
@@ -11372,7 +11379,6 @@ var LAppModel = /** @class */ (function (_super) {
                 _this._state = LoadStep.LoadExpression;
                 // callback
                 loadCubismExpression();
-                //表情は一旦非表示　slip 20200112
             });
             this._state = LoadStep.WaitLoadModel;
         }
@@ -11639,8 +11645,16 @@ var LAppModel = /** @class */ (function (_super) {
         this._dragY = this._dragManager.getY();
         // モーションによるパラメータ更新の有無
         var motionUpdated = false;
+
         //--------------------------------------------------------------------------
         this._model.loadParameters(); // 前回セーブされた状態をロード
+
+        //衣装変更用のモーション　※モーションで衣装変更する
+        if(this._IsChangeCloth == true){
+            this.changeMotionFromName(this._clothName,false);
+            this._IsChangeCloth = false;
+        }
+
         for(var i=0; i<this.MANAGERMAXNUMBER; i++){
             if (this._motionManager[i].isFinished()) {
                 //次に設定したモーションを再生する
@@ -11648,7 +11662,8 @@ var LAppModel = /** @class */ (function (_super) {
                     this.StartNextMotion();
                 }
 
-                if(this._IsDefaultPlayBack == true){
+                //セーブデータのロード直後のモーション
+                if(i == 0 && this._IsDefaultPlayBack == true){
                     this.changeMotion(this.motionGroup_Default,this.motionNumber_Default,this.motionLoop_Default);
                 }
             }
@@ -11878,7 +11893,48 @@ var LAppModel = /** @class */ (function (_super) {
     LAppModel.prototype.changeExpression = function (expressionId) {
         var motion = this._expressions.getValue(expressionId);
         this._expressionManager.startMotionPriority(motion, false, 1);
-    }
+    };
+
+    //衣装変更用のモーションを設定する
+    LAppModel.prototype.setClothMotion = function(cloth_name){
+
+        this._clothGroup = "Cloth";    //可変だが、文字は固定する
+        this._clothName = cloth_name;  //変更可能
+        this._IsChangeCloth = true;
+    };
+
+    //モーション名でモーション変更する（着替え用に使用）
+    LAppModel.prototype.changeMotionFromName = function(name,loop){
+        this._updating = false;
+        this._initialized = true;
+        this._IsDefaultPlayBack = false;
+
+        //モーション停止
+        for(var i=0; i<this.MANAGERMAXNUMBER; i++){
+            this._motionManager[i].stopAllMotions();
+        }        
+
+        var motion = this._motions.getValue(name);
+        if(motion){
+            motion.setIsLoop(loop);//ループ設定 
+            this._motionManager[0].startMotionPriority(motion, false, 1);
+        }
+    };
+
+    /*
+    * パーツの表示、非表示切り替え(検証用　実動作としては使用しない Slip)
+    */
+    LAppModel.prototype.changeParts = function (index){
+
+        for(var i = 0; i<23; i++){
+            if(index != i ){
+                this._model.setPartOpacityByIndex(i, 0);
+            }
+            else{
+                this._model.setPartOpacityByIndex(i, 1);
+            }
+        }
+   };
 
     /**
      * ランダムに選ばれた表情モーションをセットする
@@ -12151,7 +12207,7 @@ var LAppLive2DManager = /** @class */ (function () {
             var saveProjection = projection.clone();
             var modelCount = this._models.getSize();
             for (var i = 0; i < modelCount; ++i) {
-                if($gameLive2d.visible[i+1] == true){
+                //if($gameLive2d.visible[i+1] == true){
                     var model = this.getModel(i);
 
                     projection = saveProjection.clone();
@@ -12192,6 +12248,7 @@ var LAppLive2DManager = /** @class */ (function () {
 
                     projection.scale($gameLive2d.scale[i+1]*ScaleGain
                         ,direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height*ScaleGain);//Slip 2020/01/24
+                if($gameLive2d.visible[i+1] == true){
                     model.draw(projection); // 参照渡しなのでprojectionは変質する。
                 }
             }

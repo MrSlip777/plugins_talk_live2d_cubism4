@@ -55,6 +55,12 @@
 * @desc Save data
 * セーブデータ
 *
+* @param LinkEquipment
+* @type note
+* @default Linked setting with equipment
+* @desc Linked setting with equipment.
+* 装備品との連動設定
+*
 * @param upsidedown
 * @type boolean
 * @desc Upside down display
@@ -142,6 +148,13 @@
 * @default 10
 * @parent Screen
 *
+* @param useLinkEquipment
+* @desc use flag LinkEquipment.
+* 装備品との連動フラグ
+* @default false
+* @type boolean
+* @parent LinkEquipment
+*
 * @param Modelcondition
 * @desc live2d model individual setting
 * live2dモデル個別設定
@@ -187,7 +200,31 @@
  * @type note
  * @default "<basic:Idle_1,Idle_3>\n<angry:Idle_4>"
  * 
+ * @param noWeapon
+ * @desc Motion without weapon.
+ * 武器なし時のモーション
+ * @default
+ *
+ * @param noShield
+ * @desc Motion without shield.
+ * 盾なし時のモーション
+ * @default
  * 
+ * @param noHead
+ * @desc Motion without head armor.
+ * 頭防具なし時のモーション
+ * @default
+ *
+ * @param noBody
+ * @desc Motion without body armor.
+ * 体防具なし時のモーション
+ * @default
+ * 
+ * @param noOrnament
+ * @desc Motion without ornaments.
+ * 装飾品なし時のモーション
+ * @default
+ *  
  */
 
 function parseStrToBoolean(str) {
@@ -248,6 +285,7 @@ const L2DINscaleY = Number(L2DINPP['scale_H']) / 100;
 
 const L2DINincludesave = (L2DINPP['includesave'] === 'true');
 const L2DINuseinbattle = (L2DINPP['useinbattle'] === 'true');
+const L2DINuseLinkEquipment = (L2DINPP['useLinkEquipment'] === 'true');
 const L2DINpictpriority = Number(L2DINPP['pictpriority']) || 0;
 //Array型、各要素はobject
 const L2DINmodels = JSON.parse(JSON.stringify(L2DINPP['Modelcondition'], L2DINstringifyReplacer));
@@ -319,6 +357,9 @@ Game_Live2d.prototype.clear = function() {
 
     this._waitCount = 0;
 
+    //装備品、衣装変更時に使用。装備なし時のモーション
+    this.linkEquip_None = {};
+
     this.InitializeModelSetting();
 
     //内部変数
@@ -353,6 +394,14 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
         this.motionNumber[i] = 1;
         this.motionLoop[i] = false;
         this.paraminitskip[i] = false;
+
+        //装備品、衣装変更時に使用。装備なし時のモーション
+        this.linkEquip_None[i] = {};
+        this.linkEquip_None[i][0] = data.noWeapon;
+        this.linkEquip_None[i][1] = data.noShield;
+        this.linkEquip_None[i][2] = data.noHead;
+        this.linkEquip_None[i][3] = data.noBody;
+        this.linkEquip_None[i][4] = data.noOrnament;
         i++;
     }, this);
 
@@ -807,15 +856,8 @@ if (PIXI) {
     Game_Interpreter.prototype.pluginCommand = function(command, args) {
         Game_Interpreter_pluginCommand.call(this, command, args);
         if (command === 'TalkLive2d') {
-            var gameLive2d_no = 1;
-            for(var number in $gameLive2d._name){
-                if($gameLive2d._name[number] == args[0]){
-                    break;
-                }
-                gameLive2d_no++;
-            }
 
-            var model_no = gameLive2d_no;
+            var model_no = Live2DManager.prototype.getNumberFromName(args[0]);
 
             switch (args[1]) {
             case 'show':
@@ -899,7 +941,10 @@ if (PIXI) {
             case '上下反転':
                 Live2DManager.prototype.live2dSetScale(model_no,args[2]);
                 break;
-                    
+            case '衣装変更':
+            case 'changecloth':
+                Live2DManager.prototype.live2dChangeCloth(model_no,args[2]);
+
             default:
                 var loop = true;
                 if(args.lenght <= 3){
@@ -939,6 +984,19 @@ Live2DManager.prototype.initialize = function() {
     }
 
 }
+
+Live2DManager.prototype.getNumberFromName = function(modelName) {
+
+    var gameLive2d_no = 1;
+    for(var number in $gameLive2d._name){
+        if($gameLive2d._name[number] == modelName){
+            break;
+        }
+        gameLive2d_no++;
+    }
+
+    return gameLive2d_no;
+};
 
 //表示フラグ
 Live2DManager.prototype.live2dVisible = function (model_no,flag) {
@@ -1083,6 +1141,44 @@ Live2DManager.prototype.live2dDisplayDirection = function (flag) {
     $gameLive2d._IsUpsidedown = flag;
 };
 
+//衣装変更
+Live2DManager.prototype.live2dChangeCloth = function (model_no,Id) {
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).setClothMotion(Id);
+    
+};
+
+//装備とモデルの連動
+Live2DManager.prototype.live2dClothLinkEquipment = function(){
+
+    //衣装変更用
+    for(var i = 1; i<$gameActors._data.length; i++){
+        for(var number in $gameLive2d._name){
+            if($gameActors._data[i]._name == $gameLive2d._name[number]){
+                for(var j = 0; j<5; j++){
+                    if($gameLive2d.linkEquip_None[number][j] != ""){
+                        var index = $gameActors._data[i]._equips[3]._itemId;
+                        var cloth_name = null;
+
+                        if($dataArmors[index]){
+                            cloth_name = $dataArmors[index].name;
+                        }
+                        else{
+                            cloth_name = $gameLive2d.linkEquip_None[number][j];
+                        }
+
+                        var innerMotionName = null;
+
+                        innerMotionName = $gameLive2d.InnerMotionName($gameLive2d._name[number],cloth_name);
+                        var modelNo = Live2DManager.prototype.getNumberFromName($gameLive2d._name[number]);
+
+                        $gameLive2d._lappLive2dManager._models.at(modelNo-1).setClothMotion(innerMotionName);
+                    }
+                }
+            }
+        }
+    };
+};
+
 //初回モデル読み込みフラグ
 var IsFirstLoad = true;
 
@@ -1090,7 +1186,7 @@ var IsFirstLoad = true;
 Scene_Base.prototype.createlive2d = function(){
 
     this.live2dSprite = new PIXI.Live2DSprite();
-    //SceneManager._scene._spriteset.addChild(this.live2dSprite);
+    
     SceneManager._scene._spriteset.addChildlive2d(this.live2dSprite);
     this.live2dSprite.initializeCubism();
 
@@ -1101,6 +1197,10 @@ Scene_Base.prototype.createlive2d = function(){
         $gameLive2d.ReflectSavedataToModels();
 
         IsFirstLoad = false;
+    }
+
+    if(L2DINuseLinkEquipment == true){
+        Live2DManager.prototype.live2dClothLinkEquipment();
     }
 };
 
@@ -1172,3 +1272,5 @@ if(L2DINuseinbattle){
 }else{
     console.log("Live2d表示はマップシーンのみです。");
 }
+
+
