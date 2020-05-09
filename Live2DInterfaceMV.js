@@ -199,31 +199,42 @@
  * モーションの名称を設定できます。
  * @type note
  * @default "<basic:Idle_1,Idle_3>\n<angry:Idle_4>"
+ *
+ * @param SettingLinkEquipment
+ * @type note
+ * @default 装備とのモーション連動設定
+ * @desc Linked setting with equipment.
+ * 装備とのモーション連動設定
  * 
  * @param noWeapon
  * @desc Motion without weapon.
  * 武器なし時のモーション
  * @default
+ * @parent SettingLinkEquipment
  *
  * @param noShield
  * @desc Motion without shield.
  * 盾なし時のモーション
  * @default
+ * @parent SettingLinkEquipment
  * 
  * @param noHead
  * @desc Motion without head armor.
  * 頭防具なし時のモーション
  * @default
+ * @parent SettingLinkEquipment
  *
  * @param noBody
  * @desc Motion without body armor.
  * 体防具なし時のモーション
  * @default
+ * @parent SettingLinkEquipment
  * 
  * @param noOrnament
  * @desc Motion without ornaments.
  * 装飾品なし時のモーション
  * @default
+ * @parent SettingLinkEquipment
  *  
  */
 
@@ -1151,12 +1162,12 @@ Live2DManager.prototype.live2dChangeCloth = function (model_no,Id) {
 Live2DManager.prototype.live2dClothLinkEquipment = function(){
 
     //衣装変更用
-    for(var i = 1; i<$gameActors._data.length; i++){
+    for(var i = 0; i<$gameParty._actors.length; i++){
         for(var number in $gameLive2d._name){
-            if($gameActors._data[i]._name == $gameLive2d._name[number]){
-                for(var j = 0; j<5; j++){
+            if($gameParty.members()[i]._name == $gameLive2d._name[number]){
+                for(var j = 0; j<5; j++){//装備スロット
                     if($gameLive2d.linkEquip_None[number][j] != ""){
-                        var index = $gameActors._data[i]._equips[3]._itemId;
+                        var index = $gameParty.members()[i]._equips[j]._itemId;
                         var cloth_name = null;
 
                         if($dataArmors[index]){
@@ -1178,7 +1189,6 @@ Live2DManager.prototype.live2dClothLinkEquipment = function(){
         }
     };
 };
-
 //初回モデル読み込みフラグ
 var IsFirstLoad = true;
 
