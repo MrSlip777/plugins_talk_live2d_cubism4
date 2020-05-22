@@ -338,9 +338,6 @@ Game_Live2d.prototype.clear = function() {
 
     var parameters = PluginManager.parameters('Live2DInterfaceMV');
 
-    //モデルの数
-    //this.MAXNUMBER = 16;
-
     //エディタ(プラグインの設定)から取得する設定値
     this._folder = {};
     this._name = {};
@@ -1201,6 +1198,10 @@ Live2DManager.prototype.live2dClothLinkEquipment = function(){
         }
     };
 };
+
+//モデルロード完了数
+var $LoadCount_Live2DModel = 0;
+
 //初回モデル読み込みフラグ
 var IsFirstLoad = true;
 
@@ -1218,7 +1219,7 @@ Scene_Base.prototype.createlive2d = function(){
         //セーブデータの設定値をモデルに反映
         $gameLive2d.ReflectSavedataToModels();
 
-        //IsFirstLoad　は　LAppModel.prototype.loadAssets　で　false にしている
+        //IsFirstLoad　は　LAppModel.prototype.setupTextures　で　false にしている
     }
 
     if(L2DINuseLinkEquipment == true){

@@ -11347,8 +11347,6 @@ var LAppModel = /** @class */ (function (_super) {
             _this._state = LoadStep.LoadModel;
             // 結果を保存
             _this.setupModel(setting);
-            //初回モデル読み込みフラグ(Live2DInterfaceMV.js)
-            IsFirstLoad = false;
         });
     };
     /**
@@ -11610,6 +11608,15 @@ var LAppModel = /** @class */ (function (_super) {
                     if (_this._textureCount >= textureCount_1) {
                         // ロード完了
                         _this._state = LoadStep.CompleteSetup;
+
+                        //モデルロード完了数（カウントアップする）Live2DInterfaceMV.js
+                        $LoadCount_Live2DModel++;
+                        
+                        if(L2DINmodels.length == $LoadCount_Live2DModel){
+                            //初回モデル読み込みフラグ(Live2DInterfaceMV.js)
+                            IsFirstLoad = false;
+                        }
+
                     }
                 };
                 //gameLive2dから読み込み Slip 2020/01/13
