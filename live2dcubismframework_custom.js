@@ -11347,6 +11347,8 @@ var LAppModel = /** @class */ (function (_super) {
             _this._state = LoadStep.LoadModel;
             // 結果を保存
             _this.setupModel(setting);
+            //初回モデル読み込みフラグ(Live2DInterfaceMV.js)
+            IsFirstLoad = false;
         });
     };
     /**

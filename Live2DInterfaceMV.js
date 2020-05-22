@@ -1218,7 +1218,7 @@ Scene_Base.prototype.createlive2d = function(){
         //セーブデータの設定値をモデルに反映
         $gameLive2d.ReflectSavedataToModels();
 
-        IsFirstLoad = false;
+        //IsFirstLoad　は　LAppModel.prototype.loadAssets　で　false にしている
     }
 
     if(L2DINuseLinkEquipment == true){
