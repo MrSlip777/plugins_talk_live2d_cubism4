@@ -12218,7 +12218,7 @@ var LAppLive2DManager = /** @class */ (function () {
                     model._b = $gameLive2d.B[i+1];
 
                     var direction_Y = 1;
-                    if($gameLive2d._IsUpsidedown){
+                    if($gameLive2d._IsUpsidedown || $gameLive2d.individual_upsidedown[i+1]){
                         direction_Y = -1;
                     }
 

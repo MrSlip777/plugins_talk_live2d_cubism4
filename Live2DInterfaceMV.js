@@ -199,7 +199,13 @@
  * モーションの名称を設定できます。
  * @type note
  * @default "<basic:Idle_1,Idle_3>\n<angry:Idle_4>"
- *
+ 
+ * @param individual_upsidedown
+ * @type boolean
+ * @desc Individual upside down flag
+ * 個々の上下反転フラグ
+ * @default false
+*
  * @param SettingLinkEquipment
  * @type note
  * @default 装備とのモーション連動設定
@@ -368,6 +374,9 @@ Game_Live2d.prototype.clear = function() {
 
     this._waitCount = 0;
 
+    //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
+    this.individual_upsidedown = {};
+
     //装備品、衣装変更時に使用。装備なし時のモーション
     this.linkEquip_None = {};
 
@@ -405,6 +414,9 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
         this.motionNumber[i] = 1;
         this.motionLoop[i] = false;
         this.paraminitskip[i] = false;
+
+        //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
+        this.individual_upsidedown[i] = data.individual_upsidedown;
 
         //装備品、衣装変更時に使用。装備なし時のモーション
         this.linkEquip_None[i] = {};
