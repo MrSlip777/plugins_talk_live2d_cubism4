@@ -1205,6 +1205,9 @@ var $LoadCount_Live2DModel = 0;
 //初回モデル読み込みフラグ
 var IsFirstLoad = true;
 
+//初回モデル読み込みトリガーフラグ
+var IsFirstLoad_Trigger = true;
+
 //---シーン上にlive2dモデル用スプライトを作成する---
 Scene_Base.prototype.createlive2d = function(){
 
@@ -1213,12 +1216,13 @@ Scene_Base.prototype.createlive2d = function(){
     SceneManager._scene._spriteset.addChildlive2d(this.live2dSprite);
     this.live2dSprite.initializeCubism();
 
-    if(IsFirstLoad == true){
+    if(IsFirstLoad == true && IsFirstLoad_Trigger == true){
         $gameLive2d._lappLive2dManager.loadModels();
         
         //セーブデータの設定値をモデルに反映
         $gameLive2d.ReflectSavedataToModels();
-
+        IsFirstLoad_Trigger = false;
+        //IsFirstLoad_Trigger をfalseにする
         //IsFirstLoad　は　LAppModel.prototype.setupTextures　で　false にしている
     }
 
