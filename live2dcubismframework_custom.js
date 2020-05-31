@@ -11844,7 +11844,16 @@ var LAppModel = /** @class */ (function (_super) {
         for(var i=0; i<this.MANAGERMAXNUMBER; i++){
             this._motionManager[i].stopAllMotions();
         }
-        
+
+        var temp_Num = 0;
+
+        name.forEach(_name => {
+            var name_split = (String(_name)).split('_');
+            var num = Number(name_split[1])-1;//実際にあつかうモーションNoは-1されている
+            name[temp_Num] = name_split[0] + "_" + num;
+            temp_Num++;
+        });
+
         if(name.length > 1){
             //初回のモーション再生
             var firstMotion = this._motions.getValue(name[0]);

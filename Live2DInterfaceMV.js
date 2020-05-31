@@ -1054,7 +1054,7 @@ Live2DManager.prototype.live2dSequenceMotion = function (model_no,motions,loop){
             var data = (String(motionName)).split('_');
             //セーブデータ保存用
             $gameLive2d.motionGroup[model_no] = data[0];
-            $gameLive2d.motionNumber[model_no] = Number(data[1]);
+            $gameLive2d.motionNumber[model_no] = Number(data[1])-1;//実際にあつかうモーションNoは-1されている
         });
         //セーブデータ保存用
         $gameLive2d.motionLoop[model_no] = loop;
@@ -1223,7 +1223,7 @@ Scene_Base.prototype.createlive2d = function(){
         $gameLive2d.ReflectSavedataToModels();
         IsFirstLoad_Trigger = false;
         //IsFirstLoad_Trigger をfalseにする
-        //IsFirstLoad　は　LAppModel.prototype.setupTextures　で　false にしている
+        //【注意】IsFirstLoad　は　LAppModel.prototype.setupTextures　で　false にしている
     }
 
     if(L2DINuseLinkEquipment == true){
