@@ -875,7 +875,12 @@ if (PIXI) {
     const Game_Interpreter_pluginCommand = Game_Interpreter.prototype.pluginCommand;
     Game_Interpreter.prototype.pluginCommand = function(command, args) {
         Game_Interpreter_pluginCommand.call(this, command, args);
-        if (command === 'TalkLive2d') {
+
+        var StrForComparison = 'TalkLive2d';
+        StrForComparison = StrForComparison.toLowerCase();
+        command = command.toLowerCase();
+
+        if (command === StrForComparison) {
 
             var model_no = Live2DManager.prototype.getNumberFromName(args[0]);
 
