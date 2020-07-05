@@ -32,8 +32,6 @@ https://github.com/MrSlip777/plugins_talk_live2d_cubism4<br>
 
 ３．Set the path of each file and folder of live2D model in Live2DInterfaceMV<br>
 
-※Up to 16 models can be registered.<br>
-
 ## Settings in the event
 The Live2d model can be operated by setting the following plug-in commands.<br>
 
