@@ -55,6 +55,7 @@ at plugin command "TalkLive2d Koharu Basic"<br>
    ex) &lt;Angry: Idle_1, Idle_7&gt; <br>
    at plugin command "TalkLive2d Koharu Angry"<br>
   * Group name: Name of Motions in model3.json file <br>
+  ![Group name in model3.json](https://user-images.githubusercontent.com/17643697/83342186-1f282c80-a327-11ea-9a8b-4f4e6c0b124d.png)<br>
 
 ■ Motion <br>
  TalkLive2d Model name Motion group name Do not loop <br>
