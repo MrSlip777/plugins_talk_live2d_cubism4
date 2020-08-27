@@ -48,6 +48,15 @@ Project/assets/koharu/<br>
     例）Modelname：コハル<br>
     motiongroupnameは後述のモーションの章を参考にしてください<br>
 
+### プラグイン基本の補足
+■上下反転について<br>
+【全てのモデルを反転する場合】<br>
+全てのモデルを上下反転する場合は"upsidedown"をtrueにしてください。<br>
+<br>
+【モデル別に反転する場合】<br>
+モデル別で上下反転を設定する場合は"upsidedown"をfalse、<br>
+該当するモデルのModelcondition内のindividual_upsidedownをtrueにしてください。<br>
+
 ## イベント内の設定
 以下のプラグインコマンドを設定することで、Live2dモデルを操作できます。<br>
 
