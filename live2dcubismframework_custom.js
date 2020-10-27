@@ -12267,8 +12267,13 @@ var LAppLive2DManager = /** @class */ (function () {
                     projection.scale($gameLive2d.scale[i+1]*ScaleGain
                         ,direction_Y*$gameLive2d.scale[i+1]*canvas.width/canvas.height*ScaleGain);//Slip 2020/01/24
                 if($gameLive2d.visible[i+1] == true){
-                    model.draw(projection); // 参照渡しなのでprojectionは変質する。
+                    model._a = 1.0;
                 }
+                else{
+                    model._a = 0.0;
+                }
+
+                model.draw(projection); // 参照渡しなのでprojectionは変質する。
             }
         }
     };
