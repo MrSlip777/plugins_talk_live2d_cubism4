@@ -68,6 +68,13 @@
 * @default false
 * @parent Screen
 *
+* @param displayOrder
+* @type boolean
+* @desc model stacking order.
+* モデルの重なり順番。
+* @default false
+* @parent Screen
+*
 * @param playbackSpeed
 * @type number
 * @desc Playback speed
@@ -304,6 +311,9 @@ const L2DINincludesave = (L2DINPP['includesave'] === 'true');
 const L2DINuseinbattle = (L2DINPP['useinbattle'] === 'true');
 const L2DINuseLinkEquipment = (L2DINPP['useLinkEquipment'] === 'true');
 const L2DINpictpriority = Number(L2DINPP['pictpriority']) || 0;
+
+const L2DINdisplayOrder = (L2DINPP['displayOrder'] === 'true');
+
 //Array型、各要素はobject
 const L2DINmodels = JSON.parse(JSON.stringify(L2DINPP['Modelcondition'], L2DINstringifyReplacer));
 L2DINmodels.forEach(function(Ldata) {
@@ -392,40 +402,51 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
 
     var i = 1;
 
+    var data_no = L2DINmodels.length;
+
     L2DINmodels.forEach(function(data) {
-        this._folder[i] = data.folderpath;
-        this._name[i] = data.Modelname;
+
+        if(L2DINdisplayOrder){
+            data_no = L2DINmodels.length - i + 1;
+        }
+        else{
+            data_no = i;
+        }
+
+        this._folder[data_no] = data.folderpath;
+        this._name[data_no] = data.Modelname;
         var strCopy = data.folderpath.split('/');
-        this._model[i] = strCopy[strCopy.length - 2];
-        this.visible[i] = false;
-        this.scale[i] = 1.0;
-        this.A[i] = 1.0;
-        this.R[i] = 1.0;
-        this.G[i] = 1.0;
-        this.B[i] = 1.0;
-        this._duration[i] = 0;
-        this.pos_x[i] =this._pos_middle;
-        this.pos_y[i] = 0;
-        this._live2dmodelsaveonly[this._name[i]] = {};
-        this.motionGroup[i] = "Idle";
-        this.motionNumber[i] = 1;
-        this.motionLoop[i] = false;
-        this.paraminitskip[i] = false;
+        this._model[data_no] = strCopy[strCopy.length - 2];
+        this.visible[data_no] = false;
+        this.scale[data_no] = 1.0;
+        this.A[data_no] = 1.0;
+        this.R[data_no] = 1.0;
+        this.G[data_no] = 1.0;
+        this.B[data_no] = 1.0;
+        this._duration[data_no] = 0;
+        this.pos_x[data_no] =this._pos_middle;
+        this.pos_y[data_no] = 0;
+        this._live2dmodelsaveonly[this._name[data_no]] = {};
+        this.motionGroup[data_no] = "Idle";
+        this.motionNumber[data_no] = 1;
+        this.motionLoop[data_no] = false;
+        this.paraminitskip[data_no] = false;
 
         //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
-        this.individual_upsidedown[i] = data.individual_upsidedown;
+        this.individual_upsidedown[data_no] = data.individual_upsidedown;
 
         //装備品、衣装変更時に使用。装備なし時のモーション
-        this.linkEquip_None[i] = {};
-        this.linkEquip_None[i][0] = data.noWeapon;
-        this.linkEquip_None[i][1] = data.noShield;
-        this.linkEquip_None[i][2] = data.noHead;
-        this.linkEquip_None[i][3] = data.noBody;
-        this.linkEquip_None[i][4] = data.noOrnament;
+        this.linkEquip_None[data_no] = {};
+        this.linkEquip_None[data_no][0] = data.noWeapon;
+        this.linkEquip_None[data_no][1] = data.noShield;
+        this.linkEquip_None[data_no][2] = data.noHead;
+        this.linkEquip_None[data_no][3] = data.noBody;
+        this.linkEquip_None[data_no][4] = data.noOrnament;
         i++;
     }, this);
 
-    this.MAXNUMBER = i-1;
+    //this.MAXNUMBER = i-1;
+    this.MAXNUMBER = L2DINmodels.length;
 };
 
 //セーブデータの設定値をモデルに反映
