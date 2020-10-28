@@ -1,9 +1,9 @@
-#Live2DChangeModels.jsの使い方
+# Live2DChangeModels.jsの使い方
 
-##【ツクールMVエディタでの設定】
+## 【ツクールMVエディタでの設定】
 
 1．プラグイン設定画面→ReSettingModelDataにて、置き換え用のモデルを設定する<br>
-##【プラグインコマンド】
+## 【プラグインコマンド】
 1．以下のコマンドでモデルを置換する<br>
 <br>
 Live2DChangeModels モデル置換 置き換えるモデル名 置き換える元のモデル名<br>
