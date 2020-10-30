@@ -6,12 +6,12 @@
 ## 【プラグインコマンド】
 1．以下のコマンドでモデルを置換する<br>
 <br>
-Live2DChangeModels モデル置換 置き換えるモデル名 置き換える元のモデル名<br>
+TalkLive2d_Resetting モデル置換 置き換えるモデル名 置き換える元のモデル名<br>
 <br>
 例)<br>
-Live2DChangeModels モデル置換 AAA BBB<br>
+TalkLive2d_Resetting モデル置換 AAA BBB<br>
 <br>
 
 2．以下のコマンドで設定を反映する<br>
 <br>
-Live2DChangeModels 反映<br>
+TalkLive2d_Resetting 反映<br>

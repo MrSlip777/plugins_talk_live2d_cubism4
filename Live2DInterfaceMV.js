@@ -212,7 +212,7 @@
  * @desc Individual upside down flag
  * 個々の上下反転フラグ
  * @default false
-*
+ *
  * @param SettingLinkEquipment
  * @type note
  * @default 装備とのモーション連動設定
@@ -426,7 +426,6 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
         this._duration[data_no] = 0;
         this.pos_x[data_no] =this._pos_middle;
         this.pos_y[data_no] = 0;
-        this._live2dmodelsaveonly[this._name[data_no]] = {};
         this.motionGroup[data_no] = "Idle";
         this.motionNumber[data_no] = 1;
         this.motionLoop[data_no] = false;
@@ -442,24 +441,47 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
         this.linkEquip_None[data_no][2] = data.noHead;
         this.linkEquip_None[data_no][3] = data.noBody;
         this.linkEquip_None[data_no][4] = data.noOrnament;
+
+        //セーブ用のlve2dデータ保存場所
+        this._live2dmodelsaveonly[data_no] = {};
+
         i++;
     }, this);
 
-    //this.MAXNUMBER = i-1;
     this.MAXNUMBER = L2DINmodels.length;
+};
+
+//セーブデータの設定値をモデルに反映
+Game_Live2d.prototype.ReflectSavedataToReadsetting = function(){
+
+    for(var i = 1; i<=Object.keys($gameLive2d._name).length; i++){
+        var saveobj = this._live2dmodelsaveonly[i];
+
+        if(saveobj.name){
+
+            $gameLive2d._model[i] = saveobj.model;
+            $gameLive2d._name[i] = saveobj.name;
+            $gameLive2d._folder[i] = saveobj.folder;
+            $gameLive2d.individual_upsidedown[i] = saveobj.individual_upsidedown;
+            $gameLive2d.linkEquip_None[i][0] = saveobj.noWeapon;
+            $gameLive2d.linkEquip_None[i][1] = saveobj.noShield;
+            $gameLive2d.linkEquip_None[i][2] = saveobj.noHead;
+            $gameLive2d.linkEquip_None[i][3] = saveobj.noBody;
+            $gameLive2d.linkEquip_None[i][4] = saveobj.noOrnament;
+        }
+    }
 };
 
 //セーブデータの設定値をモデルに反映
 Game_Live2d.prototype.ReflectSavedataToModels = function(){
 
-    var i = 1;
-    L2DINmodels.forEach(function(data) {
-        var saveobj = this._live2dmodelsaveonly[data.Modelname]
-        if(saveobj.vis){
-            this.visible[i] = saveobj.vis;
-            this.scale[i] = saveobj.scx;
-            this.pos_x[i] = saveobj.px;
-            this.pos_y[i] = saveobj.py;
+    for(var i = 1; i<=Object.keys($gameLive2d._name).length; i++){
+        var saveobj = this._live2dmodelsaveonly[i];
+        if(saveobj.name){
+            this.visible[i] = saveobj.visible;
+            this.scale[i] = saveobj.scale;
+            this.pos_x[i] = saveobj.pos_x;
+            this.pos_y[i] = saveobj.pos_y;
             $gameLive2d._lappLive2dManager._models.at(i-1).motionGroup_Default
              = saveobj.motionGroup;
              $gameLive2d._lappLive2dManager._models.at(i-1).motionNumber_Default
@@ -469,20 +491,18 @@ Game_Live2d.prototype.ReflectSavedataToModels = function(){
              $gameLive2d._lappLive2dManager._models.at(i-1).paraminitskip_Default
              = saveobj.paraminitskip;
         }
-        i++;
-    }, this);
-
+    }
 };
 
 //ニューゲームの時に前回セーブしたときの影響が残らないように
 Game_Live2d.prototype.newgamefix = function() {
-    L2DINmodels.forEach(function(data) {
-        var name = data.Modelname;
-        var saveobj = this._live2dmodelsaveonly[name];
-        if(saveobj){
+    for(var i = 1; i<=Object.keys($gameLive2d._name).length; i++){
+    
+        var saveobj = this._live2dmodelsaveonly[i];
+        if(saveobj.Modelname){
             saveobj.isneedrestore = false;
         }
-    }, this);
+    }
 
     this.InitializeModelSetting();
 };
@@ -490,24 +510,34 @@ Game_Live2d.prototype.newgamefix = function() {
 //モデルの全ての情報をセーブするわけではないことに注意。
 Game_Live2d.prototype.Createsavemodel = function() {
 
-    var i = 1;
+    //dataではなくgamelive2dの設定値が現状の値のため、名前ではなく番号で管理する
+    for(var i = 1; i<=Object.keys($gameLive2d._name).length; i++){
+        var saveobj = this._live2dmodelsaveonly[i];
 
-    L2DINmodels.forEach(function(data) {
-        var name = data.Modelname;
-        var saveobj = this._live2dmodelsaveonly[name];
+        //以下はゲーム開始時に設定する変数
+        saveobj.name = $gameLive2d._name[i];
+        saveobj.model = $gameLive2d._model[i];
+        saveobj.folder = $gameLive2d._folder[i];
+        saveobj.individual_upsidedown = $gameLive2d.individual_upsidedown[i];
+        saveobj.noWeapon = $gameLive2d.linkEquip_None[i][0];
+        saveobj.noShield = $gameLive2d.linkEquip_None[i][1];
+        saveobj.noHead = $gameLive2d.linkEquip_None[i][2];
+        saveobj.noBody = $gameLive2d.linkEquip_None[i][3];
+        saveobj.noOrnament = $gameLive2d.linkEquip_None[i][4];
 
         saveobj.isneedrestore = true;
-        saveobj.px = $gameLive2d.pos_x[i];
-        saveobj.py = $gameLive2d.pos_y[i];
-        saveobj.scx = $gameLive2d.scale[i];
-        saveobj.vis = $gameLive2d.visible[i];
+
+        //以下は動的変数
+        saveobj.pos_x = $gameLive2d.pos_x[i];
+        saveobj.pos_y = $gameLive2d.pos_y[i];
+        saveobj.scale = $gameLive2d.scale[i];
+        saveobj.visible = $gameLive2d.visible[i];
         saveobj.motionGroup = $gameLive2d.motionGroup[i];
         saveobj.motionNumber = $gameLive2d.motionNumber[i];
         saveobj.motionLoop = $gameLive2d.motionLoop[i];
         saveobj.paraminitskip = $gameLive2d.paraminitskip[i];
-        i++;
 
-    }, this);
+    }
     return this._live2dmodelsaveonly;
 };
 
@@ -749,7 +779,9 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
         renderer.bindVao(vao);
     }
 
-    renderer.bindRenderTexture(this.texture);
+    //renderer.bindRenderTexture(this.texture);
+
+    renderer.bindRenderTexture_Test(this.texture);
     temp_gl.clearColor(0.0, 0.0, 0.0, 0.0);
     temp_gl.clear(temp_gl.COLOR_BUFFER_BIT);
     temp_gl.frontFace(temp_gl.CW);
@@ -1051,6 +1083,7 @@ Live2DManager.prototype.live2dVisible = function (model_no,flag) {
 
 //モーション設定
 Live2DManager.prototype.live2dMotion = function (model_no,motionGroup,motion_no,loop){
+    //使用するmotion_noは-1して使用する
     $gameLive2d._lappLive2dManager._models.at(model_no-1).changeMotion(motionGroup,motion_no-1, loop);
 
     //セーブデータ保存用
@@ -1074,13 +1107,14 @@ Live2DManager.prototype.PlayBackAllModel = function(){
 //モーション モーションA再生後にモーションBを再生する
 Live2DManager.prototype.live2dSequenceMotion = function (model_no,motions,loop){
     if($gameLive2d._lappLive2dManager._models.at(model_no-1)){
+        //使用するmotion_noは-1して使用する（SequenceMotion内で-1する）
         $gameLive2d._lappLive2dManager._models.at(model_no-1).SequenceMotion(motions, loop);
         var motionNames = (String(motions)).split(',');
         motionNames.forEach(function(motionName){
             var data = (String(motionName)).split('_');
             //セーブデータ保存用
             $gameLive2d.motionGroup[model_no] = data[0];
-            $gameLive2d.motionNumber[model_no] = Number(data[1])-1;//実際にあつかうモーションNoは-1されている
+            $gameLive2d.motionNumber[model_no] = Number(data[1]);
         });
         //セーブデータ保存用
         $gameLive2d.motionLoop[model_no] = loop;
@@ -1243,6 +1277,9 @@ Scene_Base.prototype.createlive2d = function(){
     this.live2dSprite.initializeCubism();
 
     if(IsFirstLoad == true && IsFirstLoad_Trigger == true){
+        //セーブデータからモデルの読み込み設定反映
+        $gameLive2d.ReflectSavedataToReadsetting();
+
         $gameLive2d._lappLive2dManager.loadModels();
         
         //セーブデータの設定値をモデルに反映
@@ -1250,6 +1287,7 @@ Scene_Base.prototype.createlive2d = function(){
         IsFirstLoad_Trigger = false;
         //IsFirstLoad_Trigger をfalseにする
         //【注意】IsFirstLoad　は　LAppModel.prototype.setupTextures　で　false にしている
+
     }
 
     if(L2DINuseLinkEquipment == true){
@@ -1285,12 +1323,28 @@ if(L2DINincludesave){
         if(!!contents && !!contents.Live2d){
             $gameLive2d.Restoresavemodel(contents.Live2d);
         }
+
+        //スロット選択時にフラグ解除（live2dのモデルデータを再読み込みする）
+        //初回モデル読み込みフラグ
+        IsFirstLoad = true;
+
+        //初回モデル読み込みトリガーフラグ
+        IsFirstLoad_Trigger = true;
+
     };
 
     const L2DINsetupNewGame = DataManager.setupNewGame;
     DataManager.setupNewGame = function() {
         L2DINsetupNewGame.call(this);
         $gameLive2d.newgamefix();
+
+        //ニューゲーム開始時にフラグ解除（live2dのモデルデータを再読み込みする）
+        //初回モデル読み込みフラグ
+        IsFirstLoad = true;
+
+        //初回モデル読み込みトリガーフラグ
+        IsFirstLoad_Trigger = true;
+
     };
 
 }else{
@@ -1325,5 +1379,3 @@ if(L2DINuseinbattle){
 }else{
     console.log("Live2d表示はマップシーンのみです。");
 }
-
-

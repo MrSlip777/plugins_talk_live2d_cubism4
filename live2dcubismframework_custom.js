@@ -11321,7 +11321,7 @@ var LAppModel = /** @class */ (function (_super) {
         _this.paraminitskip_Default = false;
 
         //衣装変更の設定値
-        _this._IsChangeCloth = true;
+        _this._IsChangeCloth = false;   //デフォルトは変更しない
         _this._clothGroup = "Cloth";    //可変だが、文字は固定する
         _this._clothName = "";         //着替え用のモーション名
 
@@ -11615,6 +11615,7 @@ var LAppModel = /** @class */ (function (_super) {
                         if(L2DINmodels.length == $LoadCount_Live2DModel){
                             //初回モデル読み込みフラグ(Live2DInterfaceMV.js)
                             IsFirstLoad = false;
+                            $LoadCount_Live2DModel = 0;
                         }
 
                     }
