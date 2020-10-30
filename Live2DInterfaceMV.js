@@ -779,9 +779,8 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
         renderer.bindVao(vao);
     }
 
-    //renderer.bindRenderTexture(this.texture);
+    renderer.bindRenderTexture(this.texture);
 
-    renderer.bindRenderTexture_Test(this.texture);
     temp_gl.clearColor(0.0, 0.0, 0.0, 0.0);
     temp_gl.clear(temp_gl.COLOR_BUFFER_BIT);
     temp_gl.frontFace(temp_gl.CW);
