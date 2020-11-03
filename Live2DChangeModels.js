@@ -115,6 +115,7 @@ Game_Live2d.prototype.initialize = function() {
     this.clear();
     this.resettng_folderpath = {};
     this.resettng_Modelname = {};
+    this.resettng_meta = {};
     this.resettng_individual_upsidedown = {};
     this.resettng_noWeapon = {};
     this.resettng_noShield = {};
@@ -128,6 +129,7 @@ Game_Live2d.prototype.initialize = function() {
 
         this.resettng_folderpath[i] = data.folderpath;
         this.resettng_Modelname[i] = data.Modelname;
+        this.resettng_meta[i] = data.meta;
         this.resettng_individual_upsidedown[i] = data.individual_upsidedown;
         this.resettng_noWeapon[i] = data.noWeapon;
         this.resettng_noShield[i] = data.noShield;
@@ -155,6 +157,7 @@ Game_Live2d.prototype.Resetting_ReplaceModelData = function(destinationName,sour
             if(destinationName == this.resettng_Modelname[i]){
                 this.resettng_folderpath[i] = sourceData.folderpath;
                 this.resettng_Modelname[i] = sourceData.Modelname;
+                this.resettng_meta[i] = sourceData.meta;
                 this.resettng_individual_upsidedown[i] = sourceData.individual_upsidedown;
                 this.resettng_noWeapon[i] = sourceData.noWeapon;
                 this.resettng_noShield[i] = sourceData.noShield;
@@ -206,11 +209,11 @@ Game_Live2d.prototype.Resetting_UpdateModelData = function(){
         this._duration[data_no] = 0;
         this.pos_x[data_no] =this._pos_middle;
         this.pos_y[data_no] = 0;
-        this._live2dmodelsaveonly[this._name[data_no]] = {};
         this.motionGroup[data_no] = "Idle";
         this.motionNumber[data_no] = 1;
         this.motionLoop[data_no] = false;
         this.paraminitskip[data_no] = false;
+        this.meta[data_no] = this.resettng_meta[data_no];
 
         //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
         this.individual_upsidedown[data_no] = this.resettng_individual_upsidedown[data_no];
@@ -250,3 +253,56 @@ Game_Live2d.prototype.Resetting_UpdateModelData = function(){
     }
 
 })();
+
+//セーブデータの設定値をモデルに反映(Live2DInterfaceMVの書き換え)
+Game_Live2d.prototype.ReflectSavedataToModels = function(){
+
+    for(var i = 1; i<=Object.keys($gameLive2d._name).length; i++){
+        var saveobj = this._live2dmodelsaveonly[i];
+        //追加した部分
+        if(saveobj.name){
+            this.visible[i] = saveobj.visible;
+            this.scale[i] = saveobj.scale;
+            this.pos_x[i] = saveobj.pos_x;
+            this.pos_y[i] = saveobj.pos_y;
+
+            $gameLive2d._lappLive2dManager._models.at(i-1).motionGroup_Default
+             = saveobj.motionGroup;
+             $gameLive2d._lappLive2dManager._models.at(i-1).motionNumber_Default
+             = saveobj.motionNumber;
+             $gameLive2d._lappLive2dManager._models.at(i-1).motionLoop_Default
+             = saveobj.motionLoop;
+             $gameLive2d._lappLive2dManager._models.at(i-1).paraminitskip_Default
+             = saveobj.paraminitskip;
+            
+            this.resettng_folderpath[i] = saveobj.folderpath;
+            this.resettng_Modelname[i] = saveobj.name;
+            this.resettng_individual_upsidedown[i] = saveobj.individual_upsidedown;
+            this.resettng_noWeapon[i] = saveobj.noWeapon;
+            this.resettng_noShield[i] = saveobj.noShield;
+            this.resettng_noHead[i] = saveobj.noHead;
+            this.resettng_noBody[i] = saveobj.noBody;
+            this.resettng_noOrnament[i] = saveobj.noOrnament;
+        }
+    }
+};
+
+//内部のモーション名 (Live2DInterfaceMVの書き換え)
+Game_Live2d.prototype.InnerMotionName = function (name, group){
+    var index = 0;//0はモデルの指定なし番号
+    
+    for(var i = 1; i<=Object.keys($gameLive2d._name).length; i++){
+        if($gameLive2d._name[i] == name){
+            index = i;
+            break;
+        }
+    }
+
+    if(index > 0){
+        const innerMotionName = $gameLive2d.meta[index][group];
+
+        return innerMotionName;
+    }else{
+        return null;
+    }
+};

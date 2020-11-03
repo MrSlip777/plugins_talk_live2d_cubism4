@@ -276,6 +276,7 @@ const L2DINextractmeta = function(data) {
             if (match[2] === ':') {
                 data.meta[match[1]] = match[3].split(', ');
             } else {
+
                 data.meta[match[1]] = true;
             }
         } else {
@@ -372,6 +373,7 @@ Game_Live2d.prototype.clear = function() {
     this.motionNumber = {};
     this.motionLoop = {};
     this.paraminitskip = {};
+    this.meta = {};
 
     this.scale = {};    //スケール
     this.A = {};
