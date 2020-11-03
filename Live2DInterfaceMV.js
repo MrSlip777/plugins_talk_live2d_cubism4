@@ -350,7 +350,7 @@ Game_Live2d.prototype.clear = function() {
     var parameters = PluginManager.parameters('Live2DInterfaceMV');
 
     //エディタ(プラグインの設定)から取得する設定値
-    this._folder = {};
+    this._folderpath= {};
     this._name = {};
     this._model = {};
     this._pos_left = Number(parameters['left']);
@@ -415,7 +415,7 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
             data_no = i;
         }
 
-        this._folder[data_no] = data.folderpath;
+        this._folderpath[data_no] = data.folderpath;
         this._name[data_no] = data.Modelname;
         var strCopy = data.folderpath.split('/');
         this._model[data_no] = strCopy[strCopy.length - 2];
@@ -432,6 +432,7 @@ Game_Live2d.prototype.InitializeModelSetting = function(){
         this.motionNumber[data_no] = 1;
         this.motionLoop[data_no] = false;
         this.paraminitskip[data_no] = false;
+        this.meta[data_no] = data.meta;
 
         //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
         this.individual_upsidedown[data_no] = data.individual_upsidedown;
@@ -463,7 +464,8 @@ Game_Live2d.prototype.ReflectSavedataToReadsetting = function(){
 
             $gameLive2d._model[i] = saveobj.model;
             $gameLive2d._name[i] = saveobj.name;
-            $gameLive2d._folder[i] = saveobj.folder;
+            $gameLive2d._folderpath[i] = saveobj.folderpath;
+ 
             $gameLive2d.individual_upsidedown[i] = saveobj.individual_upsidedown;
             $gameLive2d.linkEquip_None[i][0] = saveobj.noWeapon;
             $gameLive2d.linkEquip_None[i][1] = saveobj.noShield;
@@ -492,6 +494,7 @@ Game_Live2d.prototype.ReflectSavedataToModels = function(){
              = saveobj.motionLoop;
              $gameLive2d._lappLive2dManager._models.at(i-1).paraminitskip_Default
              = saveobj.paraminitskip;
+            $gameLive2d._meta[i] = saveobj.meta;
         }
     }
 };
@@ -519,7 +522,7 @@ Game_Live2d.prototype.Createsavemodel = function() {
         //以下はゲーム開始時に設定する変数
         saveobj.name = $gameLive2d._name[i];
         saveobj.model = $gameLive2d._model[i];
-        saveobj.folder = $gameLive2d._folder[i];
+        saveobj.folderpath = $gameLive2d._folderpath[i];
         saveobj.individual_upsidedown = $gameLive2d.individual_upsidedown[i];
         saveobj.noWeapon = $gameLive2d.linkEquip_None[i][0];
         saveobj.noShield = $gameLive2d.linkEquip_None[i][1];
@@ -538,6 +541,7 @@ Game_Live2d.prototype.Createsavemodel = function() {
         saveobj.motionNumber = $gameLive2d.motionNumber[i];
         saveobj.motionLoop = $gameLive2d.motionLoop[i];
         saveobj.paraminitskip = $gameLive2d.paraminitskip[i];
+        saveobj.meta = $gameLive2d.meta[i];
 
     }
     return this._live2dmodelsaveonly;

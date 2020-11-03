@@ -196,10 +196,23 @@ Game_Live2d.prototype.Resetting_UpdateModelData = function(){
             data_no = i;
         }
 
-        this._folder[data_no] = this.resettng_folderpath[data_no];
+        this._folderpath[data_no] = this.resettng_folderpath[data_no];
         this._name[data_no] = this.resettng_Modelname[data_no];
         var strCopy = this.resettng_folderpath[data_no].split('/');
-        this._model[data_no] = strCopy[strCopy.length - 2];
+        this._model[data_no] = strCopy[strCopy.length - 2];        
+        this.meta[data_no] = this.resettng_meta[data_no];
+
+        //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
+        this.individual_upsidedown[data_no] = this.resettng_individual_upsidedown[data_no];
+
+        //装備品、衣装変更時に使用。装備なし時のモーション
+        this.linkEquip_None[data_no][0] = this.resettng_noWeapon[data_no];
+        this.linkEquip_None[data_no][1] = this.resettng_noShield[data_no];
+        this.linkEquip_None[data_no][2] = this.resettng_noHead[data_no];
+        this.linkEquip_None[data_no][3] = this.resettng_noBody[data_no];
+        this.linkEquip_None[data_no][4] = this.resettng_noOrnament[data_no];
+
+        //ニューゲーム、コンテニューに関わらず以下の設定にする
         this.visible[data_no] = false;
         this.scale[data_no] = 1.0;
         this.A[data_no] = 1.0;
@@ -213,17 +226,7 @@ Game_Live2d.prototype.Resetting_UpdateModelData = function(){
         this.motionNumber[data_no] = 1;
         this.motionLoop[data_no] = false;
         this.paraminitskip[data_no] = false;
-        this.meta[data_no] = this.resettng_meta[data_no];
 
-        //個々の上下反転フラグ（全体のフラグ、または個々のフラグがtrueになっていると上下反転の表示）
-        this.individual_upsidedown[data_no] = this.resettng_individual_upsidedown[data_no];
-
-        //装備品、衣装変更時に使用。装備なし時のモーション
-        this.linkEquip_None[data_no][0] = this.resettng_noWeapon[data_no];
-        this.linkEquip_None[data_no][1] = this.resettng_noShield[data_no];
-        this.linkEquip_None[data_no][2] = this.resettng_noHead[data_no];
-        this.linkEquip_None[data_no][3] = this.resettng_noBody[data_no];
-        this.linkEquip_None[data_no][4] = this.resettng_noOrnament[data_no];
         i++;
     }, this);
 };
@@ -274,10 +277,13 @@ Game_Live2d.prototype.ReflectSavedataToModels = function(){
              = saveobj.motionLoop;
              $gameLive2d._lappLive2dManager._models.at(i-1).paraminitskip_Default
              = saveobj.paraminitskip;
-            
+            this.meta[i] = saveobj.meta;
+
             this.resettng_folderpath[i] = saveobj.folderpath;
             this.resettng_Modelname[i] = saveobj.name;
             this.resettng_individual_upsidedown[i] = saveobj.individual_upsidedown;
+            this.resettng_meta[i] = saveobj.meta;
+
             this.resettng_noWeapon[i] = saveobj.noWeapon;
             this.resettng_noShield[i] = saveobj.noShield;
             this.resettng_noHead[i] = saveobj.noHead;

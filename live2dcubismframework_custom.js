@@ -12320,7 +12320,7 @@ var LAppLive2DManager = /** @class */ (function () {
         this.releaseAllModel();
 
         for(var model_no = 1; model_no<=$gameLive2d.MAXNUMBER; model_no++){
-            var modelPath = $gameLive2d._folder[model_no];
+            var modelPath = $gameLive2d._folderpath[model_no];
             var modelJsonName = $gameLive2d._model[model_no] + ".model3.json";
             this._models.pushBack(new LAppModel());
             if(modelPath != "" && modelJsonName != ""){
