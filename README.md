@@ -3,6 +3,15 @@
 ## 概要
 会話表示中にLive2d(cubism4.0)でキャラクターを表示させるプラグインです。
 
+## ご使用上の注意（Live2Dライセンス）
+本プラグインはLive2D Cubism SDKを使用しており、本プラグインを使用してゲームを制作する場合はLive2D Proprietary Licenseへの同意が必要となります。<br>
+https://www.live2d.jp/terms/live2d-proprietary-software-license-agreement/
+※上記はCubism Core for Web をダウンロードする際に確認できます。<br>
+
+また、制作したゲームを公開する場合は SDKリリースライセンスへの同意が必要です。<br>
+https://www.live2d.com/download/cubism-sdk/release-license/
+※2020年10月現在、 直近売上が1,000 万円未満の小規模事業者・個人・学生・サークル・その他の団体については無償で作品をリリースできます。<br>
+
 ## 準備
 １．Cubism SDK for Webをダウンロードする<br>
 https://www.live2d.com/download/cubism-sdk/<br>
