@@ -3,6 +3,15 @@
 ## Overview
 It is a plug-in that displays characters with Live2d (cubism 4.0) during conversation display.
 
+## Notes on use (Live2D license)
+This plug-in uses the Live2D Cubism SDK, and if you want to create a game using this plugin, you will need to agree to live2D Proprietary License. <br>
+https://www.live2d.jp/terms/live2d-proprietary-software-license-agreement/
+The above can be confirmed when downloading Cebism Core for Web. <br>
+
+In addition, if you want to publish your game, you must agree to the SDK release license. <br>
+https://www.live2d.com/download/cubism-sdk/release-license/
+As of October 2020, works can be released free of charge for small businesses, individuals, students, circles, and other organizations with recent sales of less than 10 million yen. <br>
+
 ## Preparation
 １．Download Cubism SDK for Web<br>
 https://www.live2d.com/download/cubism-sdk/<br>
