@@ -996,6 +996,37 @@ if (PIXI) {
                 break;
             case 'pos':
             case '位置':
+                //変数である場合は変換して使用する
+                const str_v = "\\v";
+                const str_V = "\\V";
+                
+                if(args[2]){
+                    if(args[2].indexOf(str_v) != -1 || args[2].indexOf(str_V) != -1){
+                        var tmp = args[2].replace('[', ',');
+                        tmp = tmp.replace(']', ',');
+                        tmp = tmp.split(',');
+                        args[2] = $gameVariables.value(Number(tmp[1]));
+                    }
+                }
+
+                if(args[3]){
+                    if(args[3].indexOf(str_v) != -1 || args[3].indexOf(str_V) != -1){
+                        var tmp = args[3].replace('[', ',');
+                        tmp = tmp.replace(']', ',');
+                        tmp = tmp.split(',');
+                        args[3] = $gameVariables.value(Number(tmp[1]));
+                    }
+                }
+
+                if(args[4]){
+                    if(args[4].indexOf(str_v) != -1 || args[4].indexOf(str_V) != -1){
+                        var tmp = args[4].replace('[', ',');
+                        tmp = tmp.replace(']', ',');
+                        tmp = tmp.split(',');
+                        args[4] = $gameVariables.value(Number(tmp[1]));
+                    }
+                }
+
                 const x = Number(args[2]) || 0;
                 const y = Number(args[3]) || 0;
                 const dur = Number(args[4]) || 0;
