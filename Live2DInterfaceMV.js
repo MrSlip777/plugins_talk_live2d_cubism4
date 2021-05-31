@@ -494,7 +494,7 @@ Game_Live2d.prototype.ReflectSavedataToModels = function(){
              = saveobj.motionLoop;
              $gameLive2d._lappLive2dManager._models.at(i-1).paraminitskip_Default
              = saveobj.paraminitskip;
-            $gameLive2d._meta[i] = saveobj.meta;
+            $gameLive2d.meta[i] = saveobj.meta;
         }
     }
 };
