@@ -7,6 +7,7 @@
 
 /* 更新履歴
  * Slip 2020/01/20 ツクールMV用プラグイン向けに修正
+ * Slip 2021/09/02 戦闘シーンでのレイヤーを可変にする(スペシャルサンクス：こまさん@koma_neko) 
  *
  * 本プラグインの再配布、改変はLive2D Open Software licenseに準拠します。
  *
@@ -140,9 +141,16 @@
 * @parent SaveData
 *
 * @param useinbattle
-* @desc Live2d model use flag in battle scene
+* @desc  use flag in battle scene
 * 戦闘画面でのlive2dモデル使用フラグ
 * @default false
+* @type boolean
+* @parent Scene
+*
+* @param IsBehindEnemies
+* @desc  Display the Live2d model behind the enemy graphic
+* 戦闘画面での敵グラフィックの奥にLive2dモデルを表示する（trueは敵グラフィックの手前に表示）
+* @default true
 * @type boolean
 * @parent Scene
 *
@@ -310,6 +318,8 @@ const L2DINscaleY = Number(L2DINPP['scale_H']) / 100;
 
 const L2DINincludesave = (L2DINPP['includesave'] === 'true');
 const L2DINuseinbattle = (L2DINPP['useinbattle'] === 'true');
+const L2DINIsBehindEnemies = (L2DINPP['IsBehindEnemies'] === 'true');
+
 const L2DINuseLinkEquipment = (L2DINPP['useLinkEquipment'] === 'true');
 const L2DINpictpriority = Number(L2DINPP['pictpriority']) || 0;
 
@@ -637,6 +647,10 @@ Live2DSprite.prototype.initialize = function() {
 
     this.texture = null;
 
+    /* 上下逆転対策（暫定）
+     */
+    this.scale.y *= -1;
+    this.anchor.y = 1;
 };
 
 /**
@@ -699,13 +713,38 @@ Live2DSprite.prototype.createShader = function () {
     return programId;
 };
 
+/* Live2DSpriteが持つWebGLテクスチャを利用してオフスクリーンレンダリング用のフレームバッファを作成
+ * this.texture.baseTexture._glTextures[0].texture ← これがWebGLテクスチャ
+ */
+Live2DSprite.prototype.createFramebuffer = function(renderer) {
+    if (!this.texture || !this.texture.baseTexture || !this.texture.baseTexture._glTextures[0]) {
+        return;
+    }
+
+    let gl = renderer.gl;
+    let glTexture = this.texture.baseTexture._glTextures[0];
+    let texture = glTexture.texture;
+
+    let _frameBuffer = gl.getParameter(gl.FRAMEBUFFER_BINDING);
+
+    this.frameBuffer = gl.createFramebuffer();
+    gl.bindFramebuffer(gl.FRAMEBUFFER, this.frameBuffer);
+
+    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, texture, 0);
+
+    gl.bindFramebuffer(gl.FRAMEBUFFER, _frameBuffer);
+};
+
 Live2DSprite.prototype._renderWebGL = function(renderer) {
 
     $gameLive2d.gl = renderer.gl;
     $gameLive2d.canvas = renderer.view;
 
     if (!this.frameBuffer) {
-        this.frameBuffer = $gameLive2d.gl.getParameter($gameLive2d.gl.FRAMEBUFFER_BINDING);
+        /* オフスクリーンレンダリング用のフレームバッファを作成
+         */
+        // this.frameBuffer = $gameLive2d.gl.getParameter($gameLive2d.gl.FRAMEBUFFER_BINDING);
+        this.createFramebuffer(renderer);
     }
     // 透過設定
     //$gameLive2d.gl.enable($gameLive2d.gl.BLEND);
@@ -787,19 +826,34 @@ Live2DSprite.prototype._renderWebGL = function(renderer) {
 
     renderer.bindRenderTexture(this.texture);
 
-    temp_gl.clearColor(0.0, 0.0, 0.0, 0.0);
-    temp_gl.clear(temp_gl.COLOR_BUFFER_BIT);
-    temp_gl.frontFace(temp_gl.CW);
+    /* 描画先をLive2DSpriteが持つフレームバッファに変更して描画処理を実行
+     * this.frameBufferの準備ができていなければ描画処理は飛ばす
+     */
+    if (this.frameBuffer) {
+        // 本来の描画先（フレームバッファ）を取っておく
+        let _frameBuffer = temp_gl.getParameter(temp_gl.FRAMEBUFFER_BINDING);
+        // 描画先を変更
+        temp_gl.bindFramebuffer(temp_gl.FRAMEBUFFER, this.frameBuffer);
+        // onUpdateの処理の中で必要なので入れておく
+        $gameLive2d.frameBuffer = this.frameBuffer;
 
-    if($gameLive2d._lappLive2dManager){
-        
-        LAppPal.updateTime();
-        $gameLive2d.gl.flush();
-        $gameLive2d._lappLive2dManager.onUpdate();
+        temp_gl.clearColor(0.0, 0.0, 0.0, 0.0);
+        temp_gl.clear(temp_gl.COLOR_BUFFER_BIT);
+        temp_gl.frontFace(temp_gl.CW);
+
+        if($gameLive2d._lappLive2dManager){
+            
+            LAppPal.updateTime();
+            $gameLive2d.gl.flush();
+            $gameLive2d._lappLive2dManager.onUpdate();
 
 
+        }
+
+        // 本来の描画先に戻す
+        temp_gl.bindFramebuffer(temp_gl.FRAMEBUFFER, _frameBuffer);
     }
-    
+
     if (!useVAO) {
     renderer._activeTextureLocation = _activeTextureLocation;
     temp_gl.activeTexture(temp_gl.TEXTURE0 + _activeTextureLocation);
@@ -1332,11 +1386,25 @@ Scene_Base.prototype.createlive2d = function(){
 };
 
 Spriteset_Base.prototype.addChildlive2d = function(Sprite) {
-    if(L2DINpictpriority >= 100){
-        this.addChild(Sprite);
-    }else{
-        this._pictureContainer.addChildAt(Sprite, L2DINpictpriority);
+
+    if(this instanceof Spriteset_Battle){
+
+        if(L2DINIsBehindEnemies){
+            var index_Layer = this._battleField.getChildIndex(this._battleField.children.find(child => child instanceof Sprite_Enemy));
+            this._battleField.addChildAt(Sprite,index_Layer-1);
+        }
+        else{
+            this._battleField.addChild(Sprite);
+        }
     }
+    else{
+        if(L2DINpictpriority >= 100){
+            this.addChild(Sprite);
+        }else{
+            this._pictureContainer.addChildAt(Sprite, L2DINpictpriority);
+        }
+    }
+
 };
 
 Scene_Base.prototype.terminatelive2d = function(){
