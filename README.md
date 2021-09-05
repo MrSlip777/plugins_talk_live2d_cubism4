@@ -172,9 +172,9 @@ IsBehindEnemiesをtrueにした場合は敵グラフィックの奥に、false�
 ↓ツクールエディタ内のIsBehindEnemiesの場所<br>
 ![プラグイン](https://user-images.githubusercontent.com/17643697/132120887-806825b5-bb16-4671-bebb-ff694942b8f5.png)
 ![設定](https://user-images.githubusercontent.com/17643697/132120888-1bb5dd8c-3a87-426d-836c-304ebfdfba05.png)
-<br>
-↓IsBehindEnemiesをfalseにした場合<br>
-![falseにした場合](https://user-images.githubusercontent.com/17643697/132120894-8cbf83ad-a445-4e65-8cf4-103d358843a8.png)
-<br>
+<br><br>
 ↓IsBehindEnemiesをtrueにした場合<br>
+![falseにした場合](https://user-images.githubusercontent.com/17643697/132120894-8cbf83ad-a445-4e65-8cf4-103d358843a8.png)
+<br><br>
+↓IsBehindEnemiesをfalseにした場合<br>
 ![trueにした場合](https://user-images.githubusercontent.com/17643697/132120892-36b883d0-70de-41a4-b20e-82453d3ae4ed.png)
