@@ -159,5 +159,22 @@ Project/assets/koharu/<br>
    パラメータ初期化タイミングは全てスキップします。<br>
    （このコマンド実行時点からモデルで見た次のタイミングから）<br>
 
-## デプロイメント<br>
-・検証中
+## 戦闘シーン
+
+### Live2Dの表示レイヤー変更
+
+戦闘シーンにて、Live2Dモデルを表示する場合、表示レイヤーは<br>
+敵グラフィックの奥、または手前に表示を設定できます。<br>
+
+IsBehindEnemiesをtrueにした場合は敵グラフィックの奥に、falseにした場合は<br>
+手前に表示されます。<br>
+
+↓ツクールエディタ内のIsBehindEnemiesの場所<br>
+![プラグイン](https://user-images.githubusercontent.com/17643697/132120887-806825b5-bb16-4671-bebb-ff694942b8f5.png)
+![設定](https://user-images.githubusercontent.com/17643697/132120888-1bb5dd8c-3a87-426d-836c-304ebfdfba05.png)
+<br>
+↓IsBehindEnemiesをfalseにした場合<br>
+![falseにした場合](https://user-images.githubusercontent.com/17643697/132120894-8cbf83ad-a445-4e65-8cf4-103d358843a8.png)
+<br>
+↓IsBehindEnemiesをtrueにした場合<br>
+![trueにした場合](https://user-images.githubusercontent.com/17643697/132120892-36b883d0-70de-41a4-b20e-82453d3ae4ed.png)
