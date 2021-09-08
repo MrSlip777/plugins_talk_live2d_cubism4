@@ -1104,7 +1104,12 @@ if (PIXI) {
                 //2：スケール、3：ウェイト
                 const scale = parseFloat(args[2]) || 0;
                 const dur_scale = Number(args[3]) || 0;
-                Live2DManager.prototype.live2dSetScale(model_no,scale,dur_scale);
+                var IsWait = false;
+                if(args[4] === 'wait' || args[4] === 'ウェイト'){
+                    IsWait = true;
+                }
+
+                Live2DManager.prototype.live2dSetScale(model_no,scale,dur_scale,IsWait);
                 break;
             case 'paraminitskip':
             case 'パラメータ初期化スキップ':
@@ -1278,7 +1283,7 @@ Live2DManager.prototype.live2dSetPosition_Y = function (model_no,pos_y) {
 };
 
 //倍率変更
-Live2DManager.prototype.live2dSetScale = function (model_no,scale,dur) {
+Live2DManager.prototype.live2dSetScale = function (model_no,scale,dur,IsWait) {
     //$gameLive2d.scale[model_no] = scale;
     const model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
  
@@ -1291,7 +1296,8 @@ Live2DManager.prototype.live2dSetScale = function (model_no,scale,dur) {
             $gameLive2d.scale[model_no] = scale;
         }
         $gameLive2d._duration[model_no] = dur;
-        if(dur){
+
+        if(IsWait){
             $gameLive2d._waitCount = dur;
         }
     }
