@@ -375,6 +375,8 @@ Game_Live2d.prototype.clear = function() {
     this.pos_y ={};     //モデルのY位置
     this._targetX ={};     //モデルのX目標位置
     this._targetY ={};     //モデルのY目標位置
+    this._targetScale ={};     //モデルの目標スケール
+
     this._duration ={};     //移動する時間
     this._live2dmodelsaveonly = {}; //セーブ用データ
     
@@ -607,6 +609,8 @@ Game_Live2d.prototype.live2dupdateMove = function(model_no) {
          = ($gameLive2d.pos_x[model_no] * (d - 1) + $gameLive2d._targetX[model_no]) / d;
         $gameLive2d.pos_y[model_no]
          = ($gameLive2d.pos_y[model_no] * (d - 1) + $gameLive2d._targetY[model_no]) / d;
+        $gameLive2d.scale[model_no]
+         = ($gameLive2d.scale[model_no] * (d - 1) + $gameLive2d._targetScale[model_no]) / d;
         $gameLive2d._duration[model_no]--;
     }
 };
@@ -1090,14 +1094,17 @@ if (PIXI) {
                 }
                 Live2DManager.prototype.live2dSetPosition(model_no, x, y, dur, wait);
             break;
-
+            
             case 'grayscale':
             case 'グレースケール':
                 Live2DManager.prototype.live2dSetGrayscale(model_no,args[2]);
                 break;
             case 'scale':
             case '倍率変更':
-                Live2DManager.prototype.live2dSetScale(model_no,args[2]);
+                //2：スケール、3：ウェイト
+                const scale = Number(args[2]) || 0;
+                const dur_scale = Number(args[3]) || 0;
+                Live2DManager.prototype.live2dSetScale(model_no,scale,dur_scale);
                 break;
             case 'paraminitskip':
             case 'パラメータ初期化スキップ':
@@ -1225,6 +1232,8 @@ Live2DManager.prototype.live2dSetPosition = function (model_no, x, y, dur, wait)
         if(dur > 0){
             $gameLive2d._targetX[model_no] = x;
             $gameLive2d._targetY[model_no] = y;
+            $gameLive2d._targetScale[model_no] = $gameLive2d.scale[model_no];
+
         }else{
             $gameLive2d.pos_x[model_no] = x;
             $gameLive2d.pos_y[model_no] = y;
@@ -1269,8 +1278,23 @@ Live2DManager.prototype.live2dSetPosition_Y = function (model_no,pos_y) {
 };
 
 //倍率変更
-Live2DManager.prototype.live2dSetScale = function (model_no,scale) {
-    $gameLive2d.scale[model_no] = scale;
+Live2DManager.prototype.live2dSetScale = function (model_no,scale,dur) {
+    //$gameLive2d.scale[model_no] = scale;
+    const model = $gameLive2d._lappLive2dManager._models.at(model_no-1);
+ 
+    if(model !== null){
+        if(dur > 0){
+            $gameLive2d._targetX[model_no] = $gameLive2d.pos_x[model_no];
+            $gameLive2d._targetY[model_no] = $gameLive2d.pos_y[model_no];
+            $gameLive2d._targetScale[model_no] = scale;
+        }else{
+            $gameLive2d.scale[model_no] = scale;
+        }
+        $gameLive2d._duration[model_no] = dur;
+        if(dur){
+            $gameLive2d._waitCount = dur;
+        }
+    }
 };
 
 //初期化スキップ
