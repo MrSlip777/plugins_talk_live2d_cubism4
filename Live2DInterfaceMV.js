@@ -1102,7 +1102,7 @@ if (PIXI) {
             case 'scale':
             case '倍率変更':
                 //2：スケール、3：ウェイト
-                const scale = Number(args[2]) || 0;
+                const scale = parseFloat(args[2]) || 0;
                 const dur_scale = Number(args[3]) || 0;
                 Live2DManager.prototype.live2dSetScale(model_no,scale,dur_scale);
                 break;
