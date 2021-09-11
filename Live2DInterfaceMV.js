@@ -1421,7 +1421,7 @@ Spriteset_Base.prototype.addChildlive2d = function(Sprite) {
 
         if(L2DINIsBehindEnemies){
             var index_Layer = this._battleField.getChildIndex(this._battleField.children.find(child => child instanceof Sprite_Enemy));
-            this._battleField.addChildAt(Sprite,index_Layer-1);
+            this._battleField.addChildAt(Sprite,index_Layer);
         }
         else{
             this._battleField.addChild(Sprite);
