@@ -87,6 +87,7 @@ Project/assets/koharu/<br>
    例）<れんぞく:Idle_1,Idle_7><br>
   ※グループ名・・・model3.jsonファイル内のMotionsの名称<br>
   ![motion3.json内のグループ名](https://user-images.githubusercontent.com/17643697/83342186-1f282c80-a327-11ea-9a8b-4f4e6c0b124d.png)<br>
+  ![motion3.json内のグループ名_2](https://user-images.githubusercontent.com/17643697/139602130-7cef857a-0a17-448e-9ece-aeb49d8278e6.png)<br>
   ![ツクールMVエディタ内でのmotiongroupnames設定例](https://user-images.githubusercontent.com/17643697/139579019-f1dd7396-6640-4877-bed1-b50c248b8dc4.png)<br>
  ■ モーション<br>
  　TalkLive2d モデル名 モーション組名 ループしない<br>
