@@ -87,6 +87,7 @@ Project/assets/koharu/<br>
    例）<れんぞく:Idle_1,Idle_7><br>
   ※グループ名・・・model3.jsonファイル内のMotionsの名称<br>
   ![motion3.json内のグループ名](https://user-images.githubusercontent.com/17643697/83342186-1f282c80-a327-11ea-9a8b-4f4e6c0b124d.png)<br>
+  ![ツクールMVエディタ内でのmotiongroupnames設定例](https://user-images.githubusercontent.com/17643697/139579019-f1dd7396-6640-4877-bed1-b50c248b8dc4.png)<br>
  ■ モーション<br>
  　TalkLive2d モデル名 モーション組名 ループしない<br>
   ※ループしない・・・記入がない場合ループする設定<br>
@@ -96,7 +97,7 @@ Project/assets/koharu/<br>
   このコマンド実行時には該当のモデルは自動的に可視状態にします。<br>
   このコマンドと位置調整を同時に行いたいときは<br>
   位置の指定を先に行ってください。<br>
-
+　![ツクールMVプラグインコマンド設定例](https://user-images.githubusercontent.com/17643697/139579022-1547c274-42fd-4432-959e-3638103ab0de.png)<br>
 ■ モーション(内部データ形式)<br>
 　TalkLive2d モデル名 モーション グループ名 番号<br>
 　※グループ名・・・model3.jsonファイル内のMotionsの名称<br>
