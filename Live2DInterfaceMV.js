@@ -1227,7 +1227,8 @@ Live2DManager.prototype.live2dSequenceMotion = function (model_no,motions,loop){
 
 //表情設定
 Live2DManager.prototype.live2dExpression = function (model_no,expressionId){
-    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeExpression(expressionId + ".exp3.json");
+    //slip 2022/02/15 末尾のexp3.jsonを削除
+    $gameLive2d._lappLive2dManager._models.at(model_no-1).changeExpression(expressionId);
 }
 
 //位置変更（移動可能）
