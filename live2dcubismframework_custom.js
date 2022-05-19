@@ -11325,6 +11325,9 @@ var LAppModel = /** @class */ (function (_super) {
         _this._clothGroup = "Cloth";    //可変だが、文字は固定する
         _this._clothName = "";         //着替え用のモーション名
 
+        //リップシンク用に必要
+        _this._calledName = ""; //コマンドで呼ばれる名前
+
         return _this;
     }
 
@@ -11713,9 +11716,42 @@ var LAppModel = /** @class */ (function (_super) {
         //if (this._physics != null) {
         //    this._physics.evaluate(this._model, deltaTimeSeconds);
         //}
+
         // リップシンクの設定
         if (this._lipsync) {
             var value = 0; // リアルタイムでリップシンクを行う場合、システムから音量を取得して、0~1の範囲で値を入力します。
+            let rms = 0
+
+            AudioManager._seBuffers.forEach((seBuffer) => {
+
+                //モデル名がSEのファイル名に含まれている場合に実行する
+                if(seBuffer._url.match(encodeURI(this._calledName))){
+                    if(seBuffer._gainNode){
+                        let buffer = new Uint8Array(seBuffer._analyserNode.fftSize);
+                        seBuffer._analyserNode.getByteTimeDomainData(buffer);
+    
+                        buffer.forEach(i => {
+                        rms += i * i
+                        })
+                        rms /= buffer.length
+                        rms = Math.sqrt(rms)
+    
+                    }
+                }
+            });
+
+
+            if(rms > 128){
+                value = Math.log10(rms - 128);
+            }
+
+            if(value > 1){
+                value = 1;
+            }
+            else if(value < 0){
+                value = 0;
+            }
+
             for (var i = 0; i < this._lipSyncIds.getSize(); ++i) {
                 this._model.addParameterValueById(this._lipSyncIds.at(i), value, 0.8);
             }
@@ -12324,6 +12360,7 @@ var LAppLive2DManager = /** @class */ (function () {
             var modelJsonName = $gameLive2d._model[model_no] + ".model3.json";
             this._models.pushBack(new LAppModel());
             if(modelPath != "" && modelJsonName != ""){
+                this._models.at(model_no-1)._calledName = $gameLive2d._name[model_no];
                 this._models.at(model_no-1).loadAssets(modelPath, modelJsonName);
             }
         }

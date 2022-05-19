@@ -1514,3 +1514,30 @@ if(L2DINuseinbattle){
 }else{
     console.log("Live2d表示はマップシーンのみです。");
 }
+
+
+//リップシンク用にAnalyserNodeを追加する
+WebAudio.prototype._createNodes = function() {
+    var context = WebAudio._context;
+    this._sourceNode = context.createBufferSource();
+    this._sourceNode.buffer = this._buffer;
+    this._sourceNode.loopStart = this._loopStart;
+    this._sourceNode.loopEnd = this._loopStart + this._loopLength;
+    this._sourceNode.playbackRate.setValueAtTime(this._pitch, context.currentTime);
+    this._gainNode = context.createGain();
+    this._gainNode.gain.setValueAtTime(this._volume, context.currentTime);
+    this._pannerNode = context.createPanner();
+    this._pannerNode.panningModel = 'equalpower';
+    
+    //追加　slip 0518
+    this._analyserNode = context.createAnalyser();
+
+    this._updatePanner();
+};
+
+WebAudio.prototype._connectNodes = function() {
+    this._sourceNode.connect(this._gainNode);
+    this._gainNode.connect(this._pannerNode);
+    this._pannerNode.connect(this._analyserNode);
+    this._analyserNode.connect(WebAudio._masterGainNode);
+};
